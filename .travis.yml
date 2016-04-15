@@ -4,3 +4,5 @@ jdk:
 install: mvn test
 services:
   - mysql
+  before_script:
+  - mysql -e 'create database pojotest;'
