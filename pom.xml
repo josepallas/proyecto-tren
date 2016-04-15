@@ -18,7 +18,7 @@
     -->
     <properties>
         <!--  Data source properties -->
-        <dataSource.user>root</dataSource.user>
+        <dataSource.user>travis</dataSource.user>
         <dataSource.password></dataSource.password>
         <dataSource.jndiName>jdbc/pojo-examples-ds</dataSource.jndiName>
         <testDataSource.user>${dataSource.user}</testDataSource.user>
@@ -285,6 +285,26 @@
 		</pluginManagement>
 		
         <plugins>
+            <!-- ========================================================== -->
+            <!-- Coveralls -->
+           <plugin>
+    			<groupId>org.eluder.coveralls</groupId>
+    			<artifactId>coveralls-maven-plugin</artifactId>
+    			<version>4.0.0</version>
+			</plugin>
+			
+			<plugin>
+    			<groupId>org.codehaus.mojo</groupId>
+    			<artifactId>cobertura-maven-plugin</artifactId>
+    			<version>2.7</version>
+    				<configuration>
+        				<format>xml</format>
+        				<maxmem>256m</maxmem>
+        				<!-- aggregated reports for multi-module projects -->
+        				<aggregate>true</aggregate>
+    				</configuration>
+			</plugin> 
+
 
             <!-- ========================================================== -->
             <!-- Compiler configuration -->
