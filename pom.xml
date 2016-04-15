@@ -51,6 +51,14 @@
         <pojo-modelutil.version>2.3.0</pojo-modelutil.version>
                 
     </properties>
+    
+  <repositories>
+    <repository>
+      <id>esudcpojoprofile</id>
+      <name>Pojo maven repository server</name>
+      <url>http://www.tic.udc.es/is-java/maven-repo</url>
+    </repository>
+  </repositories>
 
     <!-- ========================================================== -->
     <!-- Profiles -->
