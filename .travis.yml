@@ -6,3 +6,5 @@ services:
   - mysql
 before_install:
   - mysql -e "create database IF NOT EXISTS pojotest;" -uroot
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report  
