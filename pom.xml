@@ -18,8 +18,8 @@
     -->
     <properties>
         <!--  Data source properties -->
-        <dataSource.user>pojo</dataSource.user>
-        <dataSource.password>pojo</dataSource.password>
+        <dataSource.user>root</dataSource.user>
+        <dataSource.password></dataSource.password>
         <dataSource.jndiName>jdbc/pojo-examples-ds</dataSource.jndiName>
         <testDataSource.user>${dataSource.user}</testDataSource.user>
         <testDataSource.password>${dataSource.password}</testDataSource.password>
