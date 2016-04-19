@@ -1,0 +1,24 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+	
+	
+	<table class="table table-striped table-hover">
+	
+		<thead>
+			<tr>
+			    <th>${message:departTime-label}</th>
+			</tr>
+		</thead>
+		
+		<tbody>			
+			<tr t:type="Loop" t:source="stops" t:value="stop">
+
+			    <td>${stop.departTime}</td>
+			    <t:output value="purchase.purchaseDate.time" format="dateFormat"/>
+			</tr>
+		</tbody>
+	
+	</table>
+
+		
+</html>	

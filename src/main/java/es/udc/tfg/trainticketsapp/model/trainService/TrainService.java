@@ -3,9 +3,9 @@ package es.udc.tfg.trainticketsapp.model.trainService;
 import java.util.Calendar;
 import java.util.List;
 
-import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.stop.Stop;
 
 public interface TrainService{
 
-	public List<Route> findTravel(Calendar travelDay,String origin, String destination);
+	public List<Stop> findTravels(Calendar travelDay,String origin, String destination);
 }

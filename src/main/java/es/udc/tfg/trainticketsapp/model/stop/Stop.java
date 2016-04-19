@@ -24,7 +24,6 @@ public class Stop {
 	}
 
 	public Stop(Long departTime, Long arrivalTime, Route route, Station station) {
-		super();
 		this.departTime = departTime;
 		this.arrivalTime = arrivalTime;
 		this.route = route;
@@ -69,7 +68,7 @@ public class Stop {
 	}
 
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="statioId")		
+	@JoinColumn(name="stationId")		
 	public Station getStation() {
 		return station;
 	}

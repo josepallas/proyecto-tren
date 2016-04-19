@@ -113,8 +113,8 @@ CREATE TABLE Station (
 
 CREATE TABLE Stop (
     stopId BIGINT NOT NULL AUTO_INCREMENT,
-    departTime BIGINT NOT NULL,
-	arrivalTime BIGINT NOT NULL,
+    departTime BIGINT,
+	arrivalTime BIGINT,
 	routeId BIGINT NOT NULL,
 	stationId BIGINT NOT NULL,
 	CONSTRAINT Stop_Route_FK FOREIGN KEY (routeId) REFERENCES Route(routeId),

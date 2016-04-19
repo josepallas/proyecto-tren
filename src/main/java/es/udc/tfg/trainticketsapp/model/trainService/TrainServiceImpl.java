@@ -11,6 +11,7 @@ import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
 import es.udc.tfg.trainticketsapp.model.station.StationDao;
+import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.stop.StopDao;
 import es.udc.tfg.trainticketsapp.model.train.TrainDao;
 
@@ -30,8 +31,8 @@ public class TrainServiceImpl implements TrainService  {
     @Autowired
     private StopDao stopDao;
     
-	public List<Route> findTravel(Calendar travelDay,String origin, String destination){
-		return null;
+	public List<Stop> findTravels(Calendar travelDay,String origin, String destination){
+		return stopDao.findTravels(travelDay, origin, destination);
 	}
 
 }
