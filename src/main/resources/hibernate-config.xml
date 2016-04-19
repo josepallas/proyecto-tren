@@ -12,5 +12,15 @@
         <property name="hibernate.use_sql_comments">${hibernate.use_sql_comments}</property>
 
         <mapping class="es.udc.tfg.trainticketsapp.model.userprofile.UserProfile" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.car.Car" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.fare.Fare" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.passenger.Passenger" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.purchase.Purchase" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.route.Route" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.station.Station" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.stop.Stop" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.ticket.Ticket" />
+        <mapping class="es.udc.tfg.trainticketsapp.model.train.Train" />
+        
     </session-factory>
 </hibernate-configuration>

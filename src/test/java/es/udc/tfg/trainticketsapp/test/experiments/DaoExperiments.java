@@ -1,12 +1,15 @@
 package es.udc.tfg.trainticketsapp.test.experiments;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.hibernate.Transaction;
 
+import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfileDao;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfileDaoHibernate;
 import es.udc.tfg.trainticketsapp.model.userservice.util.PasswordEncrypter;
-import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 
 public class DaoExperiments {
 
@@ -24,7 +27,7 @@ public class DaoExperiments {
 			// Register user.
 			UserProfile userProfile = new UserProfile("daoUser",
 					PasswordEncrypter.crypt("userPassword"), "name",
-					"lastName", "user@udc.es");
+					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
 			userProfileDao.save(userProfile);
 			Long userId = userProfile.getUserProfileId();
 			System.out.println("User with userId '" + userId

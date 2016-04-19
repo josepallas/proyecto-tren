@@ -4,6 +4,9 @@ import static es.udc.tfg.trainticketsapp.model.util.GlobalNames.SPRING_CONFIG_FI
 import static es.udc.tfg.trainticketsapp.test.util.GlobalNames.SPRING_CONFIG_TEST_FILE;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +38,7 @@ public class UserServiceTest {
         /* Register user and find profile. */
         UserProfile userProfile = userService.registerUser(
             "user", "userPassword",
-            new UserProfileDetails("name", "lastName", "user@udc.es"));
+            new UserProfileDetails("name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE));
 
         UserProfile userProfile2 = userService.findUserProfile(
             userProfile.getUserProfileId());
@@ -52,7 +55,7 @@ public class UserServiceTest {
         String loginName = "user";
         String clearPassword = "userPassword";
         UserProfileDetails userProfileDetails = new UserProfileDetails(
-            "name", "lastName", "user@udc.es");
+            "name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
 
         userService.registerUser(loginName, clearPassword,
             userProfileDetails);
@@ -127,7 +130,7 @@ public class UserServiceTest {
 
         UserProfileDetails newUserProfileDetails = new UserProfileDetails(
             'X' + userProfile.getFirstName(), 'X' + userProfile.getLastName(),
-            'X' + userProfile.getEmail());
+            'X' + userProfile.getEmail(),"47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
 
         userService.updateUserProfileDetails(userProfile.getUserProfileId(),
             newUserProfileDetails);
@@ -151,7 +154,7 @@ public class UserServiceTest {
             throws InstanceNotFoundException {
 
         userService.updateUserProfileDetails(NON_EXISTENT_USER_PROFILE_ID,
-            new UserProfileDetails("name", "lastName", "user@udc.es"));
+            new UserProfileDetails("name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE));
 
     }
 
@@ -196,7 +199,7 @@ public class UserServiceTest {
     private UserProfile registerUser(String loginName, String clearPassword) {
 
         UserProfileDetails userProfileDetails = new UserProfileDetails(
-            "name", "lastName", "user@udc.es");
+            "name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
 
         try {
 

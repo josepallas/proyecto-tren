@@ -1,5 +1,7 @@
 package es.udc.tfg.trainticketsapp.model.userprofile;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,31 +11,37 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 public class UserProfile {
-
+	
+	public enum TypeUser {ADMINISTRADOR, VENDEDOR, CLIENTE};	
+	private TypeUser typeUser;
 	private Long userProfileId;
 	private String loginName;
 	private String encryptedPassword;
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String dni;
+	private Calendar birthdate;
 
 	public UserProfile() {
 	}
 
+
 	public UserProfile(String loginName, String encryptedPassword,
-			String firstName, String lastName, String email) {
-
-		/**
-		 * NOTE: "userProfileId" *must* be left as "null" since its value is
-		 * automatically generated.
-		 */
-
+			String firstName, String lastName, String email, String dni,
+			Calendar birthdate, TypeUser typeUser) {
+		super();
 		this.loginName = loginName;
 		this.encryptedPassword = encryptedPassword;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.dni = dni;
+		this.birthdate = birthdate;
+		this.typeUser = typeUser;
 	}
+
+
 
 	@Column(name = "usrId")
 	@SequenceGenerator( // It only takes effect for
@@ -90,13 +98,38 @@ public class UserProfile {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public TypeUser getTypeUser() {
+		return typeUser;
+	}
+
+	public void setTypeUser(TypeUser typeUser) {
+		this.typeUser = typeUser;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public Calendar getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Calendar birthdate) {
+		this.birthdate = birthdate;
+	}
 
 	@Override
 	public String toString() {
-		return "UserProfile [userProfileId=" + userProfileId + ", loginName="
-				+ loginName + ", encryptedPassword=" + encryptedPassword
-				+ ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + "]";
-	}
+		return "UserProfile [userProfileId=" + userProfileId + ", typeUser="
+				+ typeUser + ", loginName=" + loginName
+				+ ", encryptedPassword=" + encryptedPassword + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", dni=" + dni + ", birthdate=" + birthdate + "]";
+	}	
 
 }

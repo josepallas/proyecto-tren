@@ -1,5 +1,8 @@
 package es.udc.tfg.trainticketsapp.test.experiments;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,7 +21,7 @@ public class SessionExperiments {
 			// Register user.
 			UserProfile userProfile = new UserProfile("sessionUser",
 					PasswordEncrypter.crypt("userPassword"), "name",
-					"lastName", "user@udc.es");
+					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
 			session.saveOrUpdate(userProfile);
 			Long userId = userProfile.getUserProfileId();
 			System.out.println("User with userId '" + userId

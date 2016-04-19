@@ -1,5 +1,7 @@
 package es.udc.tfg.trainticketsapp.web.pages.user;
 
+import java.util.Calendar;
+
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
@@ -9,6 +11,7 @@ import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
+import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
 import es.udc.tfg.trainticketsapp.model.userservice.UserProfileDetails;
 import es.udc.tfg.trainticketsapp.model.userservice.UserService;
@@ -16,7 +19,6 @@ import es.udc.tfg.trainticketsapp.web.pages.Index;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 import es.udc.tfg.trainticketsapp.web.util.UserSession;
-import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 
 @AuthenticationPolicy(AuthenticationPolicyType.NON_AUTHENTICATED_USERS)
 public class Register {
@@ -35,6 +37,12 @@ public class Register {
 
     @Property
     private String lastName;
+    
+    @Property 
+    private String dni;
+    
+    @Property 
+    private Calendar birthdate;
 
     @Property
     private String email;
@@ -72,7 +80,7 @@ public class Register {
 
             try {
                 UserProfile userProfile = userService.registerUser(loginName, password,
-                    new UserProfileDetails(firstName, lastName, email));
+                    new UserProfileDetails(firstName, lastName, email, dni, birthdate, UserProfile.TypeUser.CLIENTE));
                 userProfileId = userProfile.getUserProfileId();
             } catch (DuplicateInstanceException e) {
                 registrationForm.recordError(loginNameField, messages
