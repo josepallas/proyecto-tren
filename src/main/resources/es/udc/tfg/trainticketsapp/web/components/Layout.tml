@@ -38,8 +38,16 @@
         </div>
         
         <div class="navbar-collapse collapse">
+             <t:if test="userSession">
+               <t:if test="administrator">
+            		<a class="navbar-brand" href="#" t:type="PageLink" t:page="train/createroute">${message:createRoute}</a>
+        	   </t:if>
+        	</t:if>
+        
             <ul class="nav navbar-nav navbar-right">
+     
             	<t:if test="userSession">
+			 	            	
             		<li class="dropdown">
               			<a href="#" class="dropdown-toggle" data-toggle="dropdown">${userSession.firstName} <span class="caret"></span></a>
               				<ul class="dropdown-menu" role="menu">
@@ -52,6 +60,7 @@
             		<p:else>
 				    	<li><a href="#" t:type="PageLink" t:page="user/login">${message:authenticate}</a></li>
 			        </p:else>
+			        
             	</t:if>
             </ul>
 
@@ -79,5 +88,6 @@
 </div>
 
 </body>
+
 
 </html>

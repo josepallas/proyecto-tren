@@ -7,7 +7,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 
+@AuthenticationPolicy(AuthenticationPolicyType.ALL_USERS)
 public class TravelsFound {
 
 	private String origin;

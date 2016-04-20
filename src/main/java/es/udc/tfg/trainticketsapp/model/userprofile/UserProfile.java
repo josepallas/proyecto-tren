@@ -8,11 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class UserProfile {
 	
-	public enum TypeUser {ADMINISTRADOR, VENDEDOR, CLIENTE};	
+	public enum TypeUser {ADMINISTRATOR, SALESMAN, CLIENT};	
 	private TypeUser typeUser;
 	private Long userProfileId;
 	private String loginName;
@@ -115,6 +117,7 @@ public class UserProfile {
 		this.dni = dni;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Calendar getBirthdate() {
 		return birthdate;
 	}

@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
+import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
@@ -64,5 +66,16 @@ public class TrainServiceTest {
 		assertEquals(result.size(),1);
 
 		
+	}
+	
+	@Test
+	public void createRouteTest() throws DuplicateInstanceException, InstanceNotFoundException{
+		Train train=new Train("A25", "AVE");
+		trainDao.save(train);
+		
+        Route result=trainService.createRoute("M-Coruña", "sin paradas", train.getTrainId());
+        assertEquals(result.getRouteName(),"M-Coruña");
+        
+
 	}
 }

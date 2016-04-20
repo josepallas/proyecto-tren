@@ -5,6 +5,7 @@ import org.apache.tapestry5.services.ApplicationStateManager;
 import org.apache.tapestry5.services.ComponentSource;
 import org.apache.tapestry5.services.MetaDataLocator;
 
+import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
 import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
 public class AuthenticationValidator {
@@ -102,6 +103,33 @@ public class AuthenticationValidator {
 			}
 			break;
 
+			
+		case CLIENT_USERS:
+
+		    if (!userAuthenticated|| applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.CLIENT)
+
+			redirectPage = INIT_PAGE;
+		
+		break;
+			
+		case SALESMAN_USERS:
+
+			    if (!userAuthenticated|| applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.SALESMAN)
+
+				redirectPage = INIT_PAGE;
+			
+			break;
+			
+			
+		case ADMINISTRATOR_USERS:
+		    if (!userAuthenticated||applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.ADMINISTRATOR)
+ {			System.out.println("\n nooooooooooo \n");
+
+				redirectPage = INIT_PAGE;
+			}
+			System.out.println("\n siiiiiiiiiiii \n");
+
+			break;			
 		default:
 			break;
 

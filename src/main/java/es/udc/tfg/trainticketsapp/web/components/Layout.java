@@ -7,6 +7,7 @@ import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Cookies;
 
+import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
 import es.udc.tfg.trainticketsapp.web.pages.Index;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
@@ -39,6 +40,18 @@ public class Layout {
     		return showTitleInBody;
     	}
     	
+    }
+    
+    public boolean getClient() {
+    	return (userSession.getTypeUser() == TypeUser.CLIENT);
+    }
+    
+    public boolean getAdministrator() {
+    	return (userSession.getTypeUser() == TypeUser.ADMINISTRATOR);
+    }
+
+    public boolean getSaleman() {
+    	return (userSession.getTypeUser() == TypeUser.SALESMAN);
     }
     
     @AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)

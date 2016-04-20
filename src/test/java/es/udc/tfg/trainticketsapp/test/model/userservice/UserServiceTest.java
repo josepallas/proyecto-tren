@@ -38,7 +38,7 @@ public class UserServiceTest {
         /* Register user and find profile. */
         UserProfile userProfile = userService.registerUser(
             "user", "userPassword",
-            new UserProfileDetails("name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE));
+            new UserProfileDetails("name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT));
 
         UserProfile userProfile2 = userService.findUserProfile(
             userProfile.getUserProfileId());
@@ -55,7 +55,7 @@ public class UserServiceTest {
         String loginName = "user";
         String clearPassword = "userPassword";
         UserProfileDetails userProfileDetails = new UserProfileDetails(
-            "name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
+            "name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
 
         userService.registerUser(loginName, clearPassword,
             userProfileDetails);
@@ -130,7 +130,7 @@ public class UserServiceTest {
 
         UserProfileDetails newUserProfileDetails = new UserProfileDetails(
             'X' + userProfile.getFirstName(), 'X' + userProfile.getLastName(),
-            'X' + userProfile.getEmail(),"47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
+            'X' + userProfile.getEmail(),"47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
 
         userService.updateUserProfileDetails(userProfile.getUserProfileId(),
             newUserProfileDetails);
@@ -154,7 +154,7 @@ public class UserServiceTest {
             throws InstanceNotFoundException {
 
         userService.updateUserProfileDetails(NON_EXISTENT_USER_PROFILE_ID,
-            new UserProfileDetails("name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE));
+            new UserProfileDetails("name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT));
 
     }
 
@@ -199,7 +199,7 @@ public class UserServiceTest {
     private UserProfile registerUser(String loginName, String clearPassword) {
 
         UserProfileDetails userProfileDetails = new UserProfileDetails(
-            "name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
+            "name", "lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
 
         try {
 

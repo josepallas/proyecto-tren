@@ -21,7 +21,7 @@ public class SessionExperiments {
 			// Register user.
 			UserProfile userProfile = new UserProfile("sessionUser",
 					PasswordEncrypter.crypt("userPassword"), "name",
-					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
+					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
 			session.saveOrUpdate(userProfile);
 			Long userId = userProfile.getUserProfileId();
 			System.out.println("User with userId '" + userId

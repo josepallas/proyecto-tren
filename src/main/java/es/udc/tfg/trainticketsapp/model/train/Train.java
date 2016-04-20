@@ -16,7 +16,6 @@ public class Train {
 	}
 
 	public Train(String trainName, String trainType) {
-		super();
 		this.trainName = trainName;
 		this.trainType = trainType;
 	}

@@ -69,6 +69,7 @@ public class Login {
     	userSession = new UserSession();
         userSession.setUserProfileId(userProfile.getUserProfileId());
         userSession.setFirstName(userProfile.getFirstName());
+        userSession.setTypeUser(userProfile.getTypeUser());
 
         if (rememberMyPassword) {
             CookiesManager.leaveCookies(cookies, loginName, userProfile

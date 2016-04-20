@@ -3,6 +3,15 @@
 -- in the "pojo" database.
 -------------------------------------------------------------------------------
 
+-- Insercion de usuarios
+--admin/admin
+INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birthdate,typeuser) VALUES ("admin","SXzKIBuZJ2zBU","admin","admin","admin@udc.es","12344123M",'2000-04-20 16:43:36',0);
+--ven/ven
+INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birthdate,typeuser) VALUES ("ven","LLbhfdNqrzYMw","ven","ven","ven@udc.es","87344123H",'1986-04-20 16:43:36',1);
+--user/user
+INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birthdate,typeuser) VALUES ("user","YPb3siGrJsDX6","user","user","user@udc.es","44444123G",'1992-04-20 16:43:36',2);
+
+
 insert into Station (adress, city, stationName) values ("Calle mayor", "La Coruña", "Coruña");
 insert into Station (adress, city, stationName) values ("Calle menor", "Ourense", "Ourense");
 insert into Station (adress, city, stationName) values ("Calle real", "Madrid", "Madrid-ATocha");

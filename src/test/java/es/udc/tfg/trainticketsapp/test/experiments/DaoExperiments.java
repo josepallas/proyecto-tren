@@ -27,7 +27,7 @@ public class DaoExperiments {
 			// Register user.
 			UserProfile userProfile = new UserProfile("daoUser",
 					PasswordEncrypter.crypt("userPassword"), "name",
-					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE);
+					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
 			userProfileDao.save(userProfile);
 			Long userId = userProfile.getUserProfileId();
 			System.out.println("User with userId '" + userId

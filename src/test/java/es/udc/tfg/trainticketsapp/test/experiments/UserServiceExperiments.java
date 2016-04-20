@@ -29,7 +29,7 @@ public class UserServiceExperiments {
 			// Register user.
 			UserProfile userProfile = userService.registerUser("serviceUser",
 					"userPassword", new UserProfileDetails("name", "lastName",
-							"user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENTE));
+							"user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT));
 			System.out.println("User with userId '"
 					+ userProfile.getUserProfileId() + "' has been created");
 			System.out.println(userProfile);

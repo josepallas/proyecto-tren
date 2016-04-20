@@ -55,7 +55,7 @@ public class UpdateProfile {
 
         userService.updateUserProfileDetails(
                 userSession.getUserProfileId(), new UserProfileDetails(
-                        firstName, lastName, email, dni, birthdate, UserProfile.TypeUser.CLIENTE ));
+                        firstName, lastName, email, dni, birthdate, UserProfile.TypeUser.CLIENT ));
         userSession.setFirstName(firstName);
         return Index.class;
 

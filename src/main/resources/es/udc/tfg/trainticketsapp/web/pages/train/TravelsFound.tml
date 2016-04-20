@@ -14,7 +14,6 @@
 			<tr t:type="Loop" t:source="stops" t:value="stop">
 
 			    <td>${stop.departTime}</td>
-			    <t:output value="purchase.purchaseDate.time" format="dateFormat"/>
 			</tr>
 		</tbody>
 	

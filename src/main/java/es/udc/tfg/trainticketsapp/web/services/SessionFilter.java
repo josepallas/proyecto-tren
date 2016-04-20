@@ -10,6 +10,7 @@ import org.apache.tapestry5.services.RequestHandler;
 import org.apache.tapestry5.services.Response;
 
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
+import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
 import es.udc.tfg.trainticketsapp.model.userservice.IncorrectPasswordException;
 import es.udc.tfg.trainticketsapp.model.userservice.UserService;
 import es.udc.tfg.trainticketsapp.web.util.CookiesManager;
@@ -51,6 +52,7 @@ public class SessionFilter implements RequestFilter {
 						userSession.setUserProfileId(userProfile
 								.getUserProfileId());
 						userSession.setFirstName(userProfile.getFirstName());
+						userSession.setTypeUser(userProfile.getTypeUser());
 						applicationStateManager.set(UserSession.class,
 								userSession);
 
