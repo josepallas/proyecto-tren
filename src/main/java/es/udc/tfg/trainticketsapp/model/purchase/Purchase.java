@@ -84,11 +84,11 @@ public class Purchase {
 		this.tickets = tickets;
 	}
 	
-	public void addTickets(Ticket ticket) {
+	public void addTicket(Ticket ticket) {
 		tickets.add(ticket);
 		ticket.setPurchase(this);
 	}
-	public void removeTickets(Ticket ticket) {
+	public void removeTicket(Ticket ticket) {
 		tickets.remove(ticket);
 		ticket.setPurchase(null);
 	}

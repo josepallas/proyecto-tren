@@ -12,13 +12,12 @@ import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
+import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.station.StationDao;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.stop.StopDao;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 import es.udc.tfg.trainticketsapp.model.train.TrainDao;
-import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
-import es.udc.tfg.trainticketsapp.model.userservice.util.PasswordEncrypter;
 
 @Service("trainService")
 @Transactional
@@ -47,7 +46,23 @@ public class TrainServiceImpl implements TrainService  {
 		return trainDao.findAllTrains();
 	}
 	
-	public Route createRoute(String routeName, String routeDescription,Long trainId) throws DuplicateInstanceException, InstanceNotFoundException {
+	public Station findStation(Long id) throws InstanceNotFoundException {
+		return stationDao.find(id);
+	}
+
+	public List<Station> findStations() {
+		return stationDao.findAllStations();
+	}
+	
+	public Route findRoute(Long id) throws InstanceNotFoundException {
+		return routeDao.find(id);
+	}
+	public Route findRouteByName(String routeName) throws InstanceNotFoundException {
+		return routeDao.findByName(routeName);
+	}
+
+	
+	public Route createRoute(String routeName, String routeDescription,Long trainId, List<Stop> stops) throws DuplicateInstanceException, InstanceNotFoundException {
         try {
             routeDao.findByName(routeName);
             throw new DuplicateInstanceException(routeName,
@@ -55,8 +70,11 @@ public class TrainServiceImpl implements TrainService  {
         } catch (InstanceNotFoundException e) {
         	Train train=trainDao.find(trainId);
             Route route=new Route(routeName,routeDescription,null,train);
-
             routeDao.save(route);
+    		for (Stop a:stops) {
+    			route.addStop(a);
+				stopDao.save(a);
+			}
             return route;
         }
 	}

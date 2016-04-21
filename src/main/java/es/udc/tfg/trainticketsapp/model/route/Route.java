@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
+import es.udc.tfg.trainticketsapp.model.ticket.Ticket;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 
 @Entity
@@ -95,6 +96,14 @@ public class Route {
 
 	public void setStops(List<Stop> stops) {
 		this.stops = stops;
+	}
+	public void addStop(Stop stop) {
+		stops.add(stop);
+		stop.setRoute(this);
+	}
+	public void removeStop(Stop stop) {
+		stops.remove(stop);
+		stop.setRoute(null);
 	}
 
 	@Override

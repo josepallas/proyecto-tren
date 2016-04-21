@@ -13,11 +13,9 @@ import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.SelectModelFactory;
 
-import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
-import es.udc.tfg.trainticketsapp.web.pages.Index;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 
@@ -44,7 +42,6 @@ public class CreateRoute {
     private TextField routeNameField;
     @InjectPage
     private AddRouteStops addRouteStops;
-    private Long routeId;
     
 	void onPrepareForRender() {
 		List<Train> trains = trainService.findTrains();
@@ -70,23 +67,20 @@ public class CreateRoute {
 	}
 	
     void onValidateFromRouteForm() {
-
         if (!routeForm.isValid()) {
             return;
         }
+    	try {
+			trainService.findRouteByName(routeName);
+			routeForm.recordError(routeNameField,messages.format("error-invalidname", routeName));
+		} catch (InstanceNotFoundException e) {
 
-            try {
-                Long routeId=trainService.createRoute(routeName, routeDescription, train.getTrainId()).getRouteId();
-            } catch (DuplicateInstanceException e) {
-                routeForm.recordError(routeNameField, messages
-                        .get("error-loginNameAlreadyExists"));
-            } catch (InstanceNotFoundException e) {
-            	routeForm.recordError(messages.get("error-trainNotexists"));
-			}
-
+		}
     }
     Object onSuccess() {
-    	addRouteStops.setRouteId(routeId);
-    	return addRouteStops;
+    	addRouteStops.setRouteDescription(routeDescription);
+    	addRouteStops.setRouteName(routeName);
+    	addRouteStops.setTrainId(train.getTrainId());
+    	return  addRouteStops;
     }
 }

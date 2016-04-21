@@ -1,5 +1,48 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
 	t:type="Layout" t:title="title" showTitleInBody="false">
+
+	<br/>
+		<form t:type="Form" class="form-horizontal" t:id="stopForm" >
+	
+	   <t:errors/>
+		
+	   <div class="form-group">        
+	        <t:label for="station" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-2">
+				<t:select t:id="station" model="stationModel" encoder="StationEncoder" validate="required"/>
+
+			</div>
+	   </div>
+	   
+	   <div class="form-group">        
+	        <t:label for="arrivalTime" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-2">
+            	<input t:type="TextField" t:id="arrivalTime"  t:validate="required"/>
+			</div>
+	   </div>	    
+	   
+	   <div class="form-group">        
+	        <t:label for="departTime" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-2">
+	           <input t:type="TextField" t:id="departTime"  t:validate="required"/>
+			</div>
+	   </div>
+	   	    
+	    <div class="form-group">
+	    	<div class="col-md-offset-5 col-md-1">
+        		<button type="submit" class="btn btn-primary">${message:submit}</button>
+        	</div>
+        </div> 
+	    
+	</form>	
+	
+	<form t:type="Form" class="form-horizontal" t:id="acceptForm" >
+		   <t:errors/>
+	
+		    <div class="col-md-offset-5 col-md-1">
+        		<button type="submit" class="btn btn-primary">${message:accept}</button>
+        	</div>
+	</form>	
 	
 		
 </html>	

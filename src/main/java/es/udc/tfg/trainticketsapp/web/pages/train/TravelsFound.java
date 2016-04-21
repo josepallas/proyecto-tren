@@ -1,6 +1,8 @@
 package es.udc.tfg.trainticketsapp.web.pages.train;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -18,6 +20,8 @@ public class TravelsFound {
 	private String destination;
 	
 	private List<Stop> stops;
+	@Inject
+	private Locale locale;
 	
 	@Inject
 	private TrainService trainService;
@@ -43,6 +47,9 @@ public class TravelsFound {
 	
 	public List<Stop> getStops() {
 		return stops;
+	}
+	public DateFormat getDateFormat() {
+		return DateFormat.getTimeInstance(DateFormat.SHORT,locale);
 	}
 	
 	

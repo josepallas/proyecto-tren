@@ -12,8 +12,7 @@
 		
 		<tbody>			
 			<tr t:type="Loop" t:source="stops" t:value="stop">
-
-			    <td>${stop.departTime}</td>
+				<td><t:output value="stop.departTime" format="dateFormat"/></td>
 			</tr>
 		</tbody>
 	
