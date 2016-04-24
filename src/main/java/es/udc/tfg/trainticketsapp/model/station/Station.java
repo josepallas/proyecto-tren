@@ -10,15 +10,15 @@ import javax.persistence.SequenceGenerator;
 public class Station {
 	private Long stationId;
 	private String stationName;
-	private String adress;
+	private String address;
 	private String city;
 	
 	public Station() {
 	}
 
-	public Station(String stationName, String adress, String city) {
+	public Station(String stationName, String address, String city) {
 		this.stationName = stationName;
-		this.adress = adress;
+		this.address = address;
 		this.city = city;
 	}
 
@@ -41,12 +41,12 @@ public class Station {
 		this.stationName = stationName;
 	}
 
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getCity() {
@@ -60,7 +60,7 @@ public class Station {
 	@Override
 	public String toString() {
 		return "Station [stationId=" + stationId + ", stationName="
-				+ stationName + ", adress=" + adress + ", city=" + city + "]";
+				+ stationName + ", address=" + address + ", city=" + city + "]";
 	}
 	
 

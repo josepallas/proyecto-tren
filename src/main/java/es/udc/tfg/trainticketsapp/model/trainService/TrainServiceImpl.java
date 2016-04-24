@@ -35,28 +35,31 @@ public class TrainServiceImpl implements TrainService  {
     @Autowired
     private StopDao stopDao;
     
+	@Transactional(readOnly = true)
 	public List<Stop> findTravels(Calendar travelDay,String origin, String destination){
 		return stopDao.findTravels(travelDay, origin, destination);
 	}
+	@Transactional(readOnly = true)
 	public Train findTrain(Long id) throws InstanceNotFoundException {
 		return trainDao.find(id);
 	}
-
+	@Transactional(readOnly = true)
 	public List<Train> findTrains() {
 		return trainDao.findAllTrains();
 	}
-	
+	@Transactional(readOnly = true)
 	public Station findStation(Long id) throws InstanceNotFoundException {
 		return stationDao.find(id);
 	}
-
+	@Transactional(readOnly = true)
 	public List<Station> findStations() {
 		return stationDao.findAllStations();
 	}
-	
+	@Transactional(readOnly = true)
 	public Route findRoute(Long id) throws InstanceNotFoundException {
 		return routeDao.find(id);
 	}
+	@Transactional(readOnly = true)
 	public Route findRouteByName(String routeName) throws InstanceNotFoundException {
 		return routeDao.findByName(routeName);
 	}

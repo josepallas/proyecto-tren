@@ -104,7 +104,7 @@ CREATE TABLE Route (
 CREATE TABLE Station (
     stationId BIGINT NOT NULL AUTO_INCREMENT,
 	stationName VARCHAR(30)  NOT NULL,
-	adress VARCHAR(100) NOT NULL,
+	address VARCHAR(100) NOT NULL,
 	city VARCHAR(30) NOT NULL,
 	CONSTRAINT StationNameUniqueKey UNIQUE (stationName),
     CONSTRAINT Station_PK PRIMARY KEY (stationId))
