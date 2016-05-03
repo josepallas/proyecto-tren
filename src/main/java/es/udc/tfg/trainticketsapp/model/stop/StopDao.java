@@ -8,5 +8,6 @@ import es.udc.tfg.trainticketsapp.model.route.Route;
 
 public interface StopDao extends GenericDao<Stop, Long> {
 
-	public List<Stop> findTravels(Calendar travelDay,String origin, String destination);
+	public List<Stop> findTravels(String origin, String destination);
+	public List<Long> findRouteByStops(String origin, String destination);
 }

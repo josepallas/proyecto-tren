@@ -1,5 +1,6 @@
 package es.udc.tfg.trainticketsapp.model.trainService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
 import es.udc.tfg.trainticketsapp.model.station.Station;
@@ -37,7 +39,7 @@ public class TrainServiceImpl implements TrainService  {
     
 	@Transactional(readOnly = true)
 	public List<Stop> findTravels(Calendar travelDay,String origin, String destination){
-		return stopDao.findTravels(travelDay, origin, destination);
+		return stopDao.findTravels(origin, destination);
 	}
 	@Transactional(readOnly = true)
 	public Train findTrain(Long id) throws InstanceNotFoundException {
@@ -63,8 +65,30 @@ public class TrainServiceImpl implements TrainService  {
 	public Route findRouteByName(String routeName) throws InstanceNotFoundException {
 		return routeDao.findByName(routeName);
 	}
-
+	@Transactional(readOnly = true)
+	public List<CarType> findClassTypesByTrain(Long trainId) {
+		return carDao.findClassByTrain(trainId);
+	}
+	public List<TravelInfo> findTravels2(Calendar day,String origin, String destination) {
+		List<Long> routesId=stopDao.findRouteByStops(origin, destination);
+		if (routesId.size()==0)
+			return null;
+		List<Route> routes=routeDao.findRoutesByDay(null, routesId);
+		List<TravelInfo> travels=new ArrayList<TravelInfo>();
+		for(Route r:routes) {
+			TravelInfo travelInfo=new TravelInfo(r.getRouteName(),r.getRouteDescription(),r.getTrain());
+			for(Stop s:r.getStops()) {
+				if (s.getStation().getStationName().equals(origin))
+					travelInfo.setOrigin(s);
+				if (s.getStation().getStationName().equals(destination))
+					travelInfo.setDestination(s);		
+			}
+			travels.add(travelInfo);
+		}
+		return travels;
+	}
 	
+
 	public Route createRoute(String routeName, String routeDescription,Long trainId, List<Stop> stops) throws DuplicateInstanceException, InstanceNotFoundException {
         try {
             routeDao.findByName(routeName);
@@ -76,7 +100,6 @@ public class TrainServiceImpl implements TrainService  {
             routeDao.save(route);
     		for (Stop a:stops) {
     			route.addStop(a);
-				stopDao.save(a);
 			}
             return route;
         }

@@ -69,7 +69,7 @@ public class Route {
 	}
 
 	@ElementCollection
-	@CollectionTable(name="Days", joinColumns=@JoinColumn(name="routeId"))
+	@CollectionTable(name="days", joinColumns=@JoinColumn(name="routeId"))
 	@Column(name="day")	
 	public List<String> getDays() {
 		return days;
@@ -105,13 +105,5 @@ public class Route {
 		stops.remove(stop);
 		stop.setRoute(null);
 	}
-
-	@Override
-	public String toString() {
-		return "Route [routeId=" + routeId + ", routeName=" + routeName
-				+ ", routeDescription=" + routeDescription + ", days=" + days
-				+ ", train=" + train + ", stops=" + stops + "]";
-	}
-
 	
 }

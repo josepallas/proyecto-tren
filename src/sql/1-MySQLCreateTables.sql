@@ -47,7 +47,7 @@ CREATE INDEX UserProfileIndexByLoginName ON UserProfile (loginName);
 CREATE TABLE Train (
     trainId BIGINT NOT NULL AUTO_INCREMENT,
 	trainName VARCHAR(30)  NOT NULL,
-	trainType VARCHAR(100) NOT NULL,
+	trainType TINYINT NOT NULL,
 	CONSTRAINT TrainNameUniqueKey UNIQUE (TrainName),
     CONSTRAINT Train_PK PRIMARY KEY (TrainId))
     ENGINE = InnoDB;			
@@ -58,7 +58,7 @@ CREATE TABLE Train (
 CREATE TABLE Car (
     carId BIGINT NOT NULL AUTO_INCREMENT,
     capacity INTEGER,
-	carType VARCHAR(30),
+	carType TINYINT,
 	carNum INTEGER NOT NULL,
 	trainId BIGINT NOT NULL,
     CONSTRAINT Car_PK PRIMARY KEY (carId),
@@ -141,7 +141,7 @@ CREATE TABLE Fare (
 CREATE TABLE Ticket (
     ticketId BIGINT NOT NULL AUTO_INCREMENT,
 	realPrice NUMERIC(5,2) NOT NULL,
-	seat VARCHAR(10) NOT NULL,
+	seat INTEGER NOT NULL,
 	ticketDate TIMESTAMP NOT NULL,
 	purchaseId BIGINT NOT NULL,
 	carId BIGINT NOT NULL,	

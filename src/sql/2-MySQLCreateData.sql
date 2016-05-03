@@ -12,13 +12,13 @@ INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birth
 INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birthdate,typeuser) VALUES ("user","YPb3siGrJsDX6","user","user","user@udc.es","44444123G",'1992-04-20 16:43:36',2);
 
 
-insert into Station (address, city, stationName) values ("Calle mayor", "La Coruña", "Coruña");
+insert into Station (address, city, stationName) values ("Calle mayor", "La Coruña", "Coruna");
 insert into Station (address, city, stationName) values ("Calle menor", "Ourense", "Ourense");
 insert into Station (address, city, stationName) values ("Calle real", "Madrid", "Madrid-ATocha");
 insert into Station (address, city, stationName) values ("Calle de españa", "Ferrol", "Ferrol");
 insert into Station (address, city, stationName) values ("Calle", "Santiago de Compostela", "Santiago");
 
-insert into Train (trainName, trainType) values ("A23", "AVE");
+insert into Train (trainName, trainType) values ("A23", 1);
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Coruña-Ourense", 1);
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
@@ -47,4 +47,5 @@ insert into Fare(fareName,description, discount, typeFare) values("Turista","Pre
 insert into Fare(fareName,description, discount, typeFare) values("Familia numerosa general","Descuento familia numerosa",50,"familia");
 insert into Fare(fareName,description, discount, typeFare) values("Familia numerosa especial","Descuento familia numerosa",70,"familia");
 
-insert into Car(capacity,carType,trainId, carNum) values (20,"AVE",1,1);
+insert into Car(capacity,carType,trainId, carNum) values (20,1,1,1);
+insert into Car(capacity,carType,trainId, carNum) values (20,0,1,2);

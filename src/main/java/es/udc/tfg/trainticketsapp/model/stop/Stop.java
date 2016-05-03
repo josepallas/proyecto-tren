@@ -23,10 +23,9 @@ public class Stop {
 	public Stop() {
 	}
 
-	public Stop(Long departTime, Long arrivalTime, Route route, Station station) {
+	public Stop(Long departTime, Long arrivalTime, Station station) {
 		this.departTime = departTime;
 		this.arrivalTime = arrivalTime;
-		this.route = route;
 		this.station = station;
 	}
 
@@ -76,13 +75,5 @@ public class Stop {
 	public void setStation(Station station) {
 		this.station = station;
 	}
-
-	@Override
-	public String toString() {
-		return "Stop [stopId=" + stopId + ", departTime=" + departTime
-				+ ", arrivalTime=" + arrivalTime + ", route=" + route
-				+ ", station=" + station + "]";
-	}
-
 	
 }

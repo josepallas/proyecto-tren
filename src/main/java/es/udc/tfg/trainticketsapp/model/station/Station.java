@@ -56,12 +56,6 @@ public class Station {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-	@Override
-	public String toString() {
-		return "Station [stationId=" + stationId + ", stationName="
-				+ stationName + ", address=" + address + ", city=" + city + "]";
-	}
 	
 
 	

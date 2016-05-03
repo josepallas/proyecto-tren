@@ -8,14 +8,15 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Train {
+	public enum TrainType {AVE, ALVIA};	
 	private Long trainId;
 	private String trainName;
-	private String trainType;
+	private TrainType trainType;
 	
 	public Train() {
 	}
 
-	public Train(String trainName, String trainType) {
+	public Train(String trainName, TrainType trainType) {
 		this.trainName = trainName;
 		this.trainType = trainType;
 	}
@@ -39,20 +40,12 @@ public class Train {
 		this.trainName = trainName;
 	}
 
-	public String getTrainType() {
+	public TrainType getTrainType() {
 		return trainType;
 	}
 
-	public void setTrainType(String trainType) {
+	public void setTrainType(TrainType trainType) {
 		this.trainType = trainType;
 	}
-
-	@Override
-	public String toString() {
-		return "Train [trainId=" + trainId + ", trainName=" + trainName
-				+ ", trainType=" + trainType + "]";
-	}
-
-	
 	
 }

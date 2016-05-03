@@ -79,13 +79,4 @@ public class Passenger {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-
-	@Override
-	public String toString() {
-		return "Passenger [passengerId=" + passengerId + ", age=" + age
-				+ ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", dni=" + dni + "]";
-	}
-	
-	
 }

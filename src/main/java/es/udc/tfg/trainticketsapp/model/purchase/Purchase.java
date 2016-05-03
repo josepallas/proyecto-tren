@@ -92,13 +92,6 @@ public class Purchase {
 		tickets.remove(ticket);
 		ticket.setPurchase(null);
 	}
-	
-	@Override
-	public String toString() {
-		return "Purchase [purchaseId=" + purchaseId + ", purchaseDate="
-				+ purchaseDate + ", paymentMethod=" + paymentMethod
-				+ ", userProfile=" + userProfile + "]";
-	}	
 
 
 }

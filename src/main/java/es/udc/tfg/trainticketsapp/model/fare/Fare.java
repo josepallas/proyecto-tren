@@ -67,12 +67,5 @@ public class Fare {
 		this.typeFare = typeFare;
 	}
 
-	@Override
-	public String toString() {
-		return "Fare [fareId=" + fareId + ", fareName=" + fareName
-				+ ", description=" + description + ", discount=" + discount
-				+ ", type=" + typeFare + "]";
-	}
-	
 	
 }

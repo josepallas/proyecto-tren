@@ -13,16 +13,17 @@ import es.udc.tfg.trainticketsapp.model.train.Train;
 
 @Entity
 public class Car {
+	public enum CarType {PREFERENTE, TURISTA};	
 	private Long carId;
 	private int carNum;
 	private int capacity;
-	private String carType;
+	private CarType carType;
 	private Train train;
 	
 	public Car() {
 	}
 
-	public Car(int capacity, String carType, Train train, int carNum) {
+	public Car(int capacity, CarType carType, Train train, int carNum) {
 		this.capacity = capacity;
 		this.carType = carType;
 		this.train = train;
@@ -48,11 +49,11 @@ public class Car {
 		this.capacity = capacity;
 	}
 
-	public String getCarType() {
+	public CarType getCarType() {
 		return carType;
 	}
 
-	public void setCarType(String carType) {
+	public void setCarType(CarType carType) {
 		this.carType = carType;
 	}
 	@ManyToOne(optional=false, fetch=FetchType.LAZY)
@@ -72,13 +73,6 @@ public class Car {
 	public void setCarNum(int carNum) {
 		this.carNum = carNum;
 	}
-
-	@Override
-	public String toString() {
-		return "Car [carId=" + carId + ", carNum=" + carNum + ", capacity="
-				+ capacity + ", carType=" + carType + ", train=" + train + "]";
-	}	
-	
 
 	
 }

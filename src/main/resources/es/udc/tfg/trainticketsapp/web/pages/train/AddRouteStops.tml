@@ -13,13 +13,15 @@
 
 			</div>
 	   </div>
-	   
+	           
+	    <t:if test="stops">
 	   <div class="form-group">        
 	        <t:label for="arrivalTime" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-2">
             	<input t:type="TextField" t:id="arrivalTime"  t:validate="required"/>
 			</div>
-	   </div>	    
+	   </div>	   
+        	</t:if>
 	   
 	   <div class="form-group">        
 	        <t:label for="departTime" class="col-md-offset-3 col-md-2"/>

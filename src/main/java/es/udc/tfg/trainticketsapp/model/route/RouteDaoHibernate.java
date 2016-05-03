@@ -1,5 +1,7 @@
 package es.udc.tfg.trainticketsapp.model.route;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import es.udc.pojo.modelutil.dao.GenericDaoHibernate;
@@ -21,5 +23,10 @@ public class RouteDaoHibernate extends GenericDaoHibernate<Route, Long> implemen
     		return route;
     	}
 
+	}
+	public List<Route> findRoutesByDay(String day,List<Long> ids) {
+		@SuppressWarnings("unchecked")
+		List<Route> result= getSession().createQuery("SELECT r FROM Route r  WHERE r.routeId in (:ids)").setParameterList("ids", ids).list();
+		return result;
 	}
 }

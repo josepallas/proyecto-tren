@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 import es.udc.tfg.trainticketsapp.model.fare.FareDao;
@@ -37,6 +38,7 @@ import es.udc.tfg.trainticketsapp.model.stop.StopDao;
 import es.udc.tfg.trainticketsapp.model.ticket.Ticket;
 import es.udc.tfg.trainticketsapp.model.ticket.TicketDao;
 import es.udc.tfg.trainticketsapp.model.train.Train;
+import es.udc.tfg.trainticketsapp.model.train.Train.TrainType;
 import es.udc.tfg.trainticketsapp.model.train.TrainDao;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
@@ -53,10 +55,10 @@ public class PurchaseServiceTest {
 	private final String ADDRESS="Calle mayor";
 	private final String CITY="MADRID";
 	private final String TRAIN_NAME="A25";
-	private final String TRAIN_TYPE="AVE";
+	private final TrainType TRAIN_TYPE=TrainType.AVE;
 	private final int CAR_NUM=1;
 	private final int CAPACITY=5;
-	private final String CAR_TYPE="NORMAL";
+	private final CarType CAR_TYPE=CarType.TURISTA;
 	private final String ROUTE_NAME="Madrid-Coruña";
 	private final String ROUTE_DESCRIPTION="Viaje Con pasajeros";
 	private final String FIRST_NAME="Jose";
@@ -67,7 +69,7 @@ public class PurchaseServiceTest {
 	private final String USER_PASSWORD="contraseña";
 	private final Calendar USER_BIRTHDATE = new GregorianCalendar(1992,0,1);
 	private final TypeUser TYPE_USER=TypeUser.CLIENT;
-	private final String USER_SEAT="I21";
+	private final int USER_SEAT=1;
 
 	
 
@@ -115,8 +117,8 @@ public class PurchaseServiceTest {
 		Long hora=Calendar.getInstance().getTimeInMillis();
 		Long hora_salida=hora-3600000*4;
 		Long hora_llegada=hora;
-		initialStop=new Stop(hora_salida, null, route, station);
-		finalStop=new Stop(null, hora_llegada, route, station2);
+		initialStop=new Stop(hora_salida, null, station);
+		finalStop=new Stop(null, hora_llegada, station2);
 		route.addStop(initialStop);
 		route.addStop(finalStop);
 		stopDao.save(initialStop);
@@ -141,7 +143,7 @@ public class PurchaseServiceTest {
 		Calendar cal=Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 2);
 		List<TicketDetails> tickets=new ArrayList<TicketDetails>();
-		TicketDetails t=new TicketDetails(FIRST_NAME, LAST_NAME, USER_DNI,USER_EMAIL, car,USER_SEAT, null);
+		TicketDetails t=new TicketDetails(FIRST_NAME, LAST_NAME, USER_DNI,USER_EMAIL,CAR_TYPE, null);
 		tickets.add(t);
 		Purchase purchase=purchaseService.buyTickets(PaymentMethod.PAYPAL, userProfile.getUserProfileId(),cal,initialStop.getStopId(), finalStop.getStopId(),tickets);
 		assertEquals(purchaseDao.find(purchase.getPurchaseId()),purchase);
@@ -155,7 +157,7 @@ public class PurchaseServiceTest {
 		userProfileDao.save(userProfile);
 		Purchase p=new Purchase(Calendar.getInstance(), PaymentMethod.PAYPAL,userProfile);
 		purchaseDao.save(p);
-		Ticket ticket=new Ticket(new Float(3), "A1", Calendar.getInstance(),
+		Ticket ticket=new Ticket(new Float(3), 1, Calendar.getInstance(),
 				car, passenger,finalStop, initialStop);
 		p.addTicket(ticket);
 		ticket.setPurchase(p);
@@ -173,7 +175,7 @@ public class PurchaseServiceTest {
 		Purchase p=new Purchase(Calendar.getInstance(), PaymentMethod.PAYPAL,userProfile);
 		purchaseDao.save(p);
 		initialStop.setDepartTime(Calendar.getInstance().getTimeInMillis());
-		Ticket ticket=new Ticket(new Float(3), "A1", Calendar.getInstance(),
+		Ticket ticket=new Ticket(new Float(3), 1, Calendar.getInstance(),
 				car, passenger,finalStop, initialStop);
 		p.addTicket(ticket);
 		ticket.setPurchase(p);

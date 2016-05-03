@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 import es.udc.tfg.trainticketsapp.model.fare.FareDao;
@@ -19,6 +20,8 @@ import es.udc.tfg.trainticketsapp.model.passenger.PassengerDao;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase;
 import es.udc.tfg.trainticketsapp.model.purchase.PurchaseDao;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
+import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.RouteDao;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.stop.StopDao;
@@ -47,6 +50,8 @@ public class PurchaseServiceImpl implements PurchaseService{
     private StopDao stopDao;
     @Autowired
     private CarDao carDao;
+    @Autowired
+    private RouteDao routeDao;
     
 	@Transactional(readOnly = true)
 	public Fare findFare(Long id) throws InstanceNotFoundException {
@@ -70,8 +75,10 @@ public class PurchaseServiceImpl implements PurchaseService{
    		for (TicketDetails d:tickets) {
    			Passenger passenger=new Passenger(0, d.getFirstName(),d.getLastName(),d.getEmail(),d.getDni());
    			passengerDao.save(passenger);
+   			setSeat(ticketsDate,d.getCarType(),stopOrigin.getRoute().getRouteId(),d);
    			Ticket ticket=new Ticket(new Float(0), d.getSeat(), ticketsDate,
    				d.getCar(),passenger,destinationOrigin,stopOrigin);
+   			ticket.setFares(d.getFare());
    			purchase.addTicket(ticket);
 			ticketDao.save(ticket);
 		}
@@ -82,6 +89,32 @@ public class PurchaseServiceImpl implements PurchaseService{
     public List<Ticket> showUserTickets(Long userId) {
     	return ticketDao.findTicketsUser(userId);
     }
+	
+	private int getNumber(List<Integer> exclude,int n) {
+		int number=0;
+		for (int i=1;i<=n;i++) {
+			if (exclude.contains(i)) {		
+			}
+			else {
+			number=i;
+			return number;
+			}
+		}
+		return number;
+	}
+	
+	private void setSeat(Calendar ticketDate,CarType carType,Long routeId,TicketDetails ticketDetails) throws InstanceNotFoundException {
+		int num=0;
+		Route route=routeDao.find(routeId);
+		List<Car>cars=carDao.findCarsByTrain(carType, route.getTrain().getTrainId());
+		for (Car c:cars) {
+		num=getNumber(ticketDao.findOccupedSeats(ticketDate, carType, routeId),c.getCapacity());
+		if (num!=0)
+			ticketDetails.setCar(c);
+			ticketDetails.setSeat(num);
+			return;
+		}
+	}
     
     public void cancelTicket(Long ticketId) throws InstanceNotFoundException, TimeoutTicketException {
     	Ticket ticket=ticketDao.find(ticketId);

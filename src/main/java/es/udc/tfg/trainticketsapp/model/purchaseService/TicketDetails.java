@@ -3,6 +3,7 @@ package es.udc.tfg.trainticketsapp.model.purchaseService;
 import java.util.List;
 
 import es.udc.tfg.trainticketsapp.model.car.Car;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 
 public class TicketDetails {
@@ -13,17 +14,21 @@ public class TicketDetails {
     private String email;
     private Car car;
     private List<Fare> fare;
-    private String seat;
+    private int seat;
+    private CarType carType; 
     
 	public TicketDetails(String firstName, String lastName, String dni,
-			String email, Car car,String seat, List<Fare> fare) {
+			String email,CarType carType,List<Fare> fare) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dni = dni;
 		this.email = email;
-		this.car = car;
+		this.carType=carType;
 		this.fare = fare;
-		this.seat=seat;
+	}
+
+	public CarType getCarType() {
+		return carType;
 	}
 
 	public String getFirstName() {
@@ -46,7 +51,7 @@ public class TicketDetails {
 		return car;
 	}
 	
-	public String getSeat() {
+	public int getSeat() {
 		return seat;
 	}
 
@@ -54,7 +59,14 @@ public class TicketDetails {
 		return fare;
 	}
     
-	
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	public void setSeat(int seat) {
+		this.seat = seat;
+	}	
     
 
 }

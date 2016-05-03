@@ -52,7 +52,6 @@ public class AddRouteStops {
 	private Long arrival;
 	private Long depart;
 	private Long trainId;
-	private Route route;
 	private String routeDescription;
 	private String routeName;
 
@@ -130,7 +129,9 @@ public class AddRouteStops {
 		return milis;
 	}
 	void onValidateFromStopForm() {
+		if (arrivalTime!=null)
 		arrival=validateDate(arrivalTimeField, arrivalTime);
+		if (departTime!=null)
 		depart=validateDate(departTimeField, departTime);
 
 	}
@@ -154,7 +155,7 @@ public class AddRouteStops {
 	public void onSuccessFromStopForm (){
 		if (stops==null)
 		stops=new ArrayList<Stop>();
-		stops.add(new Stop(depart,arrival,route,station));
+		stops.add(new Stop(depart,arrival,station));
 	}
 	public Object onSuccessFromAcceptForm (){
 		return Index.class;

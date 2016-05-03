@@ -14,10 +14,12 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.SelectModelFactory;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
 import es.udc.tfg.trainticketsapp.model.purchaseService.TicketDetails;
+import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.web.pages.Index;
 import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
@@ -26,13 +28,13 @@ public class BuyTickets {
     @SessionState(create=false)
     private UserSession userSession;
 	@Property
-	private Fare fare;
+	private CarType carType;
 	@Property
 	private Fare fareFamily;
 	@Inject
 	private PurchaseService purchaseService;
-	@Property
-	private SelectModel fareModel;
+	@Inject
+	private TrainService trainService;
 	@Property
 	private SelectModel fareFamilyModel;
 	@Inject
@@ -49,6 +51,7 @@ public class BuyTickets {
     private String email;
     private Long origin;
     private Long destination;
+    private List<CarType> trainClasses;
     
     
     
@@ -64,6 +67,9 @@ public class BuyTickets {
 	public void setDestination(Long destination) {
 		this.destination = destination;
 	}
+	public List<CarType> getClasses(){
+		return this.getClasses();
+	}
 	void onActivate(Long origin, Long destination) {
 		
 		this.origin = origin;
@@ -75,8 +81,8 @@ public class BuyTickets {
 	}
 	
 	void onPrepareForRender() {
-		List<Fare> fares = purchaseService.findFareBytype("clase");
-		fareModel = selectModelFactory.create(fares,"fareName");
+		trainClasses = trainService.findClassTypesByTrain(new Long(1));
+		
 		List<Fare> faresFamily = purchaseService.findFareBytype("familia");
 		fareFamilyModel = selectModelFactory.create(faresFamily,"fareName");
 	}
@@ -99,9 +105,8 @@ public class BuyTickets {
 	}
     Object onSuccess() {
     	List<Fare> fares=new ArrayList<Fare>();
-    	fares.add(fare);
     	fares.add(fareFamily);
-    	TicketDetails ticketDetails=new TicketDetails(firstName, lastName, dni,email, null,"a", fares);
+    	TicketDetails ticketDetails=new TicketDetails(firstName, lastName, dni,email,carType, fares);
     	List<TicketDetails> tickets=new ArrayList<TicketDetails>();
     	tickets.add(ticketDetails);
     	try {
