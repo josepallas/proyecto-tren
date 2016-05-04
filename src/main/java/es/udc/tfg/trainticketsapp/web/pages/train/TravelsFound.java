@@ -1,6 +1,10 @@
 package es.udc.tfg.trainticketsapp.web.pages.train;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +22,8 @@ public class TravelsFound {
 
 	private String origin;
 	
+	private String date;
+	
 	private String destination;
 	
 	private List<TravelInfo> travels;
@@ -30,6 +36,13 @@ public class TravelsFound {
 	private TravelInfo travel;
 	
 
+	public String getDate() {
+		return date;
+	}
+	
+	public void setDate(String date) {
+		this.date=date;
+	}
 	public String getOrigin() {
 		return origin;
 	}
@@ -54,15 +67,24 @@ public class TravelsFound {
 	}
 	
 	
-	void onActivate(String origin, String destination) {
+	void onActivate(String origin, String destination,String date) {
 		
 		this.origin = origin;
 		this.destination=destination;
-		travels=trainService.findTravels2(null, origin, destination);
+		this.date=date;
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cal  = Calendar.getInstance();
+		try {
+			cal.setTime(df.parse(date));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		travels=trainService.findTravels2(cal, origin, destination);
 		
 	}
 	Object[] onPassivate() {
-		 return new Object[] {origin, destination};
+		 return new Object[] {origin, destination,date};
 	}
 	
 	

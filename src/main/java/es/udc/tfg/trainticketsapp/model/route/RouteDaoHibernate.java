@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import es.udc.pojo.modelutil.dao.GenericDaoHibernate;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 
 
 @Repository("routeDao")
@@ -24,9 +25,9 @@ public class RouteDaoHibernate extends GenericDaoHibernate<Route, Long> implemen
     	}
 
 	}
-	public List<Route> findRoutesByDay(String day,List<Long> ids) {
+	public List<Route> findRoutesByDay(WeekDay day,List<Long> ids) {
 		@SuppressWarnings("unchecked")
-		List<Route> result= getSession().createQuery("SELECT r FROM Route r  WHERE r.routeId in (:ids)").setParameterList("ids", ids).list();
+		List<Route> result= getSession().createQuery("SELECT r FROM Route r join r.days d WHERE r.routeId in (:ids) AND d= :day").setParameterList("ids", ids).setParameter("day", day).list();
 		return result;
 	}
 }

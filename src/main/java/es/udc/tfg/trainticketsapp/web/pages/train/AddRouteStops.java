@@ -19,6 +19,7 @@ import org.apache.tapestry5.services.SelectModelFactory;
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
@@ -54,6 +55,17 @@ public class AddRouteStops {
 	private Long trainId;
 	private String routeDescription;
 	private String routeName;
+	@Persist
+	private List<WeekDay> days;
+
+	
+	public List<WeekDay> getDays() {
+		return days;
+	}
+
+	public void setDays(List<WeekDay> days) {
+		this.days = days;
+	}
 
 	public Long getTrainId() {
 		return trainId;
@@ -143,7 +155,7 @@ public class AddRouteStops {
 			acceptForm.recordError(messages.format("error-nostops"));
 		} else {
 			try {
-				trainService.createRoute(routeName, routeDescription, trainId, stops);
+				trainService.createRoute(routeName, routeDescription, trainId, stops,days);
 			} catch (InstanceNotFoundException | DuplicateInstanceException e) {
 				acceptForm.recordError(messages.format("error-invalidname"));
 				stops=null;

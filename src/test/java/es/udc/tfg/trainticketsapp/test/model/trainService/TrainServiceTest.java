@@ -20,6 +20,7 @@ import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.station.StationDao;
@@ -59,7 +60,16 @@ public class TrainServiceTest {
 		stationDao.save(station2);
 		Train train=new Train("A25", TrainType.AVE);
 		trainDao.save(train);
-		Route route=new Route("Madrid-Coruna", "Viaje con paradas", null,train);
+		List<WeekDay> days=new ArrayList<WeekDay>();
+		days.add(WeekDay.DOMINGO);
+		days.add(WeekDay.JUEVES);
+		days.add(WeekDay.LUNES);
+		days.add(WeekDay.MARTES);
+		days.add(WeekDay.MIERCOLES);
+		days.add(WeekDay.SABADO);
+		days.add(WeekDay.VIERNES);
+
+		Route route=new Route("Madrid-Coruna", "Viaje con paradas", days,train);
 		routeDao.save(route);
 		Stop s1=new Stop(hora, hora, station);
 		Stop s2=new Stop(new Long(123446), new Long(123446), station2);
@@ -90,7 +100,7 @@ public class TrainServiceTest {
 		List<Stop> stops=new ArrayList<Stop>();
 		stops.add(s1);
 		stops.add(s2);
-        Route result=trainService.createRoute("M-Coruña", "sin paradas", train.getTrainId(),stops);
+        Route result=trainService.createRoute("M-Coruña", "sin paradas", train.getTrainId(),stops,null);
         assertEquals(result.getRouteName(),"M-Coruña");
 	}
 }

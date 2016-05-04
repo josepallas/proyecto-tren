@@ -7,6 +7,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,17 +24,18 @@ import es.udc.tfg.trainticketsapp.model.train.Train;
 
 @Entity
 public class Route {
+	public enum WeekDay {LUNES, MARTES, MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO};
 	private Long routeId;
 	private String routeName;
 	private String routeDescription;
-	private List<String> days;
+	private List<WeekDay> days;
 	private Train train;
 	private List<Stop> stops=new ArrayList<Stop>();
 	
 	public Route() {
 	}
 
-	public Route(String routeName, String routeDescription, List<String> days,
+	public Route(String routeName, String routeDescription, List<WeekDay> days,
 			Train train) {
 
 		this.routeName = routeName;
@@ -71,11 +74,11 @@ public class Route {
 	@ElementCollection
 	@CollectionTable(name="days", joinColumns=@JoinColumn(name="routeId"))
 	@Column(name="day")	
-	public List<String> getDays() {
+	public List<WeekDay> getDays() {
 		return days;
 	}
 
-	public void setDays(List<String> days) {
+	public void setDays(List<WeekDay> days) {
 		this.days = days;
 	}
 

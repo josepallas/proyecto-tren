@@ -134,7 +134,7 @@ public class Ticket {
 		this.origin = origin;
 	}
     @ManyToMany(fetch=FetchType.LAZY)  
-    @JoinTable(joinColumns=@JoinColumn(name="ticketId"),
+    @JoinTable(name="TicketFare",joinColumns=@JoinColumn(name="ticketId"),
     inverseJoinColumns=@JoinColumn(name="fareId"))  
 	public List<Fare> getFares() {
 		return fares;

@@ -29,6 +29,13 @@
 			           t:validate="required" maxlength="150"/>
 			</div>
 	   </div>	
+	   
+	   	   <div class="form-group">        
+	        <t:label for="days" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-3">
+	            <t:checklist t:id="days" encoder="encoder" model="model"/>
+			</div>
+	   </div>		   
 	    
 	    
 	    <div class="form-group">

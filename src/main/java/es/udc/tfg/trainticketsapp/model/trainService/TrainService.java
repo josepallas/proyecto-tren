@@ -7,6 +7,7 @@ import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.train.Train;
@@ -18,7 +19,7 @@ public interface TrainService{
 	public List<Train> findTrains() ;
 	public Station findStation(Long id) throws InstanceNotFoundException;
 	public List<Station> findStations() ;
-	public Route createRoute(String routeName, String routeDescription,Long trainId,List<Stop> stops)
+	public Route createRoute(String routeName, String routeDescription,Long trainId,List<Stop> stops,List<WeekDay> days)
 			throws DuplicateInstanceException, InstanceNotFoundException;
 	public Route findRoute(Long id) throws InstanceNotFoundException;
 	public Route findRouteByName(String routeName) throws InstanceNotFoundException;

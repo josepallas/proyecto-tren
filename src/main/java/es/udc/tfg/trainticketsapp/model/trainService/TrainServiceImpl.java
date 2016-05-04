@@ -10,9 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
-import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
+import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.station.StationDao;
@@ -73,7 +74,7 @@ public class TrainServiceImpl implements TrainService  {
 		List<Long> routesId=stopDao.findRouteByStops(origin, destination);
 		if (routesId.size()==0)
 			return null;
-		List<Route> routes=routeDao.findRoutesByDay(null, routesId);
+		List<Route> routes=routeDao.findRoutesByDay(getWeekDay(day), routesId);
 		List<TravelInfo> travels=new ArrayList<TravelInfo>();
 		for(Route r:routes) {
 			TravelInfo travelInfo=new TravelInfo(r.getRouteName(),r.getRouteDescription(),r.getTrain());
@@ -87,19 +88,48 @@ public class TrainServiceImpl implements TrainService  {
 		}
 		return travels;
 	}
+	private WeekDay getWeekDay(Calendar day) {
+		WeekDay weekDay=Route.WeekDay.LUNES;
+		switch(day.get(Calendar.DAY_OF_WEEK)) {
+	    case 1:
+	        weekDay=Route.WeekDay.DOMINGO;
+	        break;
+	    case 2:
+	        weekDay=Route.WeekDay.LUNES;
+	        break;
+	    case 3:
+	        weekDay=Route.WeekDay.MARTES;
+	        break;
+	    case 4:
+	        weekDay=Route.WeekDay.MIERCOLES;
+	        break;
+	    case 5:
+	        weekDay=Route.WeekDay.JUEVES;
+	        break;
+	    case 6:
+	        weekDay=Route.WeekDay.VIERNES;
+	        break;
+	    case 7:
+	        weekDay=Route.WeekDay.SABADO;
+	        break;
+
+		}
+		return weekDay;
+	}
 	
 
-	public Route createRoute(String routeName, String routeDescription,Long trainId, List<Stop> stops) throws DuplicateInstanceException, InstanceNotFoundException {
+	public Route createRoute(String routeName, String routeDescription,Long trainId, List<Stop> stops,List<WeekDay> days) throws DuplicateInstanceException, InstanceNotFoundException {
         try {
             routeDao.findByName(routeName);
             throw new DuplicateInstanceException(routeName,
                     Route.class.getName());
         } catch (InstanceNotFoundException e) {
         	Train train=trainDao.find(trainId);
-            Route route=new Route(routeName,routeDescription,null,train);
+            Route route=new Route(routeName,routeDescription,days,train);
             routeDao.save(route);
     		for (Stop a:stops) {
     			route.addStop(a);
+    			stopDao.save(a);
 			}
             return route;
         }

@@ -48,7 +48,7 @@
 	   	   <div class="form-group">        
 	        <t:label for="fareFamily" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-2">
-				<t:select t:id="fareFamily" model="fareFamilyModel" encoder="FareEncoder" validate="required"/>
+				<t:select t:id="fareFamily"  t:blankOption="always" model="fareFamilyModel" encoder="FareEncoder"/>
 
 			</div>
 	   </div>

@@ -11,9 +11,14 @@ import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.TypeCoercer;
 import org.apache.tapestry5.services.SelectModelFactory;
+import org.apache.tapestry5.util.EnumSelectModel;
+import org.apache.tapestry5.util.EnumValueEncoder;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
@@ -42,12 +47,22 @@ public class CreateRoute {
     private TextField routeNameField;
     @InjectPage
     private AddRouteStops addRouteStops;
+    @Property
+    private List<WeekDay> days;
+	@Inject
+    private TypeCoercer typeCoercer;
+    @Property
+    private final ValueEncoder<WeekDay> encoder = new EnumValueEncoder<WeekDay>(typeCoercer, WeekDay.class);
+
+    @Property
+    private final SelectModel model = new EnumSelectModel(WeekDay.class, messages);
     
 	void onPrepareForRender() {
 		List<Train> trains = trainService.findTrains();
 		trainModel = selectModelFactory.create(trains,"trainName");
 
 	}
+    
 	public ValueEncoder<Train> getTrainEncoder() {	 
 	    return new ValueEncoder<Train>() {
 	        @Override
@@ -65,6 +80,7 @@ public class CreateRoute {
 	        }
 	    }; 
 	}
+
 	
     void onValidateFromRouteForm() {
         if (!routeForm.isValid()) {
@@ -81,6 +97,7 @@ public class CreateRoute {
     	addRouteStops.setRouteDescription(routeDescription);
     	addRouteStops.setRouteName(routeName);
     	addRouteStops.setTrainId(train.getTrainId());
+    	addRouteStops.setDays(days);
     	return  addRouteStops;
     }
 }
