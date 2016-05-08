@@ -1,7 +1,5 @@
 package es.udc.tfg.trainticketsapp.model.purchaseService;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,7 +20,6 @@ import es.udc.tfg.trainticketsapp.model.purchase.PurchaseDao;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
-import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.stop.StopDao;
 import es.udc.tfg.trainticketsapp.model.ticket.Ticket;
@@ -94,6 +91,17 @@ public class PurchaseServiceImpl implements PurchaseService{
     	return ticketDao.findTicketsUser(userId);
     }
 	
+	@Transactional(readOnly = true)
+	public List<Purchase> findPurchaseByUserId(Long userId, int startIndex, int count) throws InstanceNotFoundException {
+		userProfileDao.find(userId);
+		return purchaseDao.findPurchasesByUser(userId, startIndex, count);
+	}
+	@Transactional(readOnly = true)
+	public int getNumberOfPurchases(Long userId) throws InstanceNotFoundException  {
+		userProfileDao.find(userId);
+		return purchaseDao.getNumberOfPurchases(userId);
+	}
+
 	private int getNumber(List<Integer> exclude,int n) {
 		int number=0;
 		for (int i=1;i<=n;i++) {

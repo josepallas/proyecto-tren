@@ -19,5 +19,6 @@ public interface PurchaseService {
     public void cancelTicket(Long ticketId) throws InstanceNotFoundException, TimeoutTicketException ;
     public List<Ticket> showUserTickets(Long userId) ;
     public Ticket findTicket(Long ticketId) throws InstanceNotFoundException;
-
+    public List<Purchase> findPurchaseByUserId(Long userId, int startIndex, int count) throws InstanceNotFoundException;
+	public int getNumberOfPurchases(Long userId) throws InstanceNotFoundException;
 }

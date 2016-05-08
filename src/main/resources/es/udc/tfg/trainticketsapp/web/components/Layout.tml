@@ -39,6 +39,8 @@
         
         <div class="navbar-collapse collapse">
              <t:if test="userSession">
+            		<a class="navbar-brand" href="#" t:type="PageLink" t:page="purchase/userpurchases">${message:purchases}</a>
+             
                <t:if test="administrator">
             		<a class="navbar-brand" href="#" t:type="PageLink" t:page="train/createroute">${message:createRoute}</a>
         	   </t:if>

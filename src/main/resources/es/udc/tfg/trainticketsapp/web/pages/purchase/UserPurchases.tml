@@ -1,0 +1,41 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+    xmlns:p="tapestry:parameter"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+	
+<t:grid source="purchaseGridDataSource" row="purchase"
+	rowsPerPage="rowsPerPage" exclude=" userProfile,tickets"
+	reorder="purchaseId, purchaseDate,paymentMethod">
+
+	<p:purchaseIdHeader>
+		${message:purchaseId}
+	</p:purchaseIdHeader>
+
+	<p:purchaseDateHeader>
+		${message:purchaseDate}
+	</p:purchaseDateHeader>
+	
+	<p:paymentMethodHeader>
+		${message:paymentMethod}
+	</p:paymentMethodHeader>	
+	
+	<p:purchaseIdCell>
+		${purchase.purchaseId}
+	</p:purchaseIdCell>
+	
+	<p:purchaseDateCell>
+		<t:output value="purchase.purchaseDate.time" format="dateFormat"/>
+	</p:purchaseDateCell>
+	
+	<p:paymentMethodCell>
+		${purchase.paymentMethod}
+	</p:paymentMethodCell>	
+	
+	<p:empty>
+	<p>${message:noPurchases}.</p>
+	</p:empty>
+
+</t:grid>
+
+<br/>
+
+</html>
