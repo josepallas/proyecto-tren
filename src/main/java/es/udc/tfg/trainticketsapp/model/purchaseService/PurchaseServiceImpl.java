@@ -53,6 +53,10 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Autowired
     private RouteDao routeDao;
     
+    public Ticket findTicket(Long ticketId) throws InstanceNotFoundException {
+    	return ticketDao.find(ticketId);
+    }
+    
 	@Transactional(readOnly = true)
 	public Fare findFare(Long id) throws InstanceNotFoundException {
 		return fareDao.find(id);
