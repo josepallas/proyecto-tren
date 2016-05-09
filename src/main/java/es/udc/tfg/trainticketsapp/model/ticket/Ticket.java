@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
@@ -76,6 +78,7 @@ public class Ticket {
 		this.seat = seat;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Calendar getTicketDate() {
 		return ticketDate;
 	}

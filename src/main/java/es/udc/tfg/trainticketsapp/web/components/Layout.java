@@ -50,7 +50,7 @@ public class Layout {
     	return (userSession.getTypeUser() == TypeUser.ADMINISTRATOR);
     }
 
-    public boolean getSaleman() {
+    public boolean getSalesman() {
     	return (userSession.getTypeUser() == TypeUser.SALESMAN);
     }
     

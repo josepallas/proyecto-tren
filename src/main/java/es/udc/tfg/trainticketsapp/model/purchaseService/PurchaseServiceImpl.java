@@ -87,8 +87,22 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
     
 	@Transactional(readOnly = true)
-    public List<Ticket> showUserTickets(Long userId) {
-    	return ticketDao.findTicketsUser(userId);
+    public TicketBlock showUserTickets(Long userId, int startIndex, int count) {
+		/*
+		 * Find count+1 tickets to determine if there exist more tickets above
+		 * the specified range.
+		 */
+		List<Ticket> tickets = ticketDao.findTicketsUser(userId, startIndex,count + 1);
+		boolean existMoreTickets = tickets.size() == (count + 1);
+		/*
+		 * Remove the last account from the returned list if there exist more
+		 * accounts above the specified range.
+		 */
+		if (existMoreTickets) {
+			tickets.remove(tickets.size() - 1);
+		}
+
+		return new TicketBlock(tickets, existMoreTickets);
     }
 	
 	@Transactional(readOnly = true)
@@ -137,7 +151,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     	ticketDate.set(Calendar.HOUR_OF_DAY, hora.get(Calendar.HOUR_OF_DAY));
     	ticketDate.set(Calendar.MINUTE, hora.get(Calendar.MINUTE));
     	ticketDate.add(Calendar.HOUR_OF_DAY, 2);
-    	if (ticketDate.after(Calendar.getInstance())){
+    	if (ticketDate.before(Calendar.getInstance())){
     		throw new TimeoutTicketException(ticketId,ticketDate);
     	}
     	else { 

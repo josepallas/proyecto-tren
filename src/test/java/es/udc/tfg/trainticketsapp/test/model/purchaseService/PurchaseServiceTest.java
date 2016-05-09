@@ -157,7 +157,9 @@ public class PurchaseServiceTest {
 		userProfileDao.save(userProfile);
 		Purchase p=new Purchase(Calendar.getInstance(), PaymentMethod.PAYPAL,userProfile);
 		purchaseDao.save(p);
-		Ticket ticket=new Ticket(new Float(3), 1, Calendar.getInstance(),
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.MONTH, 1);
+		Ticket ticket=new Ticket(new Float(3), 1, cal,
 				car, passenger,finalStop, initialStop);
 		p.addTicket(ticket);
 		ticket.setPurchase(p);
@@ -175,7 +177,9 @@ public class PurchaseServiceTest {
 		Purchase p=new Purchase(Calendar.getInstance(), PaymentMethod.PAYPAL,userProfile);
 		purchaseDao.save(p);
 		initialStop.setDepartTime(Calendar.getInstance().getTimeInMillis());
-		Ticket ticket=new Ticket(new Float(3), 1, Calendar.getInstance(),
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Ticket ticket=new Ticket(new Float(3), 1, cal,
 				car, passenger,finalStop, initialStop);
 		p.addTicket(ticket);
 		ticket.setPurchase(p);

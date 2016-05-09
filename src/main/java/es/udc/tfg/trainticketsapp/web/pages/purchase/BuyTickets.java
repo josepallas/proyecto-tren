@@ -1,5 +1,8 @@
 package es.udc.tfg.trainticketsapp.web.pages.purchase;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,6 +54,9 @@ public class BuyTickets {
     private String email;
     private Long origin;
     private Long destination;
+    @Property
+    private String date;
+    private Calendar ticketDate;
     private List<CarType> trainClasses;
     
     
@@ -70,14 +76,23 @@ public class BuyTickets {
 	public List<CarType> getClasses(){
 		return this.getClasses();
 	}
-	void onActivate(Long origin, Long destination) {
+	void onActivate(Long origin, Long destination,String date) {
 		
 		this.origin = origin;
 		this.destination=destination;
+		this.date=date;
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		ticketDate= Calendar.getInstance();
+		try {
+			ticketDate.setTime(df.parse(date));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	Object[] onPassivate() {
-		 return new Object[] {origin, destination};
+		 return new Object[] {origin, destination,date};
 	}
 	
 	void onPrepareForRender() {
@@ -110,7 +125,7 @@ public class BuyTickets {
     	List<TicketDetails> tickets=new ArrayList<TicketDetails>();
     	tickets.add(ticketDetails);
     	try {
-			purchaseService.buyTickets(PaymentMethod.EFECTIVO, userSession.getUserProfileId(), Calendar.getInstance(), origin, destination, tickets);
+			purchaseService.buyTickets(PaymentMethod.EFECTIVO, userSession.getUserProfileId(), ticketDate, origin, destination, tickets);
 		} catch (InstanceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

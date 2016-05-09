@@ -24,6 +24,10 @@ insert into Route (routeDescription, routeName, trainId) values ("Con paradas", 
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
 
+insert into Days(routeId,day) values (1,1);
+insert into Days(routeId,day) values (2,1);
+insert into Days(routeId,day) values (3,1);
+insert into Days(routeId,day) values (4,1);
 
 insert into Stop ( departTime, routeId, stationId) values ( 25200000, 1, 1);
 insert into Stop (arrivalTime, departTime, routeId, stationId) values (26800000, 26900000, 1, 5);

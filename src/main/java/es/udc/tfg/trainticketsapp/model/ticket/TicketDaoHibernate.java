@@ -14,9 +14,13 @@ import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
 public class TicketDaoHibernate extends GenericDaoHibernate<Ticket, Long> implements TicketDao {
 	
 	@SuppressWarnings("unchecked")
-	public List<Ticket> findTicketsUser(Long userId) {
-		return getSession().createQuery("SELECT t FROM Ticket t WHERE t.purchase.userProfile.userId= :user AND t.ticketDate> actualDate" +
-	            "ORDER BY t.ticketDate").setParameter("userId", userId).setParameter("actualDate", Calendar.getInstance()).list();	
+	public List<Ticket> findTicketsUser(Long userId, int startIndex,int count) {
+		return getSession().createQuery("SELECT t FROM Ticket t WHERE t.purchase.userProfile.userProfileId= :userId "
+				+ "AND t.ticketDate> :actualDate OR (t.ticketDate= :actualDate AND t.origin.departTime> :dTime) " +
+	            "ORDER BY t.ticketDate").setParameter("userId", userId).setParameter("actualDate", Calendar.getInstance())
+	            .setParameter("dTime", Calendar.getInstance().getTimeInMillis()).setFirstResult(startIndex)
+	            .setMaxResults(count)
+	            .list();	
 	}
 	@SuppressWarnings("unchecked")
 	public List<Integer> findOccupedSeats(Calendar ticketDate,CarType carType,Long carId) {

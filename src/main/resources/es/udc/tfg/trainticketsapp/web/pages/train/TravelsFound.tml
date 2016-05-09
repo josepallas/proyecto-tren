@@ -23,7 +23,7 @@
 			<tr t:type="Loop" t:source="travels" t:value="travel">
 				<td><t:output value="travel.origin.departTime" format="dateFormat"/></td>
 				<td><t:output value="travel.destination.arrivalTime" format="dateFormat"/></td>
-				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/BuyTickets" t:context="[travel.origin.stopId,travel.destination.stopId]">comprar</a></td>
+				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/BuyTickets" t:context="[travel.origin.stopId,travel.destination.stopId,date]">comprar</a></td>
 			
 			</tr>
 		</tbody>
