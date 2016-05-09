@@ -1,0 +1,50 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+	
+	<table>
+				<tr>
+					<th>${message:ticketId-label}</th>
+					<td>${ticket.ticketId}</td>
+				</tr>				
+				<tr>
+					<th>${message:date-label}</th>
+					<td><t:output value="ticket.ticketDate.time" format="dateFormat"/></td>
+				</tr>
+				<tr>
+					<th>${message:departure-label}</th>
+					<td>${ticket.origin.station.stationName} <t:output value="ticket.origin.departTime" format="timeFormat"/></td>
+				</tr>	
+				<tr>
+					<th>${message:arrival-label}</th>
+					<td>${ticket.destination.station.stationName} <t:output value="ticket.destination.arrivalTime" format="timeFormat"/></td>
+				</tr>								
+				<tr>
+					<th>${message:seat-label}</th>
+					<td>${ticket.seat}</td>
+				</tr>
+				
+				<tr>
+					<th>${message:price-label}</th>
+					<td>${ticket.realPrice}</td>
+				</tr>
+				<tr>
+					<th>${message:train-label}</th>
+					<td>${ticket.car.train.trainName}</td>
+				</tr>					
+				<tr>
+					<th>${message:car-label}</th>
+					<td>${ticket.car.carNum} ${ticket.car.carType}</td>
+				</tr>
+				<tr>
+					<th>${message:passenger-label}</th>
+					<td>${ticket.passenger.firstName} ${ticket.passenger.lastName}</td>
+				</tr>				
+				<tr>
+					<th>${message:fares-label}</th>
+					
+					<tr t:type="Loop" t:source="ticket.fares" t:value="fare"> 
+						<td>${ticket.car.carNum} ${fare.fareName}</td>				
+					</tr>				
+				</tr>
+	</table>	
+</html>		
