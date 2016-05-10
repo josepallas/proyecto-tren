@@ -134,5 +134,16 @@ public class TrainServiceImpl implements TrainService  {
             return route;
         }
 	}
+	
+	public Station createStation (String stationName, String city, String address) throws DuplicateInstanceException {
+		try {
+			stationDao.findByName(stationName);
+	        throw new DuplicateInstanceException(stationName,Station.class.getName());
+		} catch (InstanceNotFoundException e) {
+			Station station=new Station(stationName,city,address);
+			stationDao.save(station);
+			return station;
+		}
+	}
 
 }

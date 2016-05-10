@@ -25,5 +25,6 @@ public interface TrainService{
 	public Route findRouteByName(String routeName) throws InstanceNotFoundException;
 	public List<CarType> findClassTypesByTrain(Long trainId);
 	public List<TravelInfo> findTravels2(Calendar day,String origin, String destination);
+	public Station createStation (String stationName, String city, String address) throws DuplicateInstanceException;
 
 }

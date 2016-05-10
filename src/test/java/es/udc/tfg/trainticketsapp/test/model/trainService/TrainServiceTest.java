@@ -31,13 +31,19 @@ import es.udc.tfg.trainticketsapp.model.train.Train.TrainType;
 import es.udc.tfg.trainticketsapp.model.train.TrainDao;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.model.trainService.TravelInfo;
+import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
+import es.udc.tfg.trainticketsapp.model.userservice.UserProfileDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { SPRING_CONFIG_FILE, SPRING_CONFIG_TEST_FILE })
 @Transactional
 public class TrainServiceTest {
 
-
+	private final String STATION_NAME="Madrid";
+	private final String ADDRESS="Calle mayor";
+	private final String CITY="MADRID";
+	
+	
     @Autowired
     private TrainDao trainDao;
     @Autowired
@@ -51,6 +57,22 @@ public class TrainServiceTest {
     @Autowired
     private TrainService trainService;
 	
+    @Test
+    public void createStationTest () throws DuplicateInstanceException, InstanceNotFoundException{
+
+        Station station = trainService.createStation(STATION_NAME, ADDRESS, CITY);
+        Station station2 = trainService.findStation(station.getStationId());
+
+        assertEquals(station, station2);
+    	
+    }
+    @Test(expected = DuplicateInstanceException.class)
+    public void createDuplicateStationTest () throws DuplicateInstanceException, InstanceNotFoundException{
+
+        trainService.createStation(STATION_NAME, ADDRESS, CITY);
+        trainService.createStation(STATION_NAME, ADDRESS, CITY);
+    	
+    }
 	@Test
 	public void findTravelTest() {/*
 		Long hora=new Long(123445);

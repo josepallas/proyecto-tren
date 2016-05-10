@@ -43,6 +43,8 @@
              
                <t:if test="administrator">
             		<a class="navbar-brand" href="#" t:type="PageLink" t:page="train/createroute">${message:createRoute}</a>
+            		<a class="navbar-brand" href="#" t:type="PageLink" t:page="train/createstation">${message:createStation}</a>        	               		
+            		
         	   </t:if>
                <t:if test="salesman">
             		<a class="navbar-brand" href="#" t:type="PageLink" t:page="purchase/findticket">${message:findTicket}</a>

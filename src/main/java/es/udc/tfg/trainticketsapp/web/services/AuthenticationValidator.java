@@ -123,11 +123,11 @@ public class AuthenticationValidator {
 			
 		case ADMINISTRATOR_USERS:
 		    if (!userAuthenticated||applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.ADMINISTRATOR)
- {			System.out.println("\n nooooooooooo \n");
+ {			
 
 				redirectPage = INIT_PAGE;
 			}
-			System.out.println("\n siiiiiiiiiiii \n");
+			
 
 			break;			
 		default:
