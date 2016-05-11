@@ -110,8 +110,9 @@ public class PurchaseServiceTest {
 		stationDao.save(station2);
 		Train train=new Train(TRAIN_NAME,TRAIN_TYPE);
 		trainDao.save(train);
-		car=new Car(CAPACITY, CAR_TYPE, train,CAR_NUM);
+		car=new Car(CAPACITY, CAR_TYPE,CAR_NUM);
 		carDao.save(car);
+		train.addCar(car);
 		Route route=new Route(ROUTE_NAME, ROUTE_DESCRIPTION, null,train);
 		routeDao.save(route);
 		Long hora=Calendar.getInstance().getTimeInMillis();

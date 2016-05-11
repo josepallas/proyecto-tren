@@ -18,13 +18,15 @@ import org.apache.tapestry5.services.SelectModelFactory;
 
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
-import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.web.pages.Index;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 
+@AuthenticationPolicy(AuthenticationPolicyType.ADMINISTRATOR_USERS)
 public class AddRouteStops {
 	@Property
 	private SelectModel stationModel;

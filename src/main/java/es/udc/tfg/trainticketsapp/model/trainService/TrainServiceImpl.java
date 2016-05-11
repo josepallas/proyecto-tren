@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
@@ -20,6 +21,7 @@ import es.udc.tfg.trainticketsapp.model.station.StationDao;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.stop.StopDao;
 import es.udc.tfg.trainticketsapp.model.train.Train;
+import es.udc.tfg.trainticketsapp.model.train.Train.TrainType;
 import es.udc.tfg.trainticketsapp.model.train.TrainDao;
 
 @Service("trainService")
@@ -65,6 +67,10 @@ public class TrainServiceImpl implements TrainService  {
 	@Transactional(readOnly = true)
 	public Route findRouteByName(String routeName) throws InstanceNotFoundException {
 		return routeDao.findByName(routeName);
+	}
+	@Transactional(readOnly = true)
+	public Train findTrainByName(String trainName) throws InstanceNotFoundException {
+		return trainDao.findByName(trainName);
 	}
 	@Transactional(readOnly = true)
 	public List<CarType> findClassTypesByTrain(Long trainId) {
@@ -146,4 +152,19 @@ public class TrainServiceImpl implements TrainService  {
 		}
 	}
 
+	public Train createTrain(String trainName, TrainType trainType,List<Car> cars) throws DuplicateInstanceException, InstanceNotFoundException {
+        try {
+            trainDao.findByName(trainName);
+            throw new DuplicateInstanceException(trainName,
+                    Train.class.getName());
+        } catch (InstanceNotFoundException e) {
+            Train train=new Train( trainName,  trainType);
+            trainDao.save(train);
+    		for (Car a:cars) {
+    			train.addCar(a);
+    			carDao.save(a);
+			}
+            return train;
+        }
+	}
 }

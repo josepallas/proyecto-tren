@@ -23,10 +23,9 @@ public class Car {
 	public Car() {
 	}
 
-	public Car(int capacity, CarType carType, Train train, int carNum) {
+	public Car(int capacity, CarType carType, int carNum) {
 		this.capacity = capacity;
 		this.carType = carType;
-		this.train = train;
 		this.carNum= carNum;
 	}
 

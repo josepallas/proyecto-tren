@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.car.Car;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
@@ -42,7 +44,10 @@ public class TrainServiceTest {
 	private final String STATION_NAME="Madrid";
 	private final String ADDRESS="Calle mayor";
 	private final String CITY="MADRID";
-	
+	private final String TRAIN_NAME="A23";
+	private final TrainType TRAIN_TYPE=TrainType.ALVIA;
+	private final CarType CAR_TYPE=CarType.TURISTA;
+	private final int CAPACITY_TRAIN=10;
 	
     @Autowired
     private TrainDao trainDao;
@@ -125,4 +130,17 @@ public class TrainServiceTest {
         Route result=trainService.createRoute("M-Coruña", "sin paradas", train.getTrainId(),stops,null);
         assertEquals(result.getRouteName(),"M-Coruña");
 	}
+	
+	@Test
+	public void createTrainTest() throws DuplicateInstanceException, InstanceNotFoundException {
+		
+		List<Car> cars=new ArrayList<Car>();
+		cars.add( new Car(CAPACITY_TRAIN, CAR_TYPE, 1));
+		cars.add( new Car(CAPACITY_TRAIN, CAR_TYPE, 2));
+		Train train=trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
+		Train train2=trainService.findTrainByName(TRAIN_NAME);
+		assertEquals(train,train2);
+	}	
+	
+
 }

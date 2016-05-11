@@ -20,9 +20,9 @@ insert into Station (address, city, stationName) values ("Calle", "Santiago de C
 
 insert into Train (trainName, trainType) values ("A23", 1);
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Coruña-Ourense", 1);
-insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
-insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
-insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña", 1);
+insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña1", 1);
+insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña2", 1);
+insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Madrid-Coruña3", 1);
 
 insert into Days(routeId,day) values (1,1);
 insert into Days(routeId,day) values (2,1);

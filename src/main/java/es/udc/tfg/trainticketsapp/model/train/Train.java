@@ -1,17 +1,26 @@
 package es.udc.tfg.trainticketsapp.model.train;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import es.udc.tfg.trainticketsapp.model.car.Car;
+import es.udc.tfg.trainticketsapp.model.stop.Stop;
 
 @Entity
 public class Train {
-	public enum TrainType {AVE, ALVIA};	
+	public enum TrainType {AVE, ALVIA,AVANT};	
 	private Long trainId;
 	private String trainName;
 	private TrainType trainType;
+	private List<Car> cars=new ArrayList<Car>();
+
 	
 	public Train() {
 	}
@@ -46,6 +55,20 @@ public class Train {
 
 	public void setTrainType(TrainType trainType) {
 		this.trainType = trainType;
+	}
+	
+    @OneToMany(mappedBy = "train")		
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}
+
+	public void addCar(Car car) {
+		cars.add(car);
+		car.setTrain(this);
 	}
 	
 }

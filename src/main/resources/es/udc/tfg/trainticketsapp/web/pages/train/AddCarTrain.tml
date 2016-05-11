@@ -1,0 +1,43 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+
+	<br/>
+		<form t:type="Form" class="form-horizontal" t:id="carForm" >
+	
+	   <t:errors/>
+	   
+	   <div class="form-group">        
+	        <t:label for="carType" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-2">
+				<t:select t:id="carType" validate="required"/>
+
+			</div>
+	   </div>
+	   
+	   <div class="form-group">        
+	        <t:label for="capacity" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-3">
+	            <input t:id="capacity" t:type="TextField"
+				       t:validate="required" maxlength="9" />
+	        </div>
+	   </div>	 	   	   
+	           
+	   	    
+	    <div class="form-group">
+	    	<div class="col-md-offset-5 col-md-1">
+        		<button type="submit" class="btn btn-primary">${message:submit}</button>
+        	</div>
+        </div> 
+	    
+	</form>	
+	
+	<form t:type="Form" class="form-horizontal" t:id="acceptForm" >
+		   <t:errors/>
+	
+		    <div class="col-md-offset-5 col-md-1">
+        		<button type="submit" class="btn btn-primary">${message:accept}</button>
+        	</div>
+	</form>	
+	
+		
+</html>	

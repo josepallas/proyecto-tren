@@ -43,7 +43,7 @@ CREATE TABLE Train (
 	trainName VARCHAR(30)  NOT NULL,
 	trainType TINYINT NOT NULL,
 	CONSTRAINT TrainNameUniqueKey UNIQUE (TrainName),
-    CONSTRAINT Train_PK PRIMARY KEY (TrainId))
+    CONSTRAINT Train_PK PRIMARY KEY (TrainId))    
     ENGINE = InnoDB;			
 	
 
@@ -90,6 +90,7 @@ CREATE TABLE Route (
 	routeDescription VARCHAR(100),
 	trainId BIGINT NOT NULL,
     CONSTRAINT Route_PK PRIMARY KEY (routeId),
+    CONSTRAINT RouteNameUniqueKey UNIQUE (routeName),     
 	CONSTRAINT Route_Train_FK FOREIGN KEY (trainId) REFERENCES Train(trainId))
     ENGINE = InnoDB;	
 	
