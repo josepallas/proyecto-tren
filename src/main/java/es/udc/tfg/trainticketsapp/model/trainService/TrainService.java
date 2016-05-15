@@ -30,5 +30,6 @@ public interface TrainService{
 	public Station createStation (String stationName, String city, String address) throws DuplicateInstanceException;
 	public Train createTrain(String trainName, TrainType trainType,List<Car> cars) throws DuplicateInstanceException, InstanceNotFoundException;
 	public Train findTrainByName(String trainName) throws InstanceNotFoundException;
+	public List<String> findNameStations() ;
 
 }

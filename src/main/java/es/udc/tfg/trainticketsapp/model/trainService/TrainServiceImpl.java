@@ -61,6 +61,10 @@ public class TrainServiceImpl implements TrainService  {
 		return stationDao.findAllStations();
 	}
 	@Transactional(readOnly = true)
+	public List<String> findNameStations() {
+		return stationDao.findAllNameStations();
+	}
+	@Transactional(readOnly = true)
 	public Route findRoute(Long id) throws InstanceNotFoundException {
 		return routeDao.find(id);
 	}
@@ -83,7 +87,7 @@ public class TrainServiceImpl implements TrainService  {
 		List<Route> routes=routeDao.findRoutesByDay(getWeekDay(day), routesId);
 		List<TravelInfo> travels=new ArrayList<TravelInfo>();
 		for(Route r:routes) {
-			TravelInfo travelInfo=new TravelInfo(r.getRouteName(),r.getRouteDescription(),r.getTrain());
+			TravelInfo travelInfo=new TravelInfo(r.getRouteId(),r.getRouteName(),r.getRouteDescription(),r.getTrain());
 			for(Stop s:r.getStops()) {
 				if (s.getStation().getStationName().equals(origin))
 					travelInfo.setOrigin(s);

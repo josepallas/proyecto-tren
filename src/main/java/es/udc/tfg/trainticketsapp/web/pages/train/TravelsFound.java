@@ -8,10 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.model.trainService.TravelInfo;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
@@ -34,6 +35,10 @@ public class TravelsFound {
 	private TrainService trainService;
 	@Property
 	private TravelInfo travel;
+	@Property 
+	private Date zoneDate;
+    @InjectComponent
+    private Zone travelsZone;
 	
 
 	public String getDate() {
@@ -44,7 +49,7 @@ public class TravelsFound {
 		this.date=date;
 	}
 	public String getOrigin() {
-		return origin;
+		return origin.toUpperCase();
 	}
 
 	public void setOrigin(String origin) {
@@ -52,7 +57,7 @@ public class TravelsFound {
 	}
 
 	public String getDestination() {
-		return destination;
+		return destination.toUpperCase();
 	}
 
 	public void setDestination(String destination) {
@@ -65,10 +70,14 @@ public class TravelsFound {
 	public DateFormat getDateFormat() {
 		return DateFormat.getTimeInstance(DateFormat.SHORT,locale);
 	}
-	
+	Object onSuccess() {
+		Calendar cal  = Calendar.getInstance();
+		cal.setTime(zoneDate);
+		travels=trainService.findTravels2(cal, origin, destination);
+        return travelsZone.getBody();
+	}
 	
 	void onActivate(String origin, String destination,String date) {
-		
 		this.origin = origin;
 		this.destination=destination;
 		this.date=date;
@@ -76,6 +85,7 @@ public class TravelsFound {
 		Calendar cal  = Calendar.getInstance();
 		try {
 			cal.setTime(df.parse(date));
+			this.zoneDate=cal.getTime();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

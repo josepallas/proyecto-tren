@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
@@ -20,6 +21,7 @@ import es.udc.tfg.trainticketsapp.model.purchase.PurchaseDao;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
+import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.stop.StopDao;
 import es.udc.tfg.trainticketsapp.model.ticket.Ticket;
@@ -66,6 +68,24 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public List<Fare> findFareBytype(String type) {
 		return fareDao.findByType(type);
 	}
+	public Fare createFare (String fareName, String fareDescription, String fareType, int discount) throws DuplicateInstanceException {
+		try {
+			fareDao.findByName(fareName);
+	        throw new DuplicateInstanceException(fareName,Fare.class.getName());
+		} catch (InstanceNotFoundException e) {
+			Fare fare=new Fare( fareName,  fareDescription,  discount,  fareType);
+			fareDao.save(fare);
+			return fare;
+		}
+	}
+	public void updateFare(Long fareId,String fareName,String fareDescription, String fareType, int discount) throws InstanceNotFoundException {
+		Fare fare=fareDao.find(fareId);
+		fare.setDescription(fareDescription);
+		fare.setDiscount(discount);
+		fare.setFareName(fareName);
+		fare.setTypeFare(fareType);
+	}
+	
     public Purchase buyTickets(PaymentMethod paymentMethod, Long userId, Calendar
     		ticketsDate,Long origin, Long destination, List<TicketDetails> tickets) throws InstanceNotFoundException{
     	UserProfile user=userProfileDao.find(userId);

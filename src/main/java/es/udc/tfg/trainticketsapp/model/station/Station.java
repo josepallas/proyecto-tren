@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
+@org.hibernate.annotations.BatchSize(size = 10)
 public class Station {
 	private Long stationId;
 	private String stationName;

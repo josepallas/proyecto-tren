@@ -1,20 +1,22 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
 		xmlns:p="tapestry:parameter" 
 	t:type="Layout" t:title="title" showTitleInBody="false">
+<p class="h3">${origin} ${destination}</p>
+        <t:form zone="travelsZone">
+            <div class="t-beaneditor">
+        	    <div class="form-group">
+                <div class="col-md-2">
+                    <t:datefield t:id="zoneDate"/>
+                </div>
+	    </div>	 
+                <div class="t-beaneditrow">
+                    <input type="submit" value="Update"/>
+                </div>
+            </div>
+        </t:form>
 
-<head>
-  <meta charset="utf-8">
-  <title>jQuery UI Accordion - Default functionality</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script>
-  $(function() {
-    $( "#accordion" ).accordion();
-  });
-  </script>
-</head>
+
+		<t:zone t:id="travelsZone">	
 	<t:if test="!travels">	
 		<span class="title">
 			<br>
@@ -29,21 +31,49 @@
 			    <th>${message:departTime-label}</th>
 			    <th>${message:arrivalTime-label}</th>
 			    
+			    
 			</tr>
 		</thead>
 		
 		<tbody>			
-			<tr t:type="Loop" t:source="travels" t:value="travel">
+			<div t:type="Loop" t:source="travels" t:value="travel">
+			<tr>
 				<td><t:output value="travel.origin.departTime" format="dateFormat"/></td>
 				<td><t:output value="travel.destination.arrivalTime" format="dateFormat"/></td>
 				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/BuyTickets" t:context="[travel.origin.stopId,travel.destination.stopId,date]">comprar</a></td>
-			
+			    <td><button  data-toggle="collapse" data-target="#${travel.routeName}">+</button></td>
 			</tr>
+				<tr id="${travel.routeName}" class="collapse"><td>
+	       <ul class="row list-none">
+	       <li>
+	       	       <p>Train</p>
+	       ${travel.train.trainName}   ${travel.train.trainType}
+	       
+	       </li>
+	      <li>
+	       <ul>
+	       <li>
+	       
+	      
+	       <p> ${travel.routeName} <a href="#" t:type="PageLink" t:page="train/RouteDetails" t:context="travel.routeId">Ver itinerario</a>
+	       </p>
+	       </li>
+	       <li>
+	       <p>Detalles</p>
+	       ${travel.routeDescription}
+	       </li>
+	      </ul>
+	      </li>
+	       </ul>
+</td></tr>
+			
+			</div>
+			
 		</tbody>
 	
 	</table>
 	</p:else>
 	</t:if>
-
+</t:zone>
 		
 </html>	

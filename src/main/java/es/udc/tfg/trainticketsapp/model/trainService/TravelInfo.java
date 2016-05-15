@@ -6,6 +6,7 @@ import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 
 public class TravelInfo {
+	private Long routeId;
 	private Stop origin;
 	private Stop destination;
 	private String routeName;
@@ -15,10 +16,18 @@ public class TravelInfo {
 	public TravelInfo(){
 		
 	}
-	public TravelInfo( String routeName,String routeDescription, Train train) {
+	public TravelInfo( Long routeId,String routeName,String routeDescription, Train train) {
 		this.routeName = routeName;
 		this.routeDescription = routeDescription;
 		this.train = train;
+		this.routeId=routeId;
+	}
+	
+	public Long getRouteId() {
+		return routeId;
+	}
+	public void setRouteId(Long routeId) {
+		this.routeId = routeId;
 	}
 	public Stop getOrigin() {
 		return origin;

@@ -1,5 +1,7 @@
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter"
 	t:type="Layout" t:title="title" showTitleInBody="false">
+
+<t:if test="ticket">
 	
 	<table>
 				<tr>
@@ -46,5 +48,12 @@
 						<td>${ticket.car.carNum} ${fare.fareName}</td>				
 					</tr>				
 				</tr>
-	</table>	
+	</table>
+	
+			
+	<p:else>	
+		<h4 class="alert alert-danger text-center">${message:noTickets}</h4>
+	</p:else>	
+</t:if>	
+	
 </html>		

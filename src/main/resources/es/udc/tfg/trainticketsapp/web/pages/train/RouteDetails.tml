@@ -1,0 +1,34 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+
+<t:if test="route">
+	
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+			    <th>${message:station-label}</th>
+			    <th>${message:departTime-label}</th>			    
+			    <th>${message:arrivalTime-label}</th>
+			    
+			    
+			</tr>
+		</thead>
+			<div t:type="Loop" t:source="route.stops" t:value="stop">
+				<tr>
+					<td>${stop.station.stationName}</td>
+					<td><t:output value="stop.arrivalTime" format="timeFormat"/></td>
+					<td> <t:output value="stop.departTime" format="timeFormat"/></td>
+					
+				</tr>	
+
+			
+			</div>
+	</table>
+	
+			
+	<p:else>	
+		<h4 class="alert alert-danger text-center">${message:noRoute}</h4>
+	</p:else>	
+</t:if>	
+	
+</html>		

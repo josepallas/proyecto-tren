@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
@@ -43,6 +44,7 @@ import es.udc.tfg.trainticketsapp.model.train.TrainDao;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfileDao;
+import es.udc.tfg.trainticketsapp.model.userservice.UserProfileDetails;
 import es.udc.tfg.trainticketsapp.model.util.exceptions.TimeoutTicketException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -70,6 +72,10 @@ public class PurchaseServiceTest {
 	private final Calendar USER_BIRTHDATE = new GregorianCalendar(1992,0,1);
 	private final TypeUser TYPE_USER=TypeUser.CLIENT;
 	private final int USER_SEAT=1;
+	private final String FARE_NAME="Normal fare";
+	private final String FARE_DESCRIPTION="Fare all publics";
+	private final String FARE_TYPE="normal";
+	private final int FARE_DISCOUNT=10;
 
 	
 
@@ -111,8 +117,8 @@ public class PurchaseServiceTest {
 		Train train=new Train(TRAIN_NAME,TRAIN_TYPE);
 		trainDao.save(train);
 		car=new Car(CAPACITY, CAR_TYPE,CAR_NUM);
-		carDao.save(car);
 		train.addCar(car);
+		carDao.save(car);
 		Route route=new Route(ROUTE_NAME, ROUTE_DESCRIPTION, null,train);
 		routeDao.save(route);
 		Long hora=Calendar.getInstance().getTimeInMillis();
@@ -188,5 +194,26 @@ public class PurchaseServiceTest {
 		purchaseService.cancelTicket(ticket.getTicketId());
 		
 	}
+    @Test
+    public void testCreateFareAndFindFare()
+        throws DuplicateInstanceException, InstanceNotFoundException {
+
+        /* Register user and find profile. */
+        Fare fare = purchaseService.createFare(FARE_NAME, FARE_DESCRIPTION, FARE_TYPE, FARE_DISCOUNT);
+
+        Fare fare2 = purchaseService.findFare(fare.getFareId());
+
+        /* Check data. */
+        assertEquals(fare, fare2);
+
+    }
+
+    @Test(expected = DuplicateInstanceException.class)
+    public void testRegisterDuplicatedUser() throws DuplicateInstanceException,
+        InstanceNotFoundException {
+
+        purchaseService.createFare(FARE_NAME, FARE_DESCRIPTION, FARE_TYPE, FARE_DISCOUNT);
+        purchaseService.createFare(FARE_NAME, FARE_DESCRIPTION, FARE_TYPE, FARE_DISCOUNT);
+    }
 
 }

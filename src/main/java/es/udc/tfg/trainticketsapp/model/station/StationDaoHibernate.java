@@ -18,6 +18,11 @@ public class StationDaoHibernate extends GenericDaoHibernate<Station, Long> impl
 		return getSession().createQuery("SELECT t FROM Station t " +
 	            "ORDER BY t.stationName").list();	
 	}
+	@SuppressWarnings("unchecked")
+	public List<String> findAllNameStations(){
+		return getSession().createQuery("SELECT t.stationName FROM Station t " +
+	            "ORDER BY t.stationName").list();	
+	}	
 	
 	public Station findByName(String stationName) throws InstanceNotFoundException {
 

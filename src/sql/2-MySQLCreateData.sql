@@ -17,6 +17,13 @@ insert into Station (address, city, stationName) values ("Calle menor", "Ourense
 insert into Station (address, city, stationName) values ("Calle real", "Madrid", "Madrid-ATocha");
 insert into Station (address, city, stationName) values ("Calle de españa", "Ferrol", "Ferrol");
 insert into Station (address, city, stationName) values ("Calle", "Santiago de Compostela", "Santiago");
+insert into Station (address, city, stationName) values ("Calle menor", "Leon", "Leon");
+insert into Station (address, city, stationName) values ("Calle menor", "Lugo", "Lugo");
+insert into Station (address, city, stationName) values ("Calle menor", "Lleida", "Lleida");
+insert into Station (address, city, stationName) values ("Calle menor", "Lerida", "Lerida");
+
+
+
 
 insert into Train (trainName, trainType) values ("A23", 1);
 insert into Route (routeDescription, routeName, trainId) values ("Con paradas", "Coruña-Ourense", 1);
