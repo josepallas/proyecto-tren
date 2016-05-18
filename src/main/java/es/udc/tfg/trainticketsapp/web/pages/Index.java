@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.InjectPage;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.Messages;
@@ -28,6 +29,7 @@ public class Index {
 	private TravelsFound travelsFound;
 	@Property
 	private Date date;
+	@Persist
 	@Property
 	private List<String> stations;
 	@Inject
@@ -37,12 +39,11 @@ public class Index {
 	@Inject
 	private Messages messages;
 
-	void onActivate() {
+	void setupRender() {
 		stations=trainService.findNameStations();
 	}
 
     List<String> onProvideCompletions(String partial) {
-    	
         List<String> matches = new ArrayList<String>();
         partial = partial.toUpperCase();
 

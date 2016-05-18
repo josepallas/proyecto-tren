@@ -42,7 +42,7 @@ public class CreateStation {
 	            return;
 	        }		 
 	        try {
-				trainService.createStation(stationName, city, address);
+				trainService.createStation(stationName.toUpperCase(), city, address);
 			} catch (DuplicateInstanceException e) {
                 stationForm.recordError(stationNameField, messages
                         .get("error-stationNameAlreadyExists"));

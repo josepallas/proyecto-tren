@@ -12,15 +12,15 @@ INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birth
 INSERT INTO UserProfile (loginName,enPassword,firstName,lastName,email,dni,birthdate,typeuser) VALUES ("user","YPb3siGrJsDX6","user","user","user@udc.es","44444123G",'1992-04-20 16:43:36',2);
 
 
-insert into Station (address, city, stationName) values ("Calle mayor", "La Coruña", "Coruna");
-insert into Station (address, city, stationName) values ("Calle menor", "Ourense", "Ourense");
-insert into Station (address, city, stationName) values ("Calle real", "Madrid", "Madrid-ATocha");
-insert into Station (address, city, stationName) values ("Calle de españa", "Ferrol", "Ferrol");
-insert into Station (address, city, stationName) values ("Calle", "Santiago de Compostela", "Santiago");
-insert into Station (address, city, stationName) values ("Calle menor", "Leon", "Leon");
-insert into Station (address, city, stationName) values ("Calle menor", "Lugo", "Lugo");
-insert into Station (address, city, stationName) values ("Calle menor", "Lleida", "Lleida");
-insert into Station (address, city, stationName) values ("Calle menor", "Lerida", "Lerida");
+insert into Station (address, city, stationName) values ("Calle mayor", "La Coruña", "CORUÑA");
+insert into Station (address, city, stationName) values ("Calle menor", "Ourense", "OURENSE");
+insert into Station (address, city, stationName) values ("Calle real", "Madrid", "MADRID-ATOCHA");
+insert into Station (address, city, stationName) values ("Calle de españa", "Ferrol", "FERROL");
+insert into Station (address, city, stationName) values ("Calle", "Santiago de Compostela", "SANTIAGO");
+insert into Station (address, city, stationName) values ("Calle menor", "Leon", "LEON");
+insert into Station (address, city, stationName) values ("Calle menor", "Lugo", "LUGO");
+insert into Station (address, city, stationName) values ("Calle menor", "Lleida", "LLEIDA");
+insert into Station (address, city, stationName) values ("Calle menor", "Lerida", "LERIDA");
 
 
 
