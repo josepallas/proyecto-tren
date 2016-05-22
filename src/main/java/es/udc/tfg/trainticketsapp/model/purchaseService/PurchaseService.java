@@ -5,6 +5,7 @@ import java.util.List;
 
 import es.udc.pojo.modelutil.exceptions.DuplicateInstanceException;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
@@ -24,4 +25,5 @@ public interface PurchaseService {
     public Ticket findTicket(Long ticketId) throws InstanceNotFoundException;
     public List<Purchase> findPurchaseByUserId(Long userId, int startIndex, int count) throws InstanceNotFoundException;
 	public int getNumberOfPurchases(Long userId) throws InstanceNotFoundException;
+	public List<CarInfo> findCars(Calendar ticketDate,CarType carType,Long routeId) throws InstanceNotFoundException;
 }

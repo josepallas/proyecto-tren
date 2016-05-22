@@ -2,15 +2,15 @@
 		xmlns:p="tapestry:parameter" 
 	t:type="Layout" t:title="title" showTitleInBody="false">
 <p class="h3">${origin} ${destination}</p>
-        <t:form zone="travelsZone">
+        <t:form zone="travelsZone" t:id="dateForm">
             <div class="t-beaneditor">
         	    <div class="form-group">
                 <div class="col-md-2">
-                    <t:datefield t:id="zoneDate"/>
+                    <t:datefield t:id="zoneDate"  onchange="alert('1 onchange attribute');" />
                 </div>
 	    </div>	 
                 <div class="t-beaneditrow">
-                    <input type="submit" value="Update"/>
+                    <input type="submit" id="dateButton" value="Update"/>
                 </div>
             </div>
         </t:form>

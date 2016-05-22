@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.web.pages.train.TravelsFound;
@@ -28,7 +31,9 @@ public class Index {
 	@InjectPage
 	private TravelsFound travelsFound;
 	@Property
-	private Date date;
+	private Date dateOut;
+	@Property
+	private Date dateReturn;	
 	@Persist
 	@Property
 	private List<String> stations;
@@ -38,8 +43,15 @@ public class Index {
 	private Form findForm;
 	@Inject
 	private Messages messages;
+	@Property
+	private String radioSelectedValue;
+
+    @Environmental
+    private JavaScriptSupport javaScriptSupport;        
 
 	void setupRender() {
+        javaScriptSupport.importJavaScriptLibrary("/traintickets-app/js/datepicker.js");
+
 		stations=trainService.findNameStations();
 	}
 
@@ -65,7 +77,7 @@ public class Index {
 
 		try {
 			Date today =formatter.parse(formatter.format(new Date()));
-			if (date.before(today)) {
+			if (dateOut.before(today)) {
 				findForm.recordError(
 					messages.format("error-incorrectDate"));
 			}
@@ -78,7 +90,7 @@ public class Index {
     	travelsFound.setDestination(destination);
     	travelsFound.setOrigin(origin);
     	SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-        String strDate = DATE_FORMAT.format(date);
+        String strDate = DATE_FORMAT.format(dateOut);
     	travelsFound.setDate(strDate);
     	return travelsFound;
     }

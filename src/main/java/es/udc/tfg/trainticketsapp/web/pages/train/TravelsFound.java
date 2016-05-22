@@ -8,10 +8,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.model.trainService.TravelInfo;
@@ -70,6 +72,14 @@ public class TravelsFound {
 	public DateFormat getDateFormat() {
 		return DateFormat.getTimeInstance(DateFormat.SHORT,locale);
 	}
+	
+    @Environmental
+    private JavaScriptSupport javaScriptSupport;        
+
+	void setupRender() {
+        javaScriptSupport.importJavaScriptLibrary("/traintickets-app/js/datechange.js");
+	}
+
 	Object onSuccess() {
 		Calendar cal  = Calendar.getInstance();
 		cal.setTime(zoneDate);
