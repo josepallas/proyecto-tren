@@ -39,7 +39,15 @@ public class TravelsFound {
 	private Date zoneDate;
     @InjectComponent
     private Zone travelsZone;
-	
+    private int numberPassengers;
+
+	public int getNumberPassengers() {
+		return numberPassengers;
+	}
+
+	public void setNumberPassengers(int numberPassengers) {
+		this.numberPassengers = numberPassengers;
+	}
 
 	public String getDate() {
 		return date;
@@ -77,10 +85,11 @@ public class TravelsFound {
         return travelsZone.getBody();
 	}
 	
-	void onActivate(String origin, String destination,String date) {
+	void onActivate(String origin, String destination,String date,int numberPassengers) {
 		this.origin = origin;
 		this.destination=destination;
 		this.date=date;
+		this.numberPassengers=numberPassengers;
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Calendar cal  = Calendar.getInstance();
 		try {
@@ -94,7 +103,7 @@ public class TravelsFound {
 		
 	}
 	Object[] onPassivate() {
-		 return new Object[] {origin, destination,date};
+		 return new Object[] {origin, destination,date,numberPassengers};
 	}
 	
 	

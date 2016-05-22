@@ -19,6 +19,7 @@ import org.apache.tapestry5.services.SelectModelFactory;
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
+import es.udc.tfg.trainticketsapp.model.passenger.Passenger;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
 import es.udc.tfg.trainticketsapp.model.purchaseService.TicketDetails;
@@ -44,23 +45,36 @@ public class BuyTickets {
 	private SelectModelFactory selectModelFactory;
     @Component
     private Form ticketForm;
-    @Property
-    private String firstName;
-    @Property
-    private String lastName;
-    @Property 
-    private String dni;
-    @Property
-    private String email;
     private Long origin;
     private Long destination;
+    private int numberPassengers=0;
     @Property
     private String date;
     private Calendar ticketDate;
-    private List<CarType> trainClasses;
+    @Property
+    private int index;
+    private List<TicketDetails> ticketsDetails;
+    private TicketDetails ticketDetails;
     
     
-    
+	public TicketDetails getTicketDetails() {
+		return ticketDetails;
+	}
+	public void setTicketDetails(TicketDetails ticketDetails) {
+		this.ticketDetails = ticketDetails;
+	}
+	public int getNumberPassengers() {
+		return numberPassengers;
+	}
+	public void setNumberPassengers(int numberPassengers) {
+		this.numberPassengers = numberPassengers;
+	}
+	public List<TicketDetails> getTicketsDetails() {
+		return ticketsDetails;
+	}
+	public void setTicketsDetails(List<TicketDetails> ticketsDetails) {
+		this.ticketsDetails = ticketsDetails;
+	}
 	public Long getOrigin() {
 		return origin;
 	}
@@ -76,8 +90,10 @@ public class BuyTickets {
 	public List<CarType> getClasses(){
 		return this.getClasses();
 	}
-	void onActivate(Long origin, Long destination,String date) {
-		
+
+	void onActivate(Long origin, Long destination,String date,int numberPassengers) {
+		this.ticketsDetails=new ArrayList<TicketDetails>();
+		this.numberPassengers=numberPassengers;
 		this.origin = origin;
 		this.destination=destination;
 		this.date=date;
@@ -89,15 +105,15 @@ public class BuyTickets {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		while (ticketsDetails.size()<numberPassengers)
+		ticketsDetails.add(new TicketDetails());
 		
 	}
 	Object[] onPassivate() {
-		 return new Object[] {origin, destination,date};
+		 return new Object[] {origin, destination,date,numberPassengers};
 	}
-	
-	void onPrepareForRender() {
-		trainClasses = trainService.findClassTypesByTrain(new Long(1));
-		
+
+	void onPrepareForRender() {		
 		List<Fare> faresFamily = purchaseService.findFareBytype("familia");
 		fareFamilyModel = selectModelFactory.create(faresFamily,"fareName");
 	}
@@ -118,16 +134,12 @@ public class BuyTickets {
 	        }
 	    }; 
 	}
+
     Object onSuccess() {
-    	List<Fare> fares=new ArrayList<Fare>();
-    	fares.add(fareFamily);
-    	TicketDetails ticketDetails=new TicketDetails(firstName, lastName, dni,email,carType, fares);
-    	List<TicketDetails> tickets=new ArrayList<TicketDetails>();
-    	tickets.add(ticketDetails);
     	try {
-			purchaseService.buyTickets(PaymentMethod.EFECTIVO, userSession.getUserProfileId(), ticketDate, origin, destination, tickets);
+			purchaseService.buyTickets(PaymentMethod.EFECTIVO, userSession.getUserProfileId(), ticketDate, origin, destination, ticketsDetails);
 		} catch (InstanceNotFoundException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch bl
 			e.printStackTrace();
 		}
     	return Index.class;

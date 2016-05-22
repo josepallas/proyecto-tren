@@ -17,6 +17,10 @@ public class TicketDetails {
     private int seat;
     private CarType carType; 
     
+    public TicketDetails(){
+    	
+    }
+    
 	public TicketDetails(String firstName, String lastName, String dni,
 			String email,CarType carType,List<Fare> fare) {
 		this.firstName = firstName;
@@ -66,7 +70,32 @@ public class TicketDetails {
 
 	public void setSeat(int seat) {
 		this.seat = seat;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setFare(List<Fare> fare) {
+		this.fare = fare;
+	}
+
+	public void setCarType(CarType carType) {
+		this.carType = carType;
 	}	
+	
     
 
 }

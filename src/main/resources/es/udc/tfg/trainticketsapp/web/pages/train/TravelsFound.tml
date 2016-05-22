@@ -40,7 +40,7 @@
 			<tr>
 				<td><t:output value="travel.origin.departTime" format="dateFormat"/></td>
 				<td><t:output value="travel.destination.arrivalTime" format="dateFormat"/></td>
-				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/BuyTickets" t:context="[travel.origin.stopId,travel.destination.stopId,date]">comprar</a></td>
+				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/BuyTickets" t:context="[travel.origin.stopId,travel.destination.stopId,date,numberPassengers]">comprar</a></td>
 			    <td><button  data-toggle="collapse" data-target="#${travel.routeName}">+</button></td>
 			</tr>
 				<tr id="${travel.routeName}" class="collapse"><td>

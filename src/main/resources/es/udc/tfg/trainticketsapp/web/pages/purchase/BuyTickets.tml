@@ -5,19 +5,19 @@
 		<form t:type="Form" class="form-horizontal" t:id="ticketForm" >
 	
 	   <t:errors/>
-
+       <t:loop source="ticketsDetails" value="ticketDetails" t:formstate="ITERATION" index="index"  >
+		 <div>${message:passenger} ${index}</div> 
 	   <div class="form-group">        
 	        <t:label for="firstName" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-3">
-	            <input t:id="firstName" t:type="TextField"
+	            <input t:id="firstName" value="ticketDetails.firstName" t:type="TextField"
 				       t:validate="required" maxlength="30" />
 	        </div>
 	   </div>
-	   
 	   <div class="form-group">        
 	        <t:label for="lastName" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-3">
-	            <input t:id="lastName" t:type="TextField"
+	            <input t:id="lastName" value="ticketDetails.lastName" t:type="TextField"
 				       t:validate="required" maxlength="30" />
 	        </div>
 	   </div>
@@ -25,7 +25,7 @@
 	   <div class="form-group">        
 	        <t:label for="email" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-3">
-	            <input t:id="email" t:type="TextField"
+	            <input t:id="email" value="ticketDetails.email" t:type="TextField"
 				       t:validate="required,regexp" maxlength="30" />
 	        </div>
 	   </div>
@@ -33,7 +33,7 @@
 	   <div class="form-group">        
 	        <t:label for="dni" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-3">
-	            <input t:id="dni" t:type="TextField"
+	            <input t:id="dni" value="ticketDetails.dni" t:type="TextField"
 				       t:validate="required" maxlength="9" />
 	        </div>
 	   </div>	   
@@ -41,10 +41,12 @@
 	   <div class="form-group">        
 	        <t:label for="carType" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-2">
-				<t:select t:id="carType" validate="required"/>
+				<t:select t:id="carType" value="ticketDetails.carType" validate="required"/>
 
 			</div>
 	   </div>
+	   	   	   </t:loop>
+	   
 	   	   <div class="form-group">        
 	        <t:label for="fareFamily" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-2">
@@ -52,7 +54,7 @@
 
 			</div>
 	   </div>
-	    
+	   	   
 	    
 	    <div class="form-group">
 	    	<div class="col-md-offset-5 col-md-1">

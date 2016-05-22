@@ -38,6 +38,9 @@ public class Index {
 	private Form findForm;
 	@Inject
 	private Messages messages;
+	@Property
+	private int numberPassengers;
+	private
 
 	void setupRender() {
 		stations=trainService.findNameStations();
@@ -77,6 +80,7 @@ public class Index {
     Object onSuccess() {
     	travelsFound.setDestination(destination);
     	travelsFound.setOrigin(origin);
+    	travelsFound.setNumberPassengers(numberPassengers);
     	SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
         String strDate = DATE_FORMAT.format(date);
     	travelsFound.setDate(strDate);
