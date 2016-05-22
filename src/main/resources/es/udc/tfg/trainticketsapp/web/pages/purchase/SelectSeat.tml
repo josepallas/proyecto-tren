@@ -3,12 +3,12 @@
 
 <table>
 
-<t:loop t:source="cars" t:value="carInfo">
-<tr t:type="loop" t:source="carInfo.occupiedSeats" t:value="seat" t:index="index" >
+<ul t:type="loop" t:source="cars" t:value="carInfo" class="list-inline">
+<t:loop t:source="carInfo.occupiedSeats" t:value="seat" t:index="index" >
 	<t:if test="seat">
-    <td><img src="${asset:context:images/Occupied.png}" />${index}</td>
+    <li><img src="${asset:context:images/Occupied.png}" />${index}</li>
 	<p:else>	
-<td><a href="#" t:type="PageLink" t:page="purchase/BuyTickets"><img src="${asset:context:images/Free.png}"></img></a>${index}</td>
+<li><a href="#" t:type="PageLink" t:page="purchase/BuyTickets"><img src="${asset:context:images/Free.png}"></img></a>${index}</li>
 	
 	</p:else>
     
@@ -16,8 +16,9 @@
 
     
 
-  </tr>
+
 </t:loop>  
+</ul>
 	</table>
 	
 	

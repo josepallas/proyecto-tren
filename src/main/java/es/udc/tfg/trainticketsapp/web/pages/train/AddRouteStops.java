@@ -57,6 +57,7 @@ public class AddRouteStops {
 	private Long trainId;
 	private String routeDescription;
 	private String routeName;
+	private Float price;
 	@Persist
 	private List<WeekDay> days;
 
@@ -83,6 +84,14 @@ public class AddRouteStops {
 	}
 
 
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
 	public String getRouteName() {
 		return routeName;
 	}
@@ -98,13 +107,14 @@ public class AddRouteStops {
 	}
 
 
-	void onActivate(Long trainId,String routeName, String routeDescription) {
+	void onActivate(Long trainId,String routeName, String routeDescription,Float price) {
 		this.trainId = trainId;
 		this.routeName=routeName;
 		this.routeDescription=routeDescription;	
+		this.price=price;
 	}
 	Object[] onPassivate() {
-		 return new Object[] {trainId,routeName,routeDescription};
+		 return new Object[] {trainId,routeName,routeDescription,price};
 	}
 	
 	void onPrepareForRender() {
@@ -157,7 +167,7 @@ public class AddRouteStops {
 			acceptForm.recordError(messages.format("error-nostops"));
 		} else {
 			try {
-				trainService.createRoute(routeName, routeDescription, trainId, stops,days);
+				trainService.createRoute(routeName, routeDescription, trainId, price,stops,days);
 			} catch (InstanceNotFoundException | DuplicateInstanceException e) {
 				acceptForm.recordError(messages.format("error-invalidname"));
 				stops=null;

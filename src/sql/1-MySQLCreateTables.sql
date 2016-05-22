@@ -89,6 +89,7 @@ CREATE TABLE Route (
 	routeName VARCHAR(30)  NOT NULL,
 	routeDescription VARCHAR(100),
 	trainId BIGINT NOT NULL,
+	price NUMERIC(5,2),
     CONSTRAINT Route_PK PRIMARY KEY (routeId),
     CONSTRAINT RouteNameUniqueKey UNIQUE (routeName),     
 	CONSTRAINT Route_Train_FK FOREIGN KEY (trainId) REFERENCES Train(trainId))

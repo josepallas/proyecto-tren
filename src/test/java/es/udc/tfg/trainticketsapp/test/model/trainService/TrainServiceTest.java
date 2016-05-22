@@ -48,6 +48,7 @@ public class TrainServiceTest {
 	private final TrainType TRAIN_TYPE=TrainType.ALVIA;
 	private final CarType CAR_TYPE=CarType.TURISTA;
 	private final int CAPACITY_TRAIN=10;
+	private final Float ROUTE_PRICE=new Float(10);
 	
     @Autowired
     private TrainDao trainDao;
@@ -127,7 +128,7 @@ public class TrainServiceTest {
 		List<Stop> stops=new ArrayList<Stop>();
 		stops.add(s1);
 		stops.add(s2);
-        Route result=trainService.createRoute("M-Coruña", "sin paradas", train.getTrainId(),stops,null);
+        Route result=trainService.createRoute("M-Coruña", "sin paradas", train.getTrainId(),ROUTE_PRICE,stops,null);
         assertEquals(result.getRouteName(),"M-Coruña");
 	}
 	
@@ -140,7 +141,14 @@ public class TrainServiceTest {
 		Train train=trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 		Train train2=trainService.findTrainByName(TRAIN_NAME);
 		assertEquals(train,train2);
-	}	
+	}
+    @Test(expected = DuplicateInstanceException.class)
+    public void createDuplicateTrainTest () throws DuplicateInstanceException, InstanceNotFoundException{
+		List<Car> cars=new ArrayList<Car>();
+		cars.add( new Car(CAPACITY_TRAIN, CAR_TYPE, 1));
+		trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
+		trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
+    }
 	
 
 }

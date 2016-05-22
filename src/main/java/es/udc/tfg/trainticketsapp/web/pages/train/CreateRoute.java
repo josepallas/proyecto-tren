@@ -39,6 +39,8 @@ public class CreateRoute {
 	private String routeName;
 	@Property
 	private String routeDescription;
+	@Property
+	private Float price;
     @Component
     private Form routeForm;
     @Inject
@@ -97,6 +99,7 @@ public class CreateRoute {
     	addRouteStops.setRouteDescription(routeDescription);
     	addRouteStops.setRouteName(routeName);
     	addRouteStops.setTrainId(train.getTrainId());
+    	addRouteStops.setPrice(price);
     	addRouteStops.setDays(days);
     	return  addRouteStops;
     }

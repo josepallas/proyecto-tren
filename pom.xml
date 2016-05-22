@@ -5,7 +5,6 @@
     <groupId>es.udc.tfg.trainticketsapp</groupId>
     <artifactId>traintickets-app</artifactId>
     <packaging>war</packaging>
-    <version>1.0.0</version>
     <name>${project.artifactId} Project</name>
 
     <!--
@@ -445,4 +444,5 @@
         </plugins>
 
     </build>
+    <version>0.3</version>
 </project>

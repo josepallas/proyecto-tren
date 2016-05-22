@@ -28,6 +28,7 @@ public class Route {
 	private Long routeId;
 	private String routeName;
 	private String routeDescription;
+	private Float price;
 	private List<WeekDay> days;
 	private Train train;
 	private List<Stop> stops=new ArrayList<Stop>();
@@ -36,12 +37,13 @@ public class Route {
 	}
 
 	public Route(String routeName, String routeDescription, List<WeekDay> days,
-			Train train) {
+			Train train,Float price) {
 
 		this.routeName = routeName;
 		this.routeDescription = routeDescription;
 		this.days = days;
 		this.train = train;
+		this.price=price;
 	}
 
 	@SequenceGenerator(name = "RouteIdGenerator", sequenceName = "RouteSeq")
@@ -53,6 +55,14 @@ public class Route {
 
 	public void setRouteId(Long routeId) {
 		this.routeId = routeId;
+	}
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
 	}
 
 	public String getRouteName() {

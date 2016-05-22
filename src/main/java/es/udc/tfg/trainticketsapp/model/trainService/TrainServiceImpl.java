@@ -128,14 +128,14 @@ public class TrainServiceImpl implements TrainService  {
 	}
 	
 
-	public Route createRoute(String routeName, String routeDescription,Long trainId, List<Stop> stops,List<WeekDay> days) throws DuplicateInstanceException, InstanceNotFoundException {
+	public Route createRoute(String routeName, String routeDescription,Long trainId, Float price, List<Stop> stops,List<WeekDay> days) throws DuplicateInstanceException, InstanceNotFoundException {
         try {
             routeDao.findByName(routeName);
             throw new DuplicateInstanceException(routeName,
                     Route.class.getName());
         } catch (InstanceNotFoundException e) {
         	Train train=trainDao.find(trainId);
-            Route route=new Route(routeName,routeDescription,days,train);
+            Route route=new Route(routeName,routeDescription,days,train,price);
             routeDao.save(route);
     		for (Stop a:stops) {
     			route.addStop(a);

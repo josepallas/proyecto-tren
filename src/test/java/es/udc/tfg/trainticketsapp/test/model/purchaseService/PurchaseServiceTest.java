@@ -76,6 +76,8 @@ public class PurchaseServiceTest {
 	private final String FARE_DESCRIPTION="Fare all publics";
 	private final String FARE_TYPE="normal";
 	private final int FARE_DISCOUNT=10;
+	private final Float ROUTE_PRICE=new Float(10);
+	
 
 	
 
@@ -119,7 +121,7 @@ public class PurchaseServiceTest {
 		car=new Car(CAPACITY, CAR_TYPE,CAR_NUM);
 		train.addCar(car);
 		carDao.save(car);
-		Route route=new Route(ROUTE_NAME, ROUTE_DESCRIPTION, null,train);
+		Route route=new Route(ROUTE_NAME, ROUTE_DESCRIPTION, null,train,ROUTE_PRICE);
 		routeDao.save(route);
 		Long hora=Calendar.getInstance().getTimeInMillis();
 		Long hora_salida=hora-3600000*4;
@@ -209,7 +211,7 @@ public class PurchaseServiceTest {
     }
 
     @Test(expected = DuplicateInstanceException.class)
-    public void testRegisterDuplicatedUser() throws DuplicateInstanceException,
+    public void testCreateDuplicatedFare() throws DuplicateInstanceException,
         InstanceNotFoundException {
 
         purchaseService.createFare(FARE_NAME, FARE_DESCRIPTION, FARE_TYPE, FARE_DISCOUNT);

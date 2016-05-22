@@ -21,7 +21,7 @@ public interface TrainService{
 	public List<Train> findTrains() ;
 	public Station findStation(Long id) throws InstanceNotFoundException;
 	public List<Station> findStations() ;
-	public Route createRoute(String routeName, String routeDescription,Long trainId,List<Stop> stops,List<WeekDay> days)
+	public Route createRoute(String routeName, String routeDescription,Long trainId,Float price,List<Stop> stops,List<WeekDay> days)
 			throws DuplicateInstanceException, InstanceNotFoundException;
 	public Route findRoute(Long id) throws InstanceNotFoundException;
 	public Route findRouteByName(String routeName) throws InstanceNotFoundException;
