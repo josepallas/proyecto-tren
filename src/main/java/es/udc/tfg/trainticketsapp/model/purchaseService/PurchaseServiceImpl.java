@@ -1,5 +1,6 @@
 package es.udc.tfg.trainticketsapp.model.purchaseService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -154,13 +155,34 @@ public class PurchaseServiceImpl implements PurchaseService{
 		Route route=routeDao.find(routeId);
 		List<Car>cars=carDao.findCarsByTrain(carType, route.getTrain().getTrainId());
 		for (Car c:cars) {
-		num=getNumber(ticketDao.findOccupedSeats(ticketDate, carType, routeId),c.getCapacity());
+		num=getNumber(ticketDao.findOccupiedSeats(ticketDate, c.getCarId(), routeId),c.getCapacity());
 		if (num!=0)
 			ticketDetails.setCar(c);
 			ticketDetails.setSeat(num);
 			return;
 		}
 	}
+	public List<CarInfo> findCars(Calendar ticketDate,CarType carType,Long routeId) throws InstanceNotFoundException {
+		
+		List<CarInfo> carlist=new ArrayList<CarInfo>();
+		Route route=routeDao.find(routeId);
+		List<Car>cars=carDao.findCarsByTrain(carType, route.getTrain().getTrainId());
+		List<Integer> list;
+		List<Integer> seats=new ArrayList<Integer>();
+		for (Car c:cars) {
+		list=ticketDao.findOccupiedSeats(ticketDate, c.getCarId(), routeId);
+		for (int i=1;i<=c.getCapacity();i++){
+			if (list.contains(i))
+				seats.add(1);
+			else
+				seats.add(0);
+		}
+			
+		carlist.add(new CarInfo(c,seats));
+	}
+		return carlist;
+	}
+	
     
     public void cancelTicket(Long ticketId) throws InstanceNotFoundException, TimeoutTicketException {
     	Ticket ticket=ticketDao.find(ticketId);

@@ -23,9 +23,9 @@ public class TicketDaoHibernate extends GenericDaoHibernate<Ticket, Long> implem
 	            .list();	
 	}
 	@SuppressWarnings("unchecked")
-	public List<Integer> findOccupedSeats(Calendar ticketDate,CarType carType,Long carId) {
-		return getSession().createQuery("SELECT t.seat FROM Ticket t WHERE t.car.carId= :carId AND t.car.carType= :carType")
-				.setParameter("carId", carId).setParameter("carType", carType).list();	
+	public List<Integer> findOccupiedSeats(Calendar ticketDate,Long carId,Long routeId) {
+		return getSession().createQuery("SELECT t.seat FROM Ticket t WHERE  t.ticketDate= :ticketDate AND t.origin.route.routeId= :routeId AND t.car.carId= :carId")
+				.setParameter("routeId", routeId).setParameter("carId", carId).setParameter("ticketDate", ticketDate).list();	
 	}
 
 }

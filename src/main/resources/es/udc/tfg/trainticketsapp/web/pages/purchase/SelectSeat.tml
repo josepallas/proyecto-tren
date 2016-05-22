@@ -1,0 +1,26 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+
+<table>
+
+<t:loop t:source="cars" t:value="carInfo">
+<tr t:type="loop" t:source="carInfo.occupiedSeats" t:value="seat" t:index="index" >
+	<t:if test="seat">
+    <td><img src="${asset:context:images/Occupied.png}" />${index}</td>
+	<p:else>	
+<td><a href="#" t:type="PageLink" t:page="purchase/BuyTickets"><img src="${asset:context:images/Free.png}"></img></a>${index}</td>
+	
+	</p:else>
+    
+    </t:if>	
+
+    
+
+  </tr>
+</t:loop>  
+	</table>
+	
+	
+
+	
+	</html>
