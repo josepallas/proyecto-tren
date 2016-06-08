@@ -1,8 +1,6 @@
 package es.udc.tfg.trainticketsapp.model.userservice;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
 
 public class UserProfileDetails {
@@ -13,9 +11,6 @@ public class UserProfileDetails {
 	private String dni;
 	private Calendar birthdate;
 	private TypeUser typeUser;
-
-
-
 
 	public UserProfileDetails(String firstName, String lastName, String email,
 			String dni, Calendar birthdate, TypeUser typeUser) {
@@ -50,6 +45,5 @@ public class UserProfileDetails {
 	public TypeUser getTypeUser() {
 		return typeUser;
 	}
-	
 
 }

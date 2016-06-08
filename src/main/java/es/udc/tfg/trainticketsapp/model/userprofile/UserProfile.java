@@ -13,8 +13,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class UserProfile {
-	
-	public enum TypeUser {ADMINISTRATOR, SALESMAN, CLIENT};	
+
+	public enum TypeUser {
+		ADMINISTRATOR, SALESMAN, CLIENT
+	};
+
 	private TypeUser typeUser;
 	private Long userProfileId;
 	private String loginName;
@@ -27,7 +30,6 @@ public class UserProfile {
 
 	public UserProfile() {
 	}
-
 
 	public UserProfile(String loginName, String encryptedPassword,
 			String firstName, String lastName, String email, String dni,
@@ -42,8 +44,6 @@ public class UserProfile {
 		this.birthdate = birthdate;
 		this.typeUser = typeUser;
 	}
-
-
 
 	@Column(name = "usrId")
 	@SequenceGenerator( // It only takes effect for
@@ -100,7 +100,7 @@ public class UserProfile {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public TypeUser getTypeUser() {
 		return typeUser;
 	}
@@ -133,6 +133,6 @@ public class UserProfile {
 				+ ", encryptedPassword=" + encryptedPassword + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", dni=" + dni + ", birthdate=" + birthdate + "]";
-	}	
+	}
 
 }

@@ -11,6 +11,7 @@
 			    <th>${message:date-label}</th>
 			    <th>${message:departure-label}</th>
 			    <th>${message:arrival-label}</th>
+				<th></th>
 			    
 			</tr>
 		</thead>
@@ -26,7 +27,7 @@
 				<td><t:output value="ticket.ticketDate.time" format="dateFormat"/></td>			    
 				<td>${ticket.origin.station.stationName} <t:output value="ticket.origin.departTime" format="timeFormat"/></td>
 				<td>${ticket.destination.station.stationName} <t:output value="ticket.destination.arrivalTime" format="timeFormat"/></td>
-				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/CancelTicket" t:context="ticket.ticketId">${message:cancel-label}</a></td>
+				<td><a href="#" t:type="PageLink" class="btn btn-primary btn-custom" t:page="purchase/CancelTicket" t:mixins="Confirm" t:context="ticket.ticketId">${message:cancel-label}</a></td>
 			    
 			</tr>
 		</tbody>

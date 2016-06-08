@@ -12,8 +12,11 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
 import es.udc.tfg.trainticketsapp.model.purchaseService.TicketBlock;
 import es.udc.tfg.trainticketsapp.model.ticket.Ticket;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
+@AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)
 public class UserTickets {
 	private final static int TICKETS_PER_PAGE = 10;
 
@@ -23,16 +26,16 @@ public class UserTickets {
 
 	@Inject
 	private PurchaseService purchaseService;
-	
+
 	@Inject
 	private Locale locale;
-    @SessionState(create=false)
-    private UserSession userSession;
-	
+	@SessionState(create = false)
+	private UserSession userSession;
+
 	public List<Ticket> getTickets() {
 		return ticketBlock.getTickets();
 	}
-	
+
 	public Ticket getTicket() {
 		return ticket;
 	}
@@ -40,45 +43,47 @@ public class UserTickets {
 	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
+
 	public DateFormat getDateFormat() {
-		return DateFormat.getDateInstance( DateFormat.SHORT,locale);
-	}	
+		return DateFormat.getDateInstance(DateFormat.SHORT, locale);
+	}
+
 	public DateFormat getTimeFormat() {
-		return DateFormat.getTimeInstance(DateFormat.SHORT,locale);
-	}	
-	
+		return DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+	}
+
 	public Format getFormat() {
 		return NumberFormat.getInstance(locale);
 	}
-	
+
 	public Object[] getPreviousLinkContext() {
-		
-		if (startIndex-TICKETS_PER_PAGE >= 0) {
-			return new Object[] {startIndex-TICKETS_PER_PAGE};
+
+		if (startIndex - TICKETS_PER_PAGE >= 0) {
+			return new Object[] { startIndex - TICKETS_PER_PAGE };
 		} else {
 			return null;
 		}
-		
+
 	}
-	
+
 	public Object[] getNextLinkContext() {
-		
+
 		if (ticketBlock.getExistMoreTickets()) {
-			return new Object[] {startIndex+TICKETS_PER_PAGE};
+			return new Object[] { startIndex + TICKETS_PER_PAGE };
 		} else {
 			return null;
 		}
-		
+
 	}
-	
+
 	Object[] onPassivate() {
-		return new Object[] { startIndex};
+		return new Object[] { startIndex };
 	}
-	
+
 	void onActivate(int startIndex) {
 		this.startIndex = startIndex;
-		ticketBlock = purchaseService.showUserTickets(userSession.getUserProfileId(),
-			startIndex, TICKETS_PER_PAGE);
+		ticketBlock = purchaseService.showUserTickets(
+				userSession.getUserProfileId(), startIndex, TICKETS_PER_PAGE);
 	}
 
 }

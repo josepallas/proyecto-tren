@@ -103,33 +103,35 @@ public class AuthenticationValidator {
 			}
 			break;
 
-			
 		case CLIENT_USERS:
 
-		    if (!userAuthenticated|| applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.CLIENT)
-
-			redirectPage = INIT_PAGE;
-		
-		break;
-			
-		case SALESMAN_USERS:
-
-			    if (!userAuthenticated|| applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.SALESMAN)
+			if (!userAuthenticated
+					|| applicationStateManager.get(UserSession.class)
+							.getTypeUser() != TypeUser.CLIENT)
 
 				redirectPage = INIT_PAGE;
-			
+
 			break;
-			
-			
+
+		case SALESMAN_USERS:
+
+			if (!userAuthenticated
+					|| applicationStateManager.get(UserSession.class)
+							.getTypeUser() != TypeUser.SALESMAN)
+
+				redirectPage = INIT_PAGE;
+
+			break;
+
 		case ADMINISTRATOR_USERS:
-		    if (!userAuthenticated||applicationStateManager.get(UserSession.class).getTypeUser() != TypeUser.ADMINISTRATOR)
- {			
+			if (!userAuthenticated
+					|| applicationStateManager.get(UserSession.class)
+							.getTypeUser() != TypeUser.ADMINISTRATOR) {
 
 				redirectPage = INIT_PAGE;
 			}
-			
 
-			break;			
+			break;
 		default:
 			break;
 

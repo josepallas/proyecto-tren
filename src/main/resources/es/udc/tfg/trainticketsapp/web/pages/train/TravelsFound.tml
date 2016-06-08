@@ -1,79 +1,99 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
-		xmlns:p="tapestry:parameter" 
-	t:type="Layout" t:title="title" showTitleInBody="false">
+	xmlns:p="tapestry:parameter" t:type="Layout" t:title="title"
+	showTitleInBody="false">
+
+<t:purchaseState actualPage="'travelsFound'" />
+
 <p class="h3">${origin} ${destination}</p>
-        <t:form zone="travelsZone" t:id="dateForm">
-            <div class="t-beaneditor">
-        	    <div class="form-group">
-                <div class="col-md-2">
-                    <t:datefield t:id="zoneDate"  onchange="alert('1 onchange attribute');" />
-                </div>
-	    </div>	 
-                <div class="t-beaneditrow">
-                    <input type="submit" id="dateButton" value="Update"/>
-                </div>
-            </div>
-        </t:form>
+<t:zone t:id="formZone" id="formZone">
 
-
-		<t:zone t:id="travelsZone">	
-	<t:if test="!travels">	
-		<span class="title">
-			<br>
-			${message:no-travels}
-			</br>
-		</span>
-	<p:else>
-	
-	<table class="table table-striped table-hover">
-		<thead>
-			<tr>
-			    <th>${message:departTime-label}</th>
-			    <th>${message:arrivalTime-label}</th>
-			    
-			    
-			</tr>
-		</thead>
-		
-		<tbody>			
-			<div t:type="Loop" t:source="travels" t:value="travel">
-			<tr>
-				<td><t:output value="travel.origin.departTime" format="dateFormat"/></td>
-				<td><t:output value="travel.destination.arrivalTime" format="dateFormat"/></td>
-				<td><a href="#" t:type="PageLink" class="btn btn-primary" t:page="purchase/BuyTickets" t:context="[travel.origin.stopId,travel.destination.stopId,date,numberPassengers]">comprar</a></td>
-			    <td><button  data-toggle="collapse" data-target="#${travel.routeName}">+</button></td>
-			</tr>
-				<tr id="${travel.routeName}" class="collapse"><td>
-	       <ul class="row list-none">
-	       <li>
-	       	       <p>Train</p>
-	       ${travel.train.trainName}   ${travel.train.trainType}
-	       
-	       </li>
-	      <li>
-	       <ul>
-	       <li>
-	       
-	      
-	       <p> ${travel.routeName} <a href="#" t:type="PageLink" t:page="train/RouteDetails" t:context="travel.routeId">Ver itinerario</a>
-	       </p>
-	       </li>
-	       <li>
-	       <p>Detalles</p>
-	       ${travel.routeDescription}
-	       </li>
-	      </ul>
-	      </li>
-	       </ul>
-</td></tr>
-			
+	<t:form zone="travelsZone" t:id="dateForm">
+		<div class="t-beaneditor">
+			<div class="form-group">
+				<div class="col-md-2">
+					<t:datefield t:id="zoneDate" />
+				</div>
 			</div>
-			
-		</tbody>
-	
-	</table>
-	</p:else>
+			<div class="t-beaneditrow">
+			<button type="submit" class="btn btn-primary">${message:update}</button>
+			</div>
+		</div>
+	</t:form>
+</t:zone>
+
+<t:zone t:id="travelsZone" id="travelsZone">
+	<t:if test="travels">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>${message:departTime-label}</th>
+					<th>${message:arrivalTime-label}</th>
+					<th>${message:duration-label}</th>
+					<th>${message:price-label}</th>
+					<th></th>
+					<th></th>
+
+
+				</tr>
+			</thead>
+
+			<tbody>
+				<div t:type="Loop" t:source="travels" t:value="travel">
+					<tr>
+						<td><t:output value="travel.origin.departTime"
+								format="dateFormat" /></td>
+						<td><t:output value="travel.destination.arrivalTime"
+								format="dateFormat" /></td>
+						<td>${getDuration(travel.destination.arrivalTime,travel.origin.departTime)}</td>
+						<td>${travel.price}</td>
+						<t:if test="isTrainFull(travel.emptySeats)">
+						<td><a t:type="ActionLink" zone="^" class="btn btn-primary"
+							t:context="[travel.origin.stopId,travel.destination.stopId]">comprar</a></td>
+								<p:else>
+			<td> ${message:travelfull}</td> 
+		</p:else>
+						</t:if>
+					
+						<td><button data-toggle="collapse"
+								data-target="#${travel.routeName}">+</button></td>
+					</tr>
+					<tr id="${travel.routeName}" class="collapse">
+						<td>
+							<ul class="row list-none">
+								<li>
+									<p>${message:train-label}</p> ${travel.train.trainName}
+									${travel.train.trainType}
+
+								</li>
+								<li>
+									<ul>
+										<li>
+
+
+											<p>
+												${travel.routeName} <a href="#" t:type="PageLink"
+													t:page="train/RouteDetails" t:context="travel.routeId">Ver
+													itinerario</a>
+											</p>
+										</li>
+										<li>
+											<p>Detalles</p> ${travel.routeDescription}
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</td>
+					</tr>
+
+				</div>
+
+			</tbody>
+
+		</table>
+		<p:else>
+			<span class="title"> <br> ${message:no-travels} </br></span>
+		</p:else>
 	</t:if>
 </t:zone>
-		
-</html>	
+
+</html>

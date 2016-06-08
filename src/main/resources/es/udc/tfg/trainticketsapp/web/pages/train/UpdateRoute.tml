@@ -1,0 +1,62 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter"
+	t:type="Layout" t:title="title" showTitleInBody="false">
+
+<br />
+<t:if test="route">
+	<form t:type="Form" class="form-horizontal" t:id="routeForm">
+
+		<t:errors />
+
+		<div class="form-group">
+			<t:label for="routeName" class="col-md-offset-3 col-md-2" />
+			<div class="col-md-3">
+				<input t:id="routeName" t:type="TextField" t:validate="required"
+					maxlength="30" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<t:label for="train" class="col-md-offset-3 col-md-2" />
+			<div class="col-md-2">
+				<t:select t:id="train" model="trainModel" encoder="TrainEncoder"
+					validate="required" />
+
+			</div>
+		</div>
+
+		<div class="form-group">
+			<t:label for="routeDescription" class="col-md-offset-3 col-md-2" />
+			<div class="col-md-3">
+				<input class="form-control" t:id="routeDescription"
+					t:type="TextField" t:validate="required" maxlength="150" />
+			</div>
+		</div>
+		<div class="form-group">
+			<t:label for="price" class="col-md-offset-3 col-md-2" />
+			<div class="col-md-3">
+				<input class="form-control" t:id="price" t:type="TextField"
+					t:validate="required" maxlength="10" />
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<t:label for="days" class="col-md-offset-3 col-md-2" />
+			<div class="col-md-3">
+				<t:checklist t:id="days" encoder="encoder" model="model" />
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<div class="col-md-offset-5 col-md-1">
+				<button type="submit" class="btn btn-primary">${message:submit}</button>
+			</div>
+		</div>
+
+	</form>
+	<p:else>	
+		<h4 class="alert alert-danger text-center">${message:noRoutes}</h4>
+	</p:else>		
+</t:if>
+</html>

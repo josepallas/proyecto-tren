@@ -15,7 +15,6 @@ public class Passenger {
 	private String email;
 	private String dni;
 
-	
 	public Passenger() {
 	}
 
@@ -28,10 +27,9 @@ public class Passenger {
 		this.dni = dni;
 	}
 
-	@SequenceGenerator(
-	name = "PassengerIdGenerator", sequenceName = "PassengerSeq")
+	@SequenceGenerator(name = "PassengerIdGenerator", sequenceName = "PassengerSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PassengerIdGenerator")	
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PassengerIdGenerator")
 	public Long getPassengerId() {
 		return passengerId;
 	}

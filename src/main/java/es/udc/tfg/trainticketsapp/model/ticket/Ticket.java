@@ -34,14 +34,13 @@ public class Ticket {
 	private Passenger passenger;
 	private Stop destination;
 	private Stop origin;
-	private List<Fare> fares=new ArrayList<Fare>();
-	
+	private List<Fare> fares = new ArrayList<Fare>();
+
 	public Ticket() {
 	}
 
-	public Ticket(Float realPrice, int seat, Calendar ticketDate,
-			 Car car, Passenger passenger, Stop destination,
-			Stop origin) {
+	public Ticket(Float realPrice, int seat, Calendar ticketDate, Car car,
+			Passenger passenger, Stop destination, Stop origin) {
 		this.realPrice = realPrice;
 		this.seat = seat;
 		this.ticketDate = ticketDate;
@@ -53,7 +52,7 @@ public class Ticket {
 
 	@SequenceGenerator(name = "TicketIdGenerator", sequenceName = "TicketSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "TicketIdGenerator")		
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "TicketIdGenerator")
 	public Long getTicketId() {
 		return ticketId;
 	}
@@ -87,8 +86,8 @@ public class Ticket {
 		this.ticketDate = ticketDate;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="purchaseId")		
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "purchaseId")
 	public Purchase getPurchase() {
 		return purchase;
 	}
@@ -96,9 +95,9 @@ public class Ticket {
 	public void setPurchase(Purchase purchase) {
 		this.purchase = purchase;
 	}
-	
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="carId")	
+
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "carId")
 	public Car getCar() {
 		return car;
 	}
@@ -107,8 +106,8 @@ public class Ticket {
 		this.car = car;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="passengerId")		
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "passengerId")
 	public Passenger getPassenger() {
 		return passenger;
 	}
@@ -117,8 +116,8 @@ public class Ticket {
 		this.passenger = passenger;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="destinationId")	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "destinationId")
 	public Stop getDestination() {
 		return destination;
 	}
@@ -127,8 +126,8 @@ public class Ticket {
 		this.destination = destination;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="originId")		
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "originId")
 	public Stop getOrigin() {
 		return origin;
 	}
@@ -136,9 +135,9 @@ public class Ticket {
 	public void setOrigin(Stop origin) {
 		this.origin = origin;
 	}
-    @ManyToMany(fetch=FetchType.LAZY)  
-    @JoinTable(name="TicketFare",joinColumns=@JoinColumn(name="ticketId"),
-    inverseJoinColumns=@JoinColumn(name="fareId"))  
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "TicketFare", joinColumns = @JoinColumn(name = "ticketId"), inverseJoinColumns = @JoinColumn(name = "fareId"))
 	public List<Fare> getFares() {
 		return fares;
 	}
@@ -146,5 +145,9 @@ public class Ticket {
 	public void setFares(List<Fare> fares) {
 		this.fares = fares;
 	}
-	
+
+	public void addFare(Fare fare) {
+		fares.add(fare);
+	}
+
 }

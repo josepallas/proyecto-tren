@@ -2,8 +2,6 @@ package es.udc.tfg.trainticketsapp.web.pages.purchase;
 
 import java.util.List;
 
-import javax.annotation.PropertyKey;
-
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.Component;
@@ -17,7 +15,10 @@ import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
 import es.udc.tfg.trainticketsapp.web.pages.Index;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 
+@AuthenticationPolicy(AuthenticationPolicyType.ADMINISTRATOR_USERS)
 public class UpdateFare {
 	@Property
 	private Fare fare;
@@ -40,38 +41,42 @@ public class UpdateFare {
 	@Component
 	private Zone fareZone;
 
-	void onPrepareForRender() {		
+	void onPrepareForRender() {
 		List<Fare> fares = purchaseService.findFares();
-		fareModel = selectModelFactory.create(fares,"fareName");
+		fareModel = selectModelFactory.create(fares, "fareName");
 	}
-	
-	public ValueEncoder<Fare> getFareEncoder() {	 
-	    return new ValueEncoder<Fare>() {
-	        @Override
-	        public String toClient(Fare  value) {
-	            return String.valueOf(value.getFareId()); 
-	        }
-	        @Override
-	        public Fare toValue(String id) { 
-	            try {
+
+	public ValueEncoder<Fare> getFareEncoder() {
+		return new ValueEncoder<Fare>() {
+			@Override
+			public String toClient(Fare value) {
+				return String.valueOf(value.getFareId());
+			}
+
+			@Override
+			public Fare toValue(String id) {
+				try {
 					return purchaseService.findFare(Long.parseLong(id));
 				} catch (InstanceNotFoundException e) {
 					e.printStackTrace();
 					return null;
-				} 
-	        }
-	    }; 
+				}
+			}
+		};
 	}
+
 	public Object onValueChanged(Fare f) {
-		fareName=f.getFareName();
-		fareDescription=f.getDescription();
-		fareType=f.getTypeFare();
-		discount=f.getDiscount();
-		return request.isXHR() ? fareZone.getBody() : null;	
+		fareName = f.getFareName();
+		fareDescription = f.getDescription();
+		fareType = f.getTypeFare();
+		discount = f.getDiscount();
+		return request.isXHR() ? fareZone.getBody() : null;
 	}
+
 	Object onSuccess() {
 		try {
-			purchaseService.updateFare(fare.getFareId(), fareName, fareDescription, fareType, discount);
+			purchaseService.updateFare(fare.getFareId(), fareName,
+					fareDescription, fareType, discount);
 		} catch (InstanceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

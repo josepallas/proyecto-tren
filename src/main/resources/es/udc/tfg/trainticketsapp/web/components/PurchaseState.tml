@@ -1,0 +1,13 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+            <span class="${getState('travelsFound')}">  ${message:travelsFound}  </span>
+			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>      
+            <span class="${getState('ticketPassengers')}">  ${message:ticketPassenger}  </span>
+			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>      
+            <span class="${getState('selectSeat')}" >  ${message:selectSeat}  </span>
+			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>                
+            <span class="${getState('ticketPayment')}">  ${message:ticketPayment}  </span>
+			<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>                 
+            <span class="${getState('confirmPurchase')}">  ${message:confirmPurchase}  </span>
+<br/>
+
+</html>

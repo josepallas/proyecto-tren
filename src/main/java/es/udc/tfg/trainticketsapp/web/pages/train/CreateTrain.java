@@ -21,37 +21,37 @@ public class CreateTrain {
 
 	@Property
 	private TrainType trainType;
-	
+
 	@Inject
-	private TrainService trainService;	
-	
-    @InjectPage
-    private AddCarTrain addCarTrain;
-    
-    @Component
-    private Form trainForm;
-    
+	private TrainService trainService;
+
+	@InjectPage
+	private AddCarTrain addCarTrain;
+
+	@Component
+	private Form trainForm;
+
 	@Inject
-	private Messages messages;	     
-    
-    void onValidateFromTrainForm() {
-        if (!trainForm.isValid()) {
-            return;
-        }
-        
-    	try {
+	private Messages messages;
+
+	void onValidateFromTrainForm() {
+		if (!trainForm.isValid()) {
+			return;
+		}
+
+		try {
 			trainService.findTrainByName(trainName);
-			trainForm.recordError(messages.format("error-invalidname", trainName));
+			trainForm.recordError(messages.format("error-invalidname",
+					trainName));
 		} catch (InstanceNotFoundException e) {
 
 		}
-        
-    }
 
-    
-    Object onSuccess() {
-	    addCarTrain.setTrainName(trainName);
-	    addCarTrain.setTrainType(trainType);
-	    return addCarTrain;
-    }
+	}
+
+	Object onSuccess() {
+		addCarTrain.setTrainName(trainName);
+		addCarTrain.setTrainType(trainType);
+		return addCarTrain;
+	}
 }

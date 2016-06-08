@@ -11,17 +11,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import es.udc.tfg.trainticketsapp.model.car.Car;
-import es.udc.tfg.trainticketsapp.model.stop.Stop;
 
 @Entity
 public class Train {
-	public enum TrainType {AVE, ALVIA,AVANT};	
+	public enum TrainType {
+		AVE, ALVIA, AVANT
+	};
+
 	private Long trainId;
 	private String trainName;
 	private TrainType trainType;
-	private List<Car> cars=new ArrayList<Car>();
+	private List<Car> cars = new ArrayList<Car>();
 
-	
 	public Train() {
 	}
 
@@ -29,10 +30,10 @@ public class Train {
 		this.trainName = trainName;
 		this.trainType = trainType;
 	}
-	
+
 	@SequenceGenerator(name = "TrainIdGenerator", sequenceName = "TrainSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "TrainIdGenerator")		
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "TrainIdGenerator")
 	public Long getTrainId() {
 		return trainId;
 	}
@@ -56,8 +57,8 @@ public class Train {
 	public void setTrainType(TrainType trainType) {
 		this.trainType = trainType;
 	}
-	
-    @OneToMany(mappedBy = "train")		
+
+	@OneToMany(mappedBy = "train")
 	public List<Car> getCars() {
 		return cars;
 	}
@@ -70,5 +71,5 @@ public class Train {
 		cars.add(car);
 		car.setTrain(this);
 	}
-	
+
 }

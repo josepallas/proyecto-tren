@@ -1,8 +1,6 @@
 package es.udc.tfg.trainticketsapp.test.experiments;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import org.hibernate.Transaction;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
@@ -27,7 +25,8 @@ public class DaoExperiments {
 			// Register user.
 			UserProfile userProfile = new UserProfile("daoUser",
 					PasswordEncrypter.crypt("userPassword"), "name",
-					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
+					"lastName", "user@udc.es", "47544234M",
+					Calendar.getInstance(), UserProfile.TypeUser.CLIENT);
 			userProfileDao.save(userProfile);
 			Long userId = userProfile.getUserProfileId();
 			System.out.println("User with userId '" + userId
@@ -39,8 +38,9 @@ public class DaoExperiments {
 			System.out.println("User with userId '" + userId
 					+ "' has been retrieved");
 			System.out.println(userProfile);
-			
-			// ... proceed in the same way for other entities / methods / use cases
+
+			// ... proceed in the same way for other entities / methods / use
+			// cases
 
 			tx.commit();
 

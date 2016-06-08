@@ -3,7 +3,7 @@
 
 <t:if test="ticket">
 	
-	<table>
+	<table class="table-condensed">
 				<tr>
 					<th>${message:ticketId-label}</th>
 					<td>${ticket.ticketId}</td>

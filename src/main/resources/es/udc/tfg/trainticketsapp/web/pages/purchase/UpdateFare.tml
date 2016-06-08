@@ -6,7 +6,7 @@
 	   	   <div class="form-group">        
 	        <t:label for="fare" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-2">
-				<t:select t:id="fare"  t:blankOption="always" model="fareModel" zone="fareZone" encoder="FareEncoder"/>
+				<t:select t:id="fare" model="fareModel" zone="fareZone" encoder="FareEncoder"/>
 
 			</div>
 	   </div>	
@@ -32,15 +32,15 @@
 	            <input t:id="fareType" t:type="TextField"
 				       t:validate="required" maxlength="30" />
 	        </div>
-	   </div>	
-		<div class="form-group">
+	   </div>
+	   <div class="form-group">        
 	        <t:label for="discount" class="col-md-offset-3 col-md-2"/>
-	        <div class="col-md-3">	        
-			<span class="entry">
-				<t:select t:id="discount" t:model="literal:0,1,2,3,4,5,6,7,8,9,10" />
-			</span>
-		</div>
-	</div>   	    
+	        <div class="col-md-2">
+	            <input t:id="discount" t:type="TextField" type="number"
+				       t:validate="required" min="-100" />
+	        </div>
+	   </div>	   	
+	    
 	     	   	      	   
 
 	   

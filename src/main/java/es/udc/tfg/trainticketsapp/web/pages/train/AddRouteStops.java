@@ -1,10 +1,13 @@
 package es.udc.tfg.trainticketsapp.web.pages.train;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.annotations.Component;
@@ -39,19 +42,22 @@ public class AddRouteStops {
 	@Property
 	private String arrivalTime;
 	@Property
-	private String departTime;	
+	private String departTime;
 	@Component
 	private Form stopForm;
 	@Component
 	private Form acceptForm;
 	@Inject
 	private Messages messages;
-	@Component(id="departtime")
+	@Component(id = "departtime")
 	private TextField departTimeField;
-	@Component(id="arrivaltime")
+	@Component(id = "arrivaltime")
 	private TextField arrivalTimeField;
-	@Property @Persist
+	@Property
+	@Persist
 	private List<Stop> stops;
+	@Property
+	private Stop stop;
 	private Long arrival;
 	private Long depart;
 	private Long trainId;
@@ -60,8 +66,11 @@ public class AddRouteStops {
 	private Float price;
 	@Persist
 	private List<WeekDay> days;
+	@Inject
+	private Locale locale;
+	@Inject
+	private ComponentResources componentResources;	
 
-	
 	public List<WeekDay> getDays() {
 		return days;
 	}
@@ -73,16 +82,14 @@ public class AddRouteStops {
 	public Long getTrainId() {
 		return trainId;
 	}
-	
+
 	public String getRouteDescription() {
 		return routeDescription;
 	}
 
-
 	public void setRouteDescription(String routeDescription) {
 		this.routeDescription = routeDescription;
 	}
-
 
 	public Float getPrice() {
 		return price;
@@ -96,92 +103,105 @@ public class AddRouteStops {
 		return routeName;
 	}
 
-
 	public void setRouteName(String routeName) {
 		this.routeName = routeName;
 	}
-
 
 	public void setTrainId(Long trainId) {
 		this.trainId = trainId;
 	}
 
-
-	void onActivate(Long trainId,String routeName, String routeDescription,Float price) {
+	void onActivate(Long trainId, String routeName, String routeDescription,
+			Float price) {
 		this.trainId = trainId;
-		this.routeName=routeName;
-		this.routeDescription=routeDescription;	
-		this.price=price;
+		this.routeName = routeName;
+		this.routeDescription = routeDescription;
+		this.price = price;
 	}
+
 	Object[] onPassivate() {
-		 return new Object[] {trainId,routeName,routeDescription,price};
+		return new Object[] { trainId, routeName, routeDescription, price };
 	}
-	
+
 	void onPrepareForRender() {
 		List<Station> stations = trainService.findStations();
-		stationModel = selectModelFactory.create(stations,"stationName");
+		stationModel = selectModelFactory.create(stations, "stationName");
 
 	}
-	public ValueEncoder<Station> getStationEncoder() {	 
-	    return new ValueEncoder<Station>() {
-	        @Override
-	        public String toClient(Station value) {
-	            return String.valueOf(value.getStationId()); 
-	        }
-	        @Override
-	        public Station toValue(String id) { 
-	            try {
+
+	public ValueEncoder<Station> getStationEncoder() {
+		return new ValueEncoder<Station>() {
+			@Override
+			public String toClient(Station value) {
+				return String.valueOf(value.getStationId());
+			}
+
+			@Override
+			public Station toValue(String id) {
+				try {
 					return trainService.findStation(Long.parseLong(id));
 				} catch (InstanceNotFoundException e) {
 					e.printStackTrace();
 					return null;
-				} 
-	        }
-	    }; 
+				}
+			}
+		};
 	}
-	
+
 	private Long validateDate(TextField textField, String timeAsString) {
-		SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm"); 
+		SimpleDateFormat curFormater = new SimpleDateFormat("HH:mm");
 		curFormater.setLenient(false);
-		Long milis=new Long(0);
+		Long milis = new Long(0);
 		try {
-			milis=curFormater.parse(timeAsString).getTime();
+			milis = curFormater.parse(timeAsString).getTime();
 		} catch (ParseException e) {
 			stopForm.recordError(textField,
 					messages.format("error-invaliddate", timeAsString));
-		}			
+		}
 		return milis;
 	}
+
 	void onValidateFromStopForm() {
-		if (arrivalTime!=null)
-		arrival=validateDate(arrivalTimeField, arrivalTime);
-		if (departTime!=null)
-		depart=validateDate(departTimeField, departTime);
+		if (arrivalTime != null)
+			arrival = validateDate(arrivalTimeField, arrivalTime);
+		if (departTime != null)
+			depart = validateDate(departTimeField, departTime);
 
 	}
-	public void onValidateFromAcceptForm(){
+
+	public void onValidateFromAcceptForm() {
 		if (!acceptForm.isValid()) {
 			return;
 		}
-		if (stops==null) {
+		if (stops == null) {
 			acceptForm.recordError(messages.format("error-nostops"));
 		} else {
 			try {
-				trainService.createRoute(routeName, routeDescription, trainId, price,stops,days);
+				trainService.createRoute(routeName, routeDescription, trainId,
+						price, stops, days);
 			} catch (InstanceNotFoundException | DuplicateInstanceException e) {
 				acceptForm.recordError(messages.format("error-invalidname"));
-				stops=null;
+				stops = null;
 			}
-			stops=null;
+			stops = null;
 		}
 	}
-	
-	public void onSuccessFromStopForm (){
-		if (stops==null)
-		stops=new ArrayList<Stop>();
-		stops.add(new Stop(depart,arrival,station));
+
+	public void onSuccessFromStopForm() {
+		if (stops == null)
+			stops = new ArrayList<Stop>();
+		stops.add(new Stop(depart, arrival, station));
 	}
-	public Object onSuccessFromAcceptForm (){
+
+	public Object onSuccessFromAcceptForm() {
+		componentResources.discardPersistentFieldChanges();
 		return Index.class;
 	}
+	public DateFormat getDateFormat() {
+		return DateFormat.getDateInstance(DateFormat.SHORT, locale);
+	}
+
+	public DateFormat getTimeFormat() {
+		return DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+	}	
 }

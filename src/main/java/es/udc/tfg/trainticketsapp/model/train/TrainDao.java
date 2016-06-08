@@ -8,5 +8,6 @@ import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 public interface TrainDao extends GenericDao<Train, Long> {
 
 	public List<Train> findAllTrains();
+
 	public Train findByName(String name) throws InstanceNotFoundException;
 }

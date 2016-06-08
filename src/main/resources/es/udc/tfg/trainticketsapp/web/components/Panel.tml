@@ -1,0 +1,13 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>${message:panel-header}</h4>
+  </div>
+  <div class="panel-body">
+    <p>${message:originStation-label} : ${travelSession.originStation}  <t:output value="travelSession.departure.time" format="dateFormat"/></p>
+    <p>${message:destinationStation-label} : ${travelSession.destinationStation} <t:if test="travelSession.arrival"><t:output value="travelSession.arrival.time" format="dateFormat"/> </t:if></p>
+  	<p>${message:passengers-label} : ${travelSession.numPassengers}</p>
+  	<p>${message:price-label} : ${travelSession.price}</p>  	
+  </div>
+</div>	
+</html>	

@@ -1,0 +1,90 @@
+.label1{
+    margin-left: 25px; 
+    border: 1px solid	#205081;
+    background: #178ACC;
+    border-radius: 25px;
+	color:	#FFFFFF;
+    
+}
+.label2 {
+    margin-left: 25px; 
+}
+.panel > .panel-heading {
+    background-image: none;
+    background-color: #178ACC;
+    color: white;
+
+}
+.selpasajeros{
+    border: 1px solid	#205081;
+	
+}
+div.border {
+	border: 1px solid #205081;
+	padding: 28px;
+	  background-color: #71b9eb;
+	border-radius: 5px;
+    display: inline-block;
+}
+.navbar {
+     background-image: linear-gradient(#54B4EB, #2FA4E7 60%, #1D9CE5);
+     background-repeat: no-repeat;
+     border-bottom: 1px solid #178ACC;
+     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+     border-radius: 0px;
+}
+thead th {
+  background-color: #178ACC;
+  color: white;
+  
+}
+.btn-primary{
+	background-color: #074f66;;
+}
+
+
+.navbar-inverse {
+     background-color: #2FA4E7;
+     border-color: #1995DC;
+    color: #FFF;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus ,
+.navbar-inverse .navbar-nav > li > a {
+     color: #FFF;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+     color: #FFF;
+     background-color: #178ACC;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #178ACC;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #178ACC;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #FFF;
+}
+.dropdown-menu {
+    background-color: #178ACC;
+    color:#FFFFFF;
+  }
+.dropdown-menu >li>a {
+    color:#FFFFFF;
+  }
+.navbar-brand .navbar-custom {
+	color: #178ACC;
+}
+body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }

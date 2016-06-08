@@ -10,43 +10,49 @@ import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 
+@AuthenticationPolicy(AuthenticationPolicyType.ALL_USERS)
 public class RouteDetails {
 	@Inject
 	private TrainService trainService;
-	@Property	
+	@Property
 	private Route route;
 	@Property
 	private Stop stop;
-	
+
 	private Long routeId;
 	@Inject
 	private Locale locale;
-	
+
 	public Long getRouteId() {
 		return routeId;
 	}
+
 	public void setRouteId(Long routeId) {
 		this.routeId = routeId;
 	}
+
 	Long onPassivate() {
 		return routeId;
-		
+
 	}
-	
+
 	public DateFormat getDateFormat() {
-		return DateFormat.getDateInstance( DateFormat.SHORT,locale);
-	}	
+		return DateFormat.getDateInstance(DateFormat.SHORT, locale);
+	}
+
 	public DateFormat getTimeFormat() {
-		return DateFormat.getTimeInstance(DateFormat.SHORT,locale);
+		return DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 	}
 
 	void onActivate(Long routeId) {
-		this.routeId=routeId;
+		this.routeId = routeId;
 		try {
-			this.route=trainService.findRoute(routeId);
+			this.route = trainService.findRoute(routeId);
 		} catch (InstanceNotFoundException e) {
-			
+
 		}
 	}
 }

@@ -2,9 +2,9 @@ package es.udc.tfg.trainticketsapp.model.util;
 
 public class GlobalNames {
 
-    public static final String SPRING_CONFIG_FILE =
-        "classpath:/spring-config.xml";
+	public static final String SPRING_CONFIG_FILE = "classpath:/spring-config.xml";
 
-    private GlobalNames () {}
+	private GlobalNames() {
+	}
 
 }

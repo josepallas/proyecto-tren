@@ -1,15 +1,19 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter"
 	t:type="Layout" t:title="title" showTitleInBody="false">
-
+	
+<t:purchaseState actualPage="'selectSeat'"/>	
+	
+<div class="row">
+<div class="col-md-9">
 <table>
 
 <ul t:type="loop" t:source="cars" t:value="carInfo" class="list-inline">
+		 <div>${message:carName} ${carInfo.car.carNum}</div> 
 <t:loop t:source="carInfo.occupiedSeats" t:value="seat" t:index="index" >
 	<t:if test="seat">
     <li><img src="${asset:context:images/Occupied.png}" />${index}</li>
 	<p:else>	
-<li><a href="#" t:type="PageLink" t:page="purchase/BuyTickets"><img src="${asset:context:images/Free.png}"></img></a>${index}</li>
-	
+<li><a t:type="ActionLink" context="[index,carInfo.car.carId]" ><img src="${asset:context:images/Free.png}"></img></a>${index}</li>
 	</p:else>
     
     </t:if>	
@@ -20,6 +24,10 @@
 </t:loop>  
 </ul>
 	</table>
+	</div>	
+	
+	  <div class="col-md-3"><t:panel/></div>
+	      </div>	
 	
 	
 

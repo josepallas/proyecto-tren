@@ -1,8 +1,6 @@
 package es.udc.tfg.trainticketsapp.test.experiments;
 
 import java.util.Calendar;
-import java.util.Date;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,7 +19,8 @@ public class SessionExperiments {
 			// Register user.
 			UserProfile userProfile = new UserProfile("sessionUser",
 					PasswordEncrypter.crypt("userPassword"), "name",
-					"lastName", "user@udc.es","47544234M",Calendar.getInstance(),UserProfile.TypeUser.CLIENT);
+					"lastName", "user@udc.es", "47544234M",
+					Calendar.getInstance(), UserProfile.TypeUser.CLIENT);
 			session.saveOrUpdate(userProfile);
 			Long userId = userProfile.getUserProfileId();
 			System.out.println("User with userId '" + userId
@@ -38,8 +37,9 @@ public class SessionExperiments {
 				System.out.println("User with userId '" + userId
 						+ "' has not been found");
 			}
-			
-			// ... proceed in the same way for other entities / methods /use cases
+
+			// ... proceed in the same way for other entities / methods /use
+			// cases
 
 			tx.commit();
 

@@ -1,7 +1,8 @@
 package es.udc.tfg.trainticketsapp.model.purchase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -19,15 +20,16 @@ import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
 
 @Entity
 public class Purchase {
-	public enum PaymentMethod {EFECTIVO, PAYPAL};	
+	public enum PaymentMethod {
+		EFECTIVO, PAYPAL
+	};
+
 	private Long purchaseId;
 	private Calendar purchaseDate;
 	private PaymentMethod paymentMethod;
 	private UserProfile userProfile;
-    private Set<Ticket> tickets = new HashSet<Ticket>();
-	
-	
-	
+	private List<Ticket> tickets = new ArrayList<Ticket>();
+
 	public Purchase() {
 	}
 
@@ -40,7 +42,7 @@ public class Purchase {
 
 	@SequenceGenerator(name = "PurchaseIdGenerator", sequenceName = "PurchaseSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PurchaseIdGenerator")		
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "PurchaseIdGenerator")
 	public Long getPurchaseId() {
 		return purchaseId;
 	}
@@ -65,8 +67,8 @@ public class Purchase {
 		this.paymentMethod = paymentMethod;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="usrId")	
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "usrId")
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
@@ -74,24 +76,24 @@ public class Purchase {
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
 	}
-	
-    @OneToMany(mappedBy = "purchase")
-	public Set<Ticket> getTickets() {
+
+	@OneToMany(mappedBy = "purchase")
+	public List<Ticket> getTickets() {
 		return tickets;
 	}
 
-	public void setTickets(Set<Ticket> tickets) {
+	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
 	}
-	
+
 	public void addTicket(Ticket ticket) {
 		tickets.add(ticket);
 		ticket.setPurchase(this);
 	}
+
 	public void removeTicket(Ticket ticket) {
 		tickets.remove(ticket);
 		ticket.setPurchase(null);
 	}
-
 
 }

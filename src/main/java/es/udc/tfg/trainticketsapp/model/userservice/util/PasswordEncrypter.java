@@ -13,7 +13,7 @@ public class PasswordEncrypter {
 	 * Otherwise, an ArrayIndexOutOfBoundsException is thrown. This salt is used
 	 * to perturb the algorithm in one of 4096 different ways. Check "man crypt"
 	 * on a Unix machine and the implementation of "jcrypt" for further details.
-	 *
+	 * 
 	 * The implementation of "PasswordEncrypter" generates a random 2-character
 	 * salt to encrypt a password. The first two characters of the encrypted
 	 * password correspond to the salt. These two characters are randomly chosen

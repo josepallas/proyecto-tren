@@ -14,51 +14,51 @@ import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 import es.udc.tfg.trainticketsapp.web.util.CookiesManager;
 import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
-@Import(library = {"tapestry5/bootstrap/js/collapse.js", "tapestry5/bootstrap/js/dropdown.js"},
-        stylesheet="tapestry5/bootstrap/css/bootstrap-theme.css")
+@Import(library = { "tapestry5/bootstrap/js/collapse.js",
+		"tapestry5/bootstrap/js/dropdown.js" }, stylesheet = "context:css/site.css")
 public class Layout {
 
-    @Property
-    @Parameter(required = true, defaultPrefix = "message")
-    private String title;
-    
-    @Parameter(defaultPrefix = "literal")
-    private Boolean showTitleInBody;
+	@Property
+	@Parameter(required = true, defaultPrefix = "message")
+	private String title;
 
-    @Property
-    @SessionState(create=false)
-    private UserSession userSession;
-    
-    @Inject
-    private Cookies cookies;
-    
-    public boolean getShowTitleInBody() {
-    	
-    	if (showTitleInBody == null) {
-    		return true;
-    	} else {
-    		return showTitleInBody;
-    	}
-    	
-    }
-    
-    public boolean getClient() {
-    	return (userSession.getTypeUser() == TypeUser.CLIENT);
-    }
-    
-    public boolean getAdministrator() {
-    	return (userSession.getTypeUser() == TypeUser.ADMINISTRATOR);
-    }
+	@Parameter(defaultPrefix = "literal")
+	private Boolean showTitleInBody;
 
-    public boolean getSalesman() {
-    	return (userSession.getTypeUser() == TypeUser.SALESMAN);
-    }
-    
-    @AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)
-    Object onActionFromLogout() {
-        userSession = null;
-        CookiesManager.removeCookies(cookies);
-        return Index.class;
-    }
+	@Property
+	@SessionState(create = false)
+	private UserSession userSession;
+
+	@Inject
+	private Cookies cookies;
+
+	public boolean getShowTitleInBody() {
+
+		if (showTitleInBody == null) {
+			return true;
+		} else {
+			return showTitleInBody;
+		}
+
+	}
+
+	public boolean getClient() {
+		return (userSession.getTypeUser() == TypeUser.CLIENT);
+	}
+
+	public boolean getAdministrator() {
+		return (userSession.getTypeUser() == TypeUser.ADMINISTRATOR);
+	}
+
+	public boolean getSalesman() {
+		return (userSession.getTypeUser() == TypeUser.SALESMAN);
+	}
+
+	@AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)
+	Object onActionFromLogout() {
+		userSession = null;
+		CookiesManager.removeCookies(cookies);
+		return Index.class;
+	}
 
 }

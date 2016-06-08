@@ -23,81 +23,83 @@ import es.udc.tfg.trainticketsapp.web.util.UserSession;
 @AuthenticationPolicy(AuthenticationPolicyType.NON_AUTHENTICATED_USERS)
 public class Register {
 
-    @Property
-    private String loginName;
+	@Property
+	private String loginName;
 
-    @Property
-    private String password;
+	@Property
+	private String password;
 
-    @Property
-    private String retypePassword;
+	@Property
+	private String retypePassword;
 
-    @Property
-    private String firstName;
+	@Property
+	private String firstName;
 
-    @Property
-    private String lastName;
-    
-    @Property 
-    private String dni;
-    
-    @Property 
-    private Calendar birthdate;
+	@Property
+	private String lastName;
 
-    @Property
-    private String email;
+	@Property
+	private String dni;
 
-    @SessionState(create=false)
-    private UserSession userSession;
+	@Property
+	private Calendar birthdate;
 
-    @Inject
-    private UserService userService;
+	@Property
+	private String email;
 
-    @Component
-    private Form registrationForm;
+	@SessionState(create = false)
+	private UserSession userSession;
 
-    @Component(id = "loginName")
-    private TextField loginNameField;
+	@Inject
+	private UserService userService;
 
-    @Component(id = "password")
-    private PasswordField passwordField;
+	@Component
+	private Form registrationForm;
 
-    @Inject
-    private Messages messages;
+	@Component(id = "loginName")
+	private TextField loginNameField;
 
-    private Long userProfileId;
+	@Component(id = "password")
+	private PasswordField passwordField;
 
-    void onValidateFromRegistrationForm() {
+	@Inject
+	private Messages messages;
 
-        if (!registrationForm.isValid()) {
-            return;
-        }
+	private Long userProfileId;
 
-        if (!password.equals(retypePassword)) {
-            registrationForm.recordError(passwordField, messages
-                    .get("error-passwordsDontMatch"));
-        } else {
+	void onValidateFromRegistrationForm() {
 
-            try {
-                UserProfile userProfile = userService.registerUser(loginName, password,
-                    new UserProfileDetails(firstName, lastName, email, dni, Calendar.getInstance(), UserProfile.TypeUser.CLIENT));
-                userProfileId = userProfile.getUserProfileId();
-            } catch (DuplicateInstanceException e) {
-                registrationForm.recordError(loginNameField, messages
-                        .get("error-loginNameAlreadyExists"));
-            }
+		if (!registrationForm.isValid()) {
+			return;
+		}
 
-        }
+		if (!password.equals(retypePassword)) {
+			registrationForm.recordError(passwordField,
+					messages.get("error-passwordsDontMatch"));
+		} else {
 
-    }
+			try {
+				UserProfile userProfile = userService.registerUser(loginName,
+						password, new UserProfileDetails(firstName, lastName,
+								email, dni, Calendar.getInstance(),
+								UserProfile.TypeUser.CLIENT));
+				userProfileId = userProfile.getUserProfileId();
+			} catch (DuplicateInstanceException e) {
+				registrationForm.recordError(loginNameField,
+						messages.get("error-loginNameAlreadyExists"));
+			}
 
-    Object onSuccess() {
+		}
 
-        userSession = new UserSession();
-        userSession.setUserProfileId(userProfileId);
-        userSession.setFirstName(firstName);
-        return Index.class;
+	}
 
-    }
+	Object onSuccess() {
+
+		userSession = new UserSession();
+		userSession.setUserProfileId(userProfileId);
+		userSession.setFirstName(firstName);
+		return Index.class;
+
+	}
 
 }

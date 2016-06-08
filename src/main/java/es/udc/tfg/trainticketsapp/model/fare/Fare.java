@@ -14,19 +14,21 @@ public class Fare {
 	private String description;
 	private int discount;
 	private String typeFare;
-	
+
 	public Fare() {
 	}
 
-	public Fare(String fareName, String description, int discount, String typeFare) {
+	public Fare(String fareName, String description, int discount,
+			String typeFare) {
 		this.fareName = fareName;
 		this.description = description;
 		this.discount = discount;
 		this.typeFare = typeFare;
 	}
+
 	@SequenceGenerator(name = "FareIdGenerator", sequenceName = "FareSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "FareIdGenerator")		
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "FareIdGenerator")
 	public Long getFareId() {
 		return fareId;
 	}
@@ -67,5 +69,4 @@ public class Fare {
 		this.typeFare = typeFare;
 	}
 
-	
 }

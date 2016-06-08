@@ -13,7 +13,7 @@ public class Station {
 	private String stationName;
 	private String address;
 	private String city;
-	
+
 	public Station() {
 	}
 
@@ -25,7 +25,7 @@ public class Station {
 
 	@SequenceGenerator(name = "StationIdGenerator", sequenceName = "StationSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "StationIdGenerator")			
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "StationIdGenerator")
 	public Long getStationId() {
 		return stationId;
 	}
@@ -57,7 +57,5 @@ public class Station {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
 
-	
 }

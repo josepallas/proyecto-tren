@@ -24,7 +24,7 @@
 	    <div class="form-group" id="outdiv">
 	    <t:label for="dateOut" class="col-md-offset-3 col-md-2"/>
                 <div class="col-md-2">
-                    <t:datefield t:id="dateOut"/>
+                    <input t:type="DateField" t:id="dateOut"/>
                 </div>
 	    </div>	    
 	    
@@ -38,7 +38,7 @@
 	    <div class="form-group" id="returndiv" >
 	    <t:label for="dateReturn" class="col-md-offset-3 col-md-2"/>
                 <div class="col-md-2">
-                    <t:datefield t:id="dateReturn"/>
+                    <input t:type="DateField" t:id="dateReturn"/>
                 </div>
 	    </div>
 
@@ -59,6 +59,4 @@
 		</div>
 	    	
 	</form>
-
-   
 </html>

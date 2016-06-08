@@ -2,6 +2,5 @@
 	t:type="Layout" t:title="title" showTitleInBody="false">
 
 	
-	<p>${message:purchaseCreated}</p>
-	
+<t:alerts/>	
 	</html>

@@ -22,79 +22,82 @@ import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 
 @AuthenticationPolicy(AuthenticationPolicyType.ADMINISTRATOR_USERS)
 public class AddCarTrain {
-	
+
 	@Property
 	private int capacity;
-	
-	@Property @Persist
+
+	@Property
+	@Persist
 	private List<Car> cars;
-	
+
 	@Component
 	private Form carForm;
 	@Component
 	private Form acceptForm;
-	
+
 	@Inject
 	private Messages messages;
-	
+
 	@Property
 	private CarType carType;
-	
+
 	private String trainName;
 	private TrainType trainType;
-	
+
 	@Inject
 	private TrainService trainService;
-	
+
 	public String getTrainName() {
 		return trainName;
 	}
+
 	public void setTrainName(String trainName) {
 		this.trainName = trainName;
 	}
+
 	public TrainType getTrainType() {
 		return trainType;
 	}
+
 	public void setTrainType(TrainType trainType) {
 		this.trainType = trainType;
 	}
+
 	void onActivate(String trainName, TrainType trainType) {
-		this.trainName=trainName;
-		this.trainType=trainType;
+		this.trainName = trainName;
+		this.trainType = trainType;
 	}
+
 	Object[] onPassivate() {
-		 return new Object[] {trainName,trainType};
+		return new Object[] { trainName, trainType };
 	}
-	
-	public void onValidateFromAcceptForm(){
+
+	public void onValidateFromAcceptForm() {
 		if (!acceptForm.isValid()) {
 			return;
 		}
-		if (cars==null) {
+		if (cars == null) {
 			acceptForm.recordError(messages.format("error-nocars"));
 		} else {
 			try {
 				trainService.createTrain(trainName, trainType, cars);
 			} catch (InstanceNotFoundException | DuplicateInstanceException e) {
 				acceptForm.recordError(messages.format("error-invalidname"));
-				cars=null;
+				cars = null;
 			}
-			cars=null;
-		}		
-		
-		
-	}
-	
-	public void onSuccessFromCarForm (){
-		if (cars==null)
-		cars=new ArrayList<Car>();
-		cars.add( new Car(capacity, carType, cars.size()+1));
+			cars = null;
+		}
+
 	}
 
-	
-	public Object onSuccessFromAcceptForm (){
+	public void onSuccessFromCarForm() {
+		if (cars == null)
+			cars = new ArrayList<Car>();
+		cars.add(new Car(capacity, carType, cars.size() + 1));
+	}
+
+	public Object onSuccessFromAcceptForm() {
 		return Index.class;
 	}
-
 
 }

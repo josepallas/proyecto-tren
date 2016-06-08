@@ -1,27 +1,38 @@
 package es.udc.tfg.trainticketsapp.web.pages.purchase;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.tapestry5.annotations.InjectPage;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
+import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.purchaseService.CarInfo;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
+import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
+import es.udc.tfg.trainticketsapp.web.util.TravelSession;
 
+@AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)
 public class SelectSeat {
 
 	@Property
 	private int seats;
+	@SessionState(create = false)
+	private TravelSession travelSession;
 	@Inject
 	private PurchaseService purchaseService;
-	private String ticketDate;
-	private Long routeId;
+	@Inject
+	private TrainService trainService;
+	private Calendar ticketDate;
+	private Long originId;
+	private Long originReturnId;
 	@Property
 	private List<CarInfo> cars;
 	@Property
@@ -30,41 +41,95 @@ public class SelectSeat {
 	private int index;
 	@Property
 	private int seat;
+	private CarType carType;
+
+	@Property
+	private int num;
+	private int passengers;
+	@InjectPage
+	private TicketPayment ticketPayment;
+	@Persist
+	private boolean setReturn;
+
+	public int getPassengers() {
+		return passengers;
+	}
+
+
+	public void setPassengers(int passengers) {
+		this.passengers = passengers;
+	}
+
+	public Long getOriginId() {
+		return originId;
+	}
+
+	public void setOriginId(Long originId) {
+		this.originId = originId;
+	}
+
+	public Long getOriginReturnId() {
+		return originReturnId;
+	}
+
+	public void setOriginReturnId(Long originReturnId) {
+		this.originReturnId = originReturnId;
+	}
 	
-	public String getTicketDate() {
-		return ticketDate;
-	}
-	public void setTicketDate(String ticketDate) {
-		this.ticketDate = ticketDate;
-	}
-	public Long getRouteId() {
-		return routeId;
-	}
-	public void setRouteId(Long routeId) {
-		this.routeId = routeId;
-	}
-	void onActivate(){
-	}
+
 	Object[] onPassivate() {
-		return new Object[] { ticketDate,routeId};
+		return new Object[] { originId,originReturnId,num };
 	}
 	
-	void onActivate(String ticketDate, Long routeId) {
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		Calendar calendar  = Calendar.getInstance();
+
+	Object onAction(int index, Long carId) {
+		Car car;
 		try {
-			calendar.setTime(df.parse(ticketDate));
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block			
+			car = trainService.findCar(carId);
+			if(setReturn)
+				ticketPayment.setSeatsReturn(index, car, num);
+			else
+			ticketPayment.setSeats(index, car, num);
+		} catch (InstanceNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		num++;
+		if (num < passengers) {
+			return null;
+		} else
+			if (setReturn||travelSession.getCarTypeReturn()==null) {
+				setReturn=false;
+				return ticketPayment;
+			}
+			else {
+				setReturn=true;
+				num=0;
+				return null;
+			}
+			
+	}
+
+	void onActivate(Long originId,Long originReturnId ,int num) {
+		this.num = num;
+		this.passengers = travelSession.getNumPassengers();
+		this.ticketDate = travelSession.getDeparture();
+		this.originId = originId;
+		this.originReturnId = originReturnId;
+		this.carType=travelSession.getCarType();
+
 		try {
-			cars=purchaseService.findCars(calendar, CarType.PREFERENTE, routeId);
+			if(!setReturn) {
+				cars = purchaseService.findCars(ticketDate,carType,originId);
+				
+			} else
+			cars = purchaseService.findCars(travelSession.getArrival(),travelSession.getCarTypeReturn(),originReturnId);
+
 		} catch (InstanceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
+
 }

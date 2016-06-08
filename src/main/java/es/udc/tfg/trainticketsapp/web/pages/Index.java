@@ -4,15 +4,16 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -20,12 +21,16 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
 import es.udc.tfg.trainticketsapp.web.pages.train.TravelsFound;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
+import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
+import es.udc.tfg.trainticketsapp.web.util.TravelSession;
 
+@AuthenticationPolicy(AuthenticationPolicyType.ALL_USERS)
 public class Index {
-	
+
 	@Property
 	private String origin;
-	
+
 	@Property
 	private String destination;
 	@InjectPage
@@ -33,8 +38,7 @@ public class Index {
 	@Property
 	private Date dateOut;
 	@Property
-	private Date dateReturn;	
-	@Persist
+	private Date dateReturn;
 	@Property
 	private List<String> stations;
 	@Inject
@@ -47,54 +51,63 @@ public class Index {
 	private int numberPassengers;
 	@Property
 	private String radioSelectedValue;
+	@SessionState(create = false)
+	private TravelSession travelSession;
 
-    @Environmental
-    private JavaScriptSupport javaScriptSupport;        
+	@Environmental
+	private JavaScriptSupport javaScriptSupport;
 
 	void setupRender() {
-        javaScriptSupport.importJavaScriptLibrary("/traintickets-app/js/datepicker.js");
-
-		stations=trainService.findNameStations();
+		javaScriptSupport
+				.importJavaScriptLibrary("/traintickets-app/js/datepicker.js");
+		radioSelectedValue = "I";
 	}
 
-    List<String> onProvideCompletions(String partial) {
-        List<String> matches = new ArrayList<String>();
-        partial = partial.toUpperCase();
+	List<String> onProvideCompletions(String partial) {
+		stations = trainService.findNameStations();
+		List<String> matches = new ArrayList<String>();
+		partial = partial.toUpperCase();
 
-        for (String station : stations) {
-            if (station.contains(partial)) {
-                matches.add(station);
-            }
-        }
+		for (String station : stations) {
+			if (station.contains(partial)) {
+				matches.add(station);
+			}
+		}
 
-        return matches;
-    }
-    
+		return matches;
+	}
+
 	void onValidateFromFindForm() {
-		
+
 		if (!findForm.isValid()) {
 			return;
 		}
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		try {
-			Date today =formatter.parse(formatter.format(new Date()));
+			Date today = formatter.parse(formatter.format(new Date()));
 			if (dateOut.before(today)) {
-				findForm.recordError(
-					messages.format("error-incorrectDate"));
+				findForm.recordError(messages.format("error-incorrectDate"));
 			}
 		} catch (ParseException e) {
 
 		}
 
 	}
-    Object onSuccess() {
-    	travelsFound.setDestination(destination);
-    	travelsFound.setOrigin(origin);
-    	travelsFound.setNumberPassengers(numberPassengers);
-    	SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-        String strDate = DATE_FORMAT.format(dateOut);
-    	travelsFound.setDate(strDate);
-    	return travelsFound;
-    }
+
+	Object onSuccess() {
+		travelsFound.setDestination(destination);
+		travelsFound.setOrigin(origin);
+		travelSession = new TravelSession();
+		travelSession.setNumPassengers(numberPassengers);
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTime(dateOut);
+		travelSession.setDeparture(calendar);
+		if (dateReturn != null) {
+			Calendar cal=Calendar.getInstance();
+			cal.setTime(dateReturn);
+			travelSession.setArrival(cal);
+		}
+		return travelsFound;
+	}
 }

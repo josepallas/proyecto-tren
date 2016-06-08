@@ -13,25 +13,28 @@ import es.udc.tfg.trainticketsapp.model.train.Train;
 
 @Entity
 public class Car {
-	public enum CarType {PREFERENTE, TURISTA};	
+	public enum CarType {
+		PREFERENTE, TURISTA
+	};
+
 	private Long carId;
 	private int carNum;
 	private int capacity;
 	private CarType carType;
 	private Train train;
-	
+
 	public Car() {
 	}
 
 	public Car(int capacity, CarType carType, int carNum) {
 		this.capacity = capacity;
 		this.carType = carType;
-		this.carNum= carNum;
+		this.carNum = carNum;
 	}
 
 	@SequenceGenerator(name = "CarIdGenerator", sequenceName = "CarSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "CarIdGenerator")		
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "CarIdGenerator")
 	public Long getCarId() {
 		return carId;
 	}
@@ -55,8 +58,9 @@ public class Car {
 	public void setCarType(CarType carType) {
 		this.carType = carType;
 	}
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="trainId")	
+
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "trainId")
 	public Train getTrain() {
 		return train;
 	}
@@ -73,5 +77,4 @@ public class Car {
 		this.carNum = carNum;
 	}
 
-	
 }

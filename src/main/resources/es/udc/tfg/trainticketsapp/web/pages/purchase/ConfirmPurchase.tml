@@ -1,0 +1,39 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter" t:type="Layout" t:title="title"
+	showTitleInBody="false">
+
+<t:purchaseState actualPage="'confirmPurchase'" />
+
+    <h2>${message:congratulations}</h2>
+
+<t:if test="purchase">
+
+
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4>${message:panel-header}</h4>
+		</div>
+		<div class="panel-body">
+			<p>${message:id-label} : ${purchase.purchaseId}</p>
+			<p>${message:numTickets-label} : ${purchase.tickets.size()}</p>
+			<p>${message:paymentMethod-label}: ${purchase.paymentMethod}</p>
+		</div>
+	</div>
+
+	<form t:type="Form" class="form-horizontal">
+
+		<t:errors />
+
+			<div class="form-group">
+				<div class="col-md-offset-5 col-md-1">
+					<button type="submit" class="btn btn-primary">${message:button-send}</button>
+				</div>
+			</div>
+	</form>
+	<t:alerts />
+	<p:else>
+		<h4 class="alert alert-danger text-center">${message:purchaseNotFound}</h4>
+	</p:else>
+
+</t:if>
+</html>

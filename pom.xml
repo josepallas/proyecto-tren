@@ -40,6 +40,8 @@
         <spring.version>4.0.6.RELEASE</spring.version>
         <servletApi.version>2.5</servletApi.version>
         <tapestry.version>5.4.0</tapestry.version>
+        <mail.version>1.5.0-b01</mail.version>
+        
 
         <!-- Plugin versions -->
         <mavenCompilerPlugin.version>3.1</mavenCompilerPlugin.version>
@@ -179,12 +181,17 @@
     		<artifactId>tapestry-webresources</artifactId>
     		<version>${tapestry.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>${mail.version}</version>
+		</dependency>  		
         <!-- POJO-Examples Model Util -->
         <dependency>
             <groupId>es.udc.pojo</groupId>
             <artifactId>pojo-modelutil</artifactId>
             <version>${pojo-modelutil.version}</version>
-        </dependency>
+        </dependency>      
     </dependencies>
 
     <build>

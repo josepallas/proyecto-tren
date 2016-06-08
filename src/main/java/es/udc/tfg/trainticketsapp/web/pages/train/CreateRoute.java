@@ -17,7 +17,6 @@ import org.apache.tapestry5.util.EnumSelectModel;
 import org.apache.tapestry5.util.EnumValueEncoder;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
-import es.udc.tfg.trainticketsapp.model.route.Route;
 import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
@@ -41,66 +40,70 @@ public class CreateRoute {
 	private String routeDescription;
 	@Property
 	private Float price;
-    @Component
-    private Form routeForm;
-    @Inject
-    private Messages messages;
-    @Component(id = "routeName")
-    private TextField routeNameField;
-    @InjectPage
-    private AddRouteStops addRouteStops;
-    @Property
-    private List<WeekDay> days;
+	@Component
+	private Form routeForm;
 	@Inject
-    private TypeCoercer typeCoercer;
-    @Property
-    private final ValueEncoder<WeekDay> encoder = new EnumValueEncoder<WeekDay>(typeCoercer, WeekDay.class);
+	private Messages messages;
+	@Component(id = "routeName")
+	private TextField routeNameField;
+	@InjectPage
+	private AddRouteStops addRouteStops;
+	@Property
+	private List<WeekDay> days;
+	@Inject
+	private TypeCoercer typeCoercer;
+	@Property
+	private final ValueEncoder<WeekDay> encoder = new EnumValueEncoder<WeekDay>(
+			typeCoercer, WeekDay.class);
 
-    @Property
-    private final SelectModel model = new EnumSelectModel(WeekDay.class, messages);
-    
+	@Property
+	private final SelectModel model = new EnumSelectModel(WeekDay.class,
+			messages);
+
 	void onPrepareForRender() {
 		List<Train> trains = trainService.findTrains();
-		trainModel = selectModelFactory.create(trains,"trainName");
+		trainModel = selectModelFactory.create(trains, "trainName");
 
 	}
-    
-	public ValueEncoder<Train> getTrainEncoder() {	 
-	    return new ValueEncoder<Train>() {
-	        @Override
-	        public String toClient(Train  value) {
-	            return String.valueOf(value.getTrainId()); 
-	        }
-	        @Override
-	        public Train toValue(String id) { 
-	            try {
+
+	public ValueEncoder<Train> getTrainEncoder() {
+		return new ValueEncoder<Train>() {
+			@Override
+			public String toClient(Train value) {
+				return String.valueOf(value.getTrainId());
+			}
+
+			@Override
+			public Train toValue(String id) {
+				try {
 					return trainService.findTrain(Long.parseLong(id));
 				} catch (InstanceNotFoundException e) {
 					e.printStackTrace();
 					return null;
-				} 
-	        }
-	    }; 
+				}
+			}
+		};
 	}
 
-	
-    void onValidateFromRouteForm() {
-        if (!routeForm.isValid()) {
-            return;
-        }
-    	try {
+	void onValidateFromRouteForm() {
+		if (!routeForm.isValid()) {
+			return;
+		}
+		try {
 			trainService.findRouteByName(routeName);
-			routeForm.recordError(routeNameField,messages.format("error-invalidname", routeName));
+			routeForm.recordError(routeNameField,
+					messages.format("error-invalidname", routeName));
 		} catch (InstanceNotFoundException e) {
 
 		}
-    }
-    Object onSuccess() {
-    	addRouteStops.setRouteDescription(routeDescription);
-    	addRouteStops.setRouteName(routeName);
-    	addRouteStops.setTrainId(train.getTrainId());
-    	addRouteStops.setPrice(price);
-    	addRouteStops.setDays(days);
-    	return  addRouteStops;
-    }
+	}
+
+	Object onSuccess() {
+		addRouteStops.setRouteDescription(routeDescription);
+		addRouteStops.setRouteName(routeName);
+		addRouteStops.setTrainId(train.getTrainId());
+		addRouteStops.setPrice(price);
+		addRouteStops.setDays(days);
+		return addRouteStops;
+	}
 }

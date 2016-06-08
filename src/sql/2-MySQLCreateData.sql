@@ -30,11 +30,37 @@ insert into Route (routeDescription, routeName, trainId, price) values ("Con par
 insert into Route (routeDescription, routeName, trainId, price) values ("Con paradas", "Madrid-Coruña1", 1, 12);
 insert into Route (routeDescription, routeName, trainId, price) values ("Con paradas", "Madrid-Coruña2", 1, 15);
 insert into Route (routeDescription, routeName, trainId, price) values ("Con paradas", "Madrid-Coruña3", 1, 18);
+insert into Route (routeDescription, routeName, trainId, price) values ("Con paradas", "Coruña-Madrid", 1, 18);
+insert into Route (routeDescription, routeName, trainId, price) values ("Con paradas", "Santiago-Madrid", 1, 18);
 
+insert into Days(routeId,day) values (1,0);
+insert into Days(routeId,day) values (2,0);
+insert into Days(routeId,day) values (3,0);
+insert into Days(routeId,day) values (4,0);
 insert into Days(routeId,day) values (1,1);
 insert into Days(routeId,day) values (2,1);
 insert into Days(routeId,day) values (3,1);
 insert into Days(routeId,day) values (4,1);
+insert into Days(routeId,day) values (1,2);
+insert into Days(routeId,day) values (2,2);
+insert into Days(routeId,day) values (3,2);
+insert into Days(routeId,day) values (4,2);
+insert into Days(routeId,day) values (1,3);
+insert into Days(routeId,day) values (2,3);
+insert into Days(routeId,day) values (3,3);
+insert into Days(routeId,day) values (4,3);
+insert into Days(routeId,day) values (5,0);
+insert into Days(routeId,day) values (6,0);
+insert into Days(routeId,day) values (5,1);
+insert into Days(routeId,day) values (6,1);
+insert into Days(routeId,day) values (5,2);
+insert into Days(routeId,day) values (6,2);
+insert into Days(routeId,day) values (5,3);
+insert into Days(routeId,day) values (6,3);
+insert into Days(routeId,day) values (5,4);
+insert into Days(routeId,day) values (6,4);
+insert into Days(routeId,day) values (5,5);
+insert into Days(routeId,day) values (6,5);
 
 insert into Stop ( departTime, routeId, stationId) values ( 25200000, 1, 1);
 insert into Stop (arrivalTime, departTime, routeId, stationId) values (26800000, 26900000, 1, 5);
@@ -46,8 +72,15 @@ insert into Stop (arrivalTime, routeId, stationId) values (28800000, 2, 1);
 insert into Stop ( departTime, routeId, stationId) values ( 35200000, 3, 3);
 insert into Stop (arrivalTime, routeId, stationId) values (48800000, 3, 1);
 
-insert into Stop ( departTime, routeId, stationId) values ( 55200000, 4, 3);
+insert into Stop ( departTime, routeId, stationId) values (55200000, 4, 3);
 insert into Stop (arrivalTime, routeId, stationId) values (68800000, 4, 1);
+
+insert into Stop ( departTime, routeId, stationId) values (55200000, 5, 1);
+insert into Stop (arrivalTime, routeId, stationId) values (68800000, 5, 3);
+
+insert into Stop ( departTime, routeId, stationId) values (45200000, 6, 5);
+insert into Stop (arrivalTime,departTime, routeId, stationId) values (58800000,60200000 ,6, 1);
+insert into Stop (arrivalTime, routeId, stationId) values (68800000, 6, 3);
 
 
 
@@ -55,8 +88,10 @@ insert into Fare(fareName,description, discount, typeFare) values("Normal adulto
 insert into Fare(fareName,description, discount, typeFare) values("Preferente","Precio epreferente",25,"clase");
 insert into Fare(fareName,description, discount, typeFare) values("Turista","Precio turista",0,"clase");
 
-insert into Fare(fareName,description, discount, typeFare) values("Familia numerosa general","Descuento familia numerosa",50,"familia");
-insert into Fare(fareName,description, discount, typeFare) values("Familia numerosa especial","Descuento familia numerosa",70,"familia");
+insert into Fare(fareName,description, discount, typeFare) values("Familia numerosa general","Descuento familia numerosa",-50,"familia");
+insert into Fare(fareName,description, discount, typeFare) values("Familia numerosa especial","Descuento familia numerosa",-70,"familia");
 
 insert into Car(capacity,carType,trainId, carNum) values (20,1,1,1);
 insert into Car(capacity,carType,trainId, carNum) values (20,0,1,2);
+insert into Car(capacity,carType,trainId, carNum) values (20,1,1,3);
+insert into Car(capacity,carType,trainId, carNum) values (20,0,1,4);

@@ -7,18 +7,16 @@
 		<thead>
 			<tr>
 			    <th>${message:station-label}</th>
-			    <th>${message:departTime-label}</th>			    
 			    <th>${message:arrivalTime-label}</th>
-			    
+			    <th>${message:departTime-label}</th>			    
 			    
 			</tr>
 		</thead>
 			<div t:type="Loop" t:source="route.stops" t:value="stop">
 				<tr>
 					<td>${stop.station.stationName}</td>
-					<td><t:output value="stop.arrivalTime" format="timeFormat"/></td>
+					<td><t:output value="stop.arrivalTime" format="timeFormat"/></td>					
 					<td> <t:output value="stop.departTime" format="timeFormat"/></td>
-					
 				</tr>	
 
 			

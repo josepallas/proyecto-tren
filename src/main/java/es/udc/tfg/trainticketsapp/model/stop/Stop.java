@@ -19,7 +19,7 @@ public class Stop {
 	private Long arrivalTime;
 	private Route route;
 	private Station station;
-	
+
 	public Stop() {
 	}
 
@@ -31,7 +31,7 @@ public class Stop {
 
 	@SequenceGenerator(name = "StopIdGenerator", sequenceName = "StopSeq")
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "StopIdGenerator")			
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "StopIdGenerator")
 	public Long getStopId() {
 		return stopId;
 	}
@@ -56,8 +56,8 @@ public class Stop {
 		this.arrivalTime = arrivalTime;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="routeId")		
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "routeId")
 	public Route getRoute() {
 		return route;
 	}
@@ -66,8 +66,8 @@ public class Stop {
 		this.route = route;
 	}
 
-	@ManyToOne(optional=false, fetch=FetchType.LAZY)
-	@JoinColumn(name="stationId")		
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "stationId")
 	public Station getStation() {
 		return station;
 	}
@@ -75,5 +75,5 @@ public class Stop {
 	public void setStation(Station station) {
 		this.station = station;
 	}
-	
+
 }

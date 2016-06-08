@@ -18,47 +18,47 @@ import es.udc.tfg.trainticketsapp.web.util.UserSession;
 @AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)
 public class UpdateProfile {
 
-    @Property
-    private String firstName;
+	@Property
+	private String firstName;
 
-    @Property
-    private String lastName;
+	@Property
+	private String lastName;
 
-    @Property
-    private String email;
-    
-    @Property 
-    private String dni;
-    
-    @Property
-    private Calendar birthdate;
+	@Property
+	private String email;
 
-    @SessionState(create=false)
-    private UserSession userSession;
+	@Property
+	private String dni;
 
-    @Inject
-    private UserService userService;
+	@Property
+	private Calendar birthdate;
 
-    void onPrepareForRender() throws InstanceNotFoundException {
+	@SessionState(create = false)
+	private UserSession userSession;
 
-        UserProfile userProfile;
+	@Inject
+	private UserService userService;
 
-        userProfile = userService.findUserProfile(userSession
-                .getUserProfileId());
-        firstName = userProfile.getFirstName();
-        lastName = userProfile.getLastName();
-        email = userProfile.getEmail();
+	void onPrepareForRender() throws InstanceNotFoundException {
 
-    }
+		UserProfile userProfile;
 
-    Object onSuccess() throws InstanceNotFoundException {
+		userProfile = userService.findUserProfile(userSession
+				.getUserProfileId());
+		firstName = userProfile.getFirstName();
+		lastName = userProfile.getLastName();
+		email = userProfile.getEmail();
 
-        userService.updateUserProfileDetails(
-                userSession.getUserProfileId(), new UserProfileDetails(
-                        firstName, lastName, email, dni, birthdate, UserProfile.TypeUser.CLIENT ));
-        userSession.setFirstName(firstName);
-        return Index.class;
+	}
 
-    }
+	Object onSuccess() throws InstanceNotFoundException {
+
+		userService.updateUserProfileDetails(userSession.getUserProfileId(),
+				new UserProfileDetails(firstName, lastName, email, dni,
+						birthdate, UserProfile.TypeUser.CLIENT));
+		userSession.setFirstName(firstName);
+		return Index.class;
+
+	}
 
 }

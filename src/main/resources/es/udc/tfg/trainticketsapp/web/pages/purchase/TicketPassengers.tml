@@ -1,10 +1,15 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
 	t:type="Layout" t:title="title" showTitleInBody="false">
 	
-	<br/>
+<t:purchaseState actualPage="'ticketPassengers'"/>	
+
+	<div class="row">
+	<div class="col-md-9">
 		<form t:type="Form" class="form-horizontal" t:id="ticketForm" >
-	
+		<legend>${message:legendpassenger}</legend>
 	   <t:errors/>
+	   <div class="panel panel-default">
+  <div class="panel-body">
        <t:loop source="ticketsDetails" value="ticketDetails" t:formstate="ITERATION" index="index"  >
 		 <div>${message:passenger} ${index}</div> 
 	   <div class="form-group">        
@@ -38,30 +43,57 @@
 	        </div>
 	   </div>	   
 
-	   <div class="form-group">        
-	        <t:label for="carType" class="col-md-offset-3 col-md-2"/>
-	        <div class="col-md-2">
-				<t:select t:id="carType" value="ticketDetails.carType" validate="required"/>
-
-			</div>
-	   </div>
-	   	   	   </t:loop>
-	   
 	   	   <div class="form-group">        
 	        <t:label for="fareFamily" class="col-md-offset-3 col-md-2"/>
 	        <div class="col-md-2">
-				<t:select t:id="fareFamily"  t:blankOption="always" model="fareFamilyModel" encoder="FareEncoder"/>
+				<t:select t:id="fareFamily" value="ticketDetails.fareFamily"  t:blankOption="always" model="fareFamilyModel" encoder="FareEncoder"/>
+
+			</div>
+	   </div>	   
+	   <hr></hr>
+	   	   	   </t:loop>
+</div></div>
+<div class="panel panel-default">
+  <div class="panel-body">
+	   <div class="form-group">        
+	        <t:label for="carType" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-2">
+				<t:select t:id="carType" model="carTypes" validate="required"/>
+
+			</div>
+	   </div>	 
+	   <t:if t:test="originReturn">  
+	   <div class="form-group">        
+	        <t:label for="carTypeReturn" class="col-md-offset-3 col-md-2"/>
+	        <div class="col-md-2">
+				<t:select t:id="carTypeReturn" model="carTypesReturn" validate="required"/>
 
 			</div>
 	   </div>
-	   	   
+	   </t:if>
+
+	    <div class="form-group">
+            <div class="col-md-offset-5 col-md-3">
+                <div class="checkbox">
+                	<label for="autoSeat">
+                		<input t:type="Checkbox" t:id="autoSeat"/> ${message:autoSeat-label}
+                    </label>
+	            </div>
+	        </div>
+	    </div>	   	   
 	    
 	    <div class="form-group">
 	    	<div class="col-md-offset-5 col-md-1">
         		<button type="submit" class="btn btn-primary">${message:submit}</button>
         	</div>
         </div> 
-	    
+	</div></div>    
 	</form>
-		
+	
+	</div>	
+	
+	      <div class="col-md-3"><t:panel/></div>
+	      </div>
+	
+	
 </html>	

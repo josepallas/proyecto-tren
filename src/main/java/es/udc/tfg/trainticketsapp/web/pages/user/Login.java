@@ -21,62 +21,61 @@ import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 @AuthenticationPolicy(AuthenticationPolicyType.NON_AUTHENTICATED_USERS)
 public class Login {
 
-    @Property
-    private String loginName;
+	@Property
+	private String loginName;
 
-    @Property
-    private String password;
+	@Property
+	private String password;
 
-    @Property
-    private boolean rememberMyPassword;
+	@Property
+	private boolean rememberMyPassword;
 
-    @SessionState(create=false)
-    private UserSession userSession;
+	@SessionState(create = false)
+	private UserSession userSession;
 
-    @Inject
-    private Cookies cookies;
+	@Inject
+	private Cookies cookies;
 
-    @Component
-    private Form loginForm;
+	@Component
+	private Form loginForm;
 
-    @Inject
-    private Messages messages;
+	@Inject
+	private Messages messages;
 
-    @Inject
-    private UserService userService;
+	@Inject
+	private UserService userService;
 
-    private UserProfile userProfile = null;
+	private UserProfile userProfile = null;
 
+	void onValidateFromLoginForm() {
 
-    void onValidateFromLoginForm() {
+		if (!loginForm.isValid()) {
+			return;
+		}
 
-        if (!loginForm.isValid()) {
-            return;
-        }
+		try {
+			userProfile = userService.login(loginName, password, false);
+		} catch (InstanceNotFoundException e) {
+			loginForm.recordError(messages.get("error-authenticationFailed"));
+		} catch (IncorrectPasswordException e) {
+			loginForm.recordError(messages.get("error-authenticationFailed"));
+		}
 
-        try {
-            userProfile = userService.login(loginName, password, false);
-        } catch (InstanceNotFoundException e) {
-            loginForm.recordError(messages.get("error-authenticationFailed"));
-        } catch (IncorrectPasswordException e) {
-            loginForm.recordError(messages.get("error-authenticationFailed"));
-        }
+	}
 
-    }
+	Object onSuccess() {
 
-    Object onSuccess() {
+		userSession = new UserSession();
+		userSession.setUserProfileId(userProfile.getUserProfileId());
+		userSession.setFirstName(userProfile.getFirstName());
+		userSession.setTypeUser(userProfile.getTypeUser());
 
-    	userSession = new UserSession();
-        userSession.setUserProfileId(userProfile.getUserProfileId());
-        userSession.setFirstName(userProfile.getFirstName());
-        userSession.setTypeUser(userProfile.getTypeUser());
+		if (rememberMyPassword) {
+			CookiesManager.leaveCookies(cookies, loginName,
+					userProfile.getEncryptedPassword());
+		}
+		return Index.class;
 
-        if (rememberMyPassword) {
-            CookiesManager.leaveCookies(cookies, loginName, userProfile
-                    .getEncryptedPassword());
-        }
-        return Index.class;
-
-    }
+	}
 
 }

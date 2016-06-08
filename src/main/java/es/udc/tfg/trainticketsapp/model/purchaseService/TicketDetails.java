@@ -1,38 +1,31 @@
 package es.udc.tfg.trainticketsapp.model.purchaseService;
 
-import java.util.List;
-
 import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.fare.Fare;
 
 public class TicketDetails {
-	
-    private String firstName;
-    private String lastName;
-    private String dni;
-    private String email;
-    private Car car;
-    private List<Fare> fare;
-    private int seat;
-    private CarType carType; 
-    
-    public TicketDetails(){
-    	
-    }
-    
+
+	private String firstName;
+	private String lastName;
+	private String dni;
+	private String email;
+	private Car car;
+	private Car carReturn;
+	private int seatReturn;
+	private Fare fareFamily;
+	private int seat;
+	public TicketDetails() {
+
+	}
+
 	public TicketDetails(String firstName, String lastName, String dni,
-			String email,CarType carType,List<Fare> fare) {
+			String email, CarType carType, Fare fareFamily) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dni = dni;
 		this.email = email;
-		this.carType=carType;
-		this.fare = fare;
-	}
-
-	public CarType getCarType() {
-		return carType;
+		this.fareFamily = fareFamily;
 	}
 
 	public String getFirstName() {
@@ -54,15 +47,14 @@ public class TicketDetails {
 	public Car getCar() {
 		return car;
 	}
-	
+
 	public int getSeat() {
 		return seat;
 	}
 
-	public List<Fare> getFare() {
-		return fare;
+	public Fare getFareFamily() {
+		return fareFamily;
 	}
-    
 
 	public void setCar(Car car) {
 		this.car = car;
@@ -88,14 +80,24 @@ public class TicketDetails {
 		this.email = email;
 	}
 
-	public void setFare(List<Fare> fare) {
-		this.fare = fare;
+	public void setFareFamily(Fare fareFamily) {
+		this.fareFamily = fareFamily;
 	}
 
-	public void setCarType(CarType carType) {
-		this.carType = carType;
-	}	
-	
-    
+	public Car getCarReturn() {
+		return carReturn;
+	}
+
+	public void setCarReturn(Car carReturn) {
+		this.carReturn = carReturn;
+	}
+
+	public int getSeatReturn() {
+		return seatReturn;
+	}
+
+	public void setSeatReturn(int seatReturn) {
+		this.seatReturn = seatReturn;
+	}
 
 }
