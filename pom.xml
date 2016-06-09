@@ -305,9 +305,9 @@
     			<version>2.7</version>
     				<configuration>
    					<instrumentation>
-						<ignores>
-							<ignore>src.main.java.es.udc.tfg.trainticketsapp.web.*</ignore>
-						</ignores>
+  					          <excludes>
+            						<exclude>**/web/*</exclude>
+        					 </excludes> 						
 					</instrumentation> 					
         				<format>xml</format>
         				<maxmem>256m</maxmem>
