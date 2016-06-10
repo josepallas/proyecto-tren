@@ -8,4 +8,4 @@ before_install:
   - mysql -e "create database IF NOT EXISTS pojotest;" -uroot
   - mysql -e "GRANT ALL PRIVILEGES ON pojotest.* to pojo@localhost IDENTIFIED BY 'pojo';" -uroot
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report  
+  - mvn clean jacoco:report coveralls:report  
