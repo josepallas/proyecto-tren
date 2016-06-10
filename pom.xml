@@ -304,12 +304,6 @@
     			<artifactId>cobertura-maven-plugin</artifactId>
     			<version>2.7</version>
     				<configuration>
-					           <ignores>
-              <ignore>es.udc.tfg.trainticketsapp.web.*</ignore>
-            </ignores>
-            <excludes>
-              <exclude>**/*Index</exclude>
-            </excludes>
         				<format>xml</format>
         				<maxmem>256m</maxmem>
         				<!-- aggregated reports for multi-module projects -->
