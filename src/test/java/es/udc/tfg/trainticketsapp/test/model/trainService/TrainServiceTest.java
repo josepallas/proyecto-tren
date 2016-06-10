@@ -170,19 +170,21 @@ public class TrainServiceTest {
 		trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 		trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 	}
-	
+	@Test	
 	public void findTrainByIdTest() throws InstanceNotFoundException {
 		Train train=new Train(TRAIN_NAME, TRAIN_TYPE);
 		trainDao.save(train);
 		Train train2=trainService.findTrain(train.getTrainId());
 		assertEquals(train, train2);
 	}
+	@Test
 	public void findStationByIdTest() throws InstanceNotFoundException {
 		Station station = new Station("estacionA", "Calle de españa", "Coruna");
 		stationDao.save(station);
 		Station station2=trainService.findStation(station.getStationId());
 		assertEquals(station, station2);
 	}
+	@Test	
 	public void findRouteByIdTest() throws InstanceNotFoundException {
 		Train train=new Train(TRAIN_NAME, TRAIN_TYPE);
 		trainDao.save(train);
@@ -191,6 +193,7 @@ public class TrainServiceTest {
 		Route route2=trainService.findRoute(route.getRouteId());
 		assertEquals(route,route2);
 	}	
+	@Test	
 	public void findTravelsTest() throws InstanceNotFoundException, DuplicateInstanceException {
 		Train train = new Train("A25", TrainType.AVE);
 		Long hora = new Long(123445);
@@ -213,8 +216,5 @@ public class TrainServiceTest {
 		assertEquals(train, travels.get(0).getTrain());
 		assertEquals(s1, travels.get(0).getOrigin());
 		assertEquals(s2, travels.get(0).getDestination());
-		
-
-		
 	}	
 }
