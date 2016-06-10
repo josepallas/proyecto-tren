@@ -1,5 +1,5 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter"
-	t:type="Layout" t:title="title" showTitleInBody="false">
+	t:type="Layout" t:title="title">
 
 <br />
 <t:if test="route">

@@ -1,6 +1,5 @@
 package es.udc.tfg.trainticketsapp.model.car;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;

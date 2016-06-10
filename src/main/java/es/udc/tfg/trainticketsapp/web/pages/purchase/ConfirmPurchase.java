@@ -1,21 +1,21 @@
 package es.udc.tfg.trainticketsapp.web.pages.purchase;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
-import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import es.udc.tfg.trainticketsapp.model.purchaseService.TicketDetails;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
-import es.udc.tfg.trainticketsapp.model.purchase.Purchase;
+import es.udc.tfg.trainticketsapp.model.car.Car;
+import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
-import es.udc.tfg.trainticketsapp.model.ticket.Ticket;
-import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile;
-import es.udc.tfg.trainticketsapp.model.userservice.UserService;
+import es.udc.tfg.trainticketsapp.model.util.exceptions.NotEmpySeatsException;
+import es.udc.tfg.trainticketsapp.web.pages.Index;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 import es.udc.tfg.trainticketsapp.web.util.TravelSession;
@@ -23,52 +23,101 @@ import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
 @AuthenticationPolicy(AuthenticationPolicyType.AUTHENTICATED_USERS)
 public class ConfirmPurchase {
-	private Long purchaseId;
-	@Inject
-	private PurchaseService purchaseService;
-	@Inject
-	private UserService userService;
 	@Property
-	private Purchase purchase;
+	@SessionState(create = false)
+	private TravelSession travelSession;
 	@SessionState(create = false)
 	private UserSession userSession;
+	@InjectPage
+	private SendTickets sendTickets;
+	@Property
+	private boolean confirm;
+	@Persist
+	private List<TicketDetails> ticketsDetails;
 	@Inject
-	private AlertManager alertManager;
+	private ComponentResources componentResources;
 	@Inject
-	private Messages messages;
+	private PurchaseService purchaseService;
+	@Persist
+	private Long origin;
+	@Persist
+	private Long destination;
+	@Persist
+	private Long originReturn;
+	@Persist
+	private Long destinationReturn;
+	@Property
+	private float price;
 
-	public Long getpurchaseId() {
-		return purchaseId;
+	public Long getOrigin() {
+		return origin;
 	}
 
-	public void setpurchaseId(Long purchaseId) {
-		this.purchaseId = purchaseId;
+	public void setOrigin(Long origin) {
+		this.origin = origin;
 	}
 
-	Long onPassivate() {
-		return purchaseId;
+	public Long getDestination() {
+		return destination;
 	}
 
-	void onActivate(Long purchaseId) {
-		this.purchaseId = purchaseId;
+	public void setDestination(Long destination) {
+		this.destination = destination;
+	}
+
+	public Long getOriginReturn() {
+		return originReturn;
+	}
+
+	public void setOriginReturn(Long originReturn) {
+		this.originReturn = originReturn;
+	}
+
+	public Long getDestinationReturn() {
+		return destinationReturn;
+	}
+
+	public void setDestinationReturn(Long destinationReturn) {
+		this.destinationReturn = destinationReturn;
+	}
+
+	public List<TicketDetails> getTicketsDetails() {
+		return ticketsDetails;
+	}
+
+	public void setTicketsDetails(List<TicketDetails> ticketsDetails) {
+		this.ticketsDetails = ticketsDetails;
+	}
+
+	public void setSeats(int seat, Car car, int num) {
+		this.ticketsDetails.get(num).setSeat(seat);
+		this.ticketsDetails.get(num).setCar(car);
+	}
+	public void setSeatsReturn(int seat, Car car, int num) {
+		this.ticketsDetails.get(num).setSeatReturn(seat);
+		this.ticketsDetails.get(num).setCarReturn(car);
+	}
+
+	void onPrepareForRender() {
+		this.price = travelSession.getPrice();
+	}
+
+	Object onActionFromPurchase() {
+		Long purchaseId = null;
 		try {
-			this.purchase = purchaseService.findPurchase(purchaseId);
-			if (!purchase.getUserProfile().getUserProfileId()
-					.equals(userSession.getUserProfileId()))
-				this.purchase = null;
-
+			purchaseId = purchaseService.buyTickets(PaymentMethod.PAYPAL,
+					userSession.getUserProfileId(),
+					travelSession.getDeparture(), travelSession.getArrival(),
+					origin, destination, originReturn, destinationReturn,
+					ticketsDetails,travelSession.getCarType(),travelSession.getCarTypeReturn()).getPurchaseId();
 		} catch (InstanceNotFoundException e) {
+			return null;
+			
+		} catch (NotEmpySeatsException e) {
+			return null;
 		}
-	}
+		sendTickets.setpurchaseId(purchaseId);
+		return sendTickets;
 
-	void onSuccess() {
-		try {
-			purchaseService.sendTickets(purchaseId);
-			this.alertManager.success(messages.get("success-label"));
-		} catch (InstanceNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-
 }

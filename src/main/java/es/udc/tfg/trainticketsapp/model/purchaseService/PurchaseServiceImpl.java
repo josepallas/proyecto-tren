@@ -34,8 +34,9 @@ import es.udc.tfg.trainticketsapp.model.userprofile.UserProfileDao;
 import es.udc.tfg.trainticketsapp.model.util.exceptions.NotEmpySeatsException;
 import es.udc.tfg.trainticketsapp.model.util.exceptions.TimeoutTicketException;
 import es.udc.tfg.trainticketsapp.model.util.MailService;
+
 @Service("purchaseService")
-@Transactional(rollbackFor={NotEmpySeatsException.class})
+@Transactional(rollbackFor = { NotEmpySeatsException.class })
 public class PurchaseServiceImpl implements PurchaseService {
 
 	@Autowired
@@ -104,7 +105,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public Purchase buyTickets(PaymentMethod paymentMethod, Long userId,
 			Calendar ticketsDate, Calendar ticketsDateReturn, Long origin,
 			Long destination, Long originReturn, Long destinationReturn,
-			List<TicketDetails> tickets,CarType carType,CarType carTypeReturn) throws InstanceNotFoundException, NotEmpySeatsException {
+			List<TicketDetails> tickets, CarType carType, CarType carTypeReturn)
+			throws InstanceNotFoundException, NotEmpySeatsException {
 		boolean outreturn = (ticketsDateReturn != null);
 		UserProfile user = userProfileDao.find(userId);
 		Stop stopOrigin = stopDao.find(origin);
@@ -133,8 +135,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 				purchase.addTicket(ticketReturn);
 				ticketDao.save(ticketReturn);
 			}
-			setSeat(ticketsDate, carType, stopOrigin.getRoute()
-					.getRouteId(), d, false);
+			setSeat(ticketsDate, carType, stopOrigin.getRoute().getRouteId(),
+					d, false);
 			Ticket ticket = new Ticket(new Float(0), d.getSeat(), ticketsDate,
 					d.getCar(), passenger, stopDestination, stopOrigin);
 			ticket.addFare(d.getFareFamily());
@@ -168,7 +170,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		for (Car c : cars) {
 			num = getNumber(ticketDao.findOccupiedSeats(ticketDate,
 					c.getCarId(), routeId), c.getCapacity());
-			if(num==-1){
+			if (num == -1) {
 				throw new NotEmpySeatsException(routeId, ticketDate);
 
 			}
@@ -241,17 +243,19 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	public float calculatePayment(Long id, Long idReturn,
-			List<TicketDetails> ticketDetails,CarType carType,CarType carTypeReturn) throws InstanceNotFoundException {
+			List<TicketDetails> ticketDetails, CarType carType,
+			CarType carTypeReturn) throws InstanceNotFoundException {
 		float total = 0;
 		float amount = 0;
 		Float price = stopDao.find(id).getRoute().getPrice();
-		Fare classTravel=fareDao.findByName(carType.toString());
-		price=price+classTravel.getDiscount()*price/100;
-		if (idReturn != null){
-			float price2=stopDao.find(idReturn).getRoute().getPrice();
-			Fare classTravelReturn=fareDao.findByName(carTypeReturn.toString());
-			price=price+classTravelReturn.getDiscount()*price/100;
-			price=price+price2;
+		Fare classTravel = fareDao.findByName(carType.toString());
+		price = price + classTravel.getDiscount() * price / 100;
+		if (idReturn != null) {
+			float price2 = stopDao.find(idReturn).getRoute().getPrice();
+			Fare classTravelReturn = fareDao.findByName(carTypeReturn
+					.toString());
+			price = price + classTravelReturn.getDiscount() * price / 100;
+			price = price + price2;
 		}
 		for (TicketDetails t : ticketDetails) {
 			amount = price;
@@ -279,56 +283,59 @@ public class PurchaseServiceImpl implements PurchaseService {
 				purchase.removeTicket(ticket);
 			}
 			ticketDao.remove(ticket.getTicketId());
-			if (purchase.getTickets().isEmpty())
-				purchaseDao.remove(purchase.getPurchaseId());
+			if (purchase != null) {
+				if (purchase.getTickets().isEmpty())
+					purchaseDao.remove(purchase.getPurchaseId());
+			}
 		}
 	}
 
-	public void sendTickets(Long purchaseId)
-			throws InstanceNotFoundException {
+	public void sendTickets(Long purchaseId) throws InstanceNotFoundException {
 		Purchase purchase = purchaseDao.find(purchaseId);
-		List<Ticket> tickets=purchase.getTickets();
+		List<Ticket> tickets = purchase.getTickets();
 		Iterator<Ticket> it1 = tickets.iterator();
-		boolean roundTrip=false;
-		if (tickets.size()>1) {
-			roundTrip=tickets.get(0).getPassenger().equals(tickets.get(1).getPassenger());
+		boolean roundTrip = false;
+		if (tickets.size() > 1) {
+			roundTrip = tickets.get(0).getPassenger()
+					.equals(tickets.get(1).getPassenger());
 		}
 		while (it1.hasNext()) {
-			Ticket ticket=it1.next();
-			String srtmessage=formatTicket(ticket.getTicketId(),ticket.getTicketDate(),ticket.getOrigin().getDepartTime(),
-					ticket.getDestination().getArrivalTime(),ticket.getSeat(),ticket.getCar().getTrain().getTrainName(),ticket.getCar().getCarNum());
+			Ticket ticket = it1.next();
+			String srtmessage = formatTicket(ticket.getTicketId(),
+					ticket.getTicketDate(), ticket.getOrigin().getDepartTime(),
+					ticket.getDestination().getArrivalTime(), ticket.getSeat(),
+					ticket.getCar().getTrain().getTrainName(), ticket.getCar()
+							.getCarNum());
 			if (roundTrip) {
-				ticket=it1.next();
-				srtmessage=srtmessage+formatTicket(ticket.getTicketId(),ticket.getTicketDate(),ticket.getOrigin().getDepartTime(),
-						ticket.getDestination().getArrivalTime(),ticket.getSeat(),ticket.getCar().getTrain().getTrainName(),ticket.getCar().getCarNum());
-				
+				ticket = it1.next();
+				srtmessage = srtmessage
+						+ formatTicket(ticket.getTicketId(),
+								ticket.getTicketDate(), ticket.getOrigin()
+										.getDepartTime(), ticket
+										.getDestination().getArrivalTime(),
+								ticket.getSeat(), ticket.getCar().getTrain()
+										.getTrainName(), ticket.getCar()
+										.getCarNum());
+
 			}
-			MailService.sendMessage(ticket.getPassenger().getEmail(), srtmessage);
+			MailService.sendMessage(ticket.getPassenger().getEmail(),
+					srtmessage);
 		}
 	}
-	private String formatTicket(Long id,Calendar ticketDate,Long departTime,Long arrivalTime,int seat,String trainName,int carNum){
+
+	private String formatTicket(Long id, Calendar ticketDate, Long departTime,
+			Long arrivalTime, int seat, String trainName, int carNum) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		DateFormat dateformat = DateFormat.getTimeInstance(DateFormat.SHORT);
-		return "<table bgcolor=\"#D3D3D3\"><tr><th>TicketId</th><td>"
-				+ id
-				+ "</td></tr>"
-				+ "<tr><th>Date</th><td>"
-				+ sdf.format(ticketDate.getTime())
-				+ "</td></tr>"
-				+ "<tr><th>Departure</th><td>"
-				+ dateformat.format(departTime)
-				+ "</td></tr>"
-				+ "<tr><th>Arrival</th><td>"
-				+ dateformat.format(arrivalTime)
-				+ "</td></tr>"
-				+ "<tr><th>Seat</th><td>"
-				+ seat
-				+ "</td></tr>"
-				+ "<tr><th>Train</th><td>"
-				+ trainName
-				+ "</td></tr>"
-				+ "<tr><th>Car</th><td>"
-				+ carNum
+		return "<table bgcolor=\"#D3D3D3\"><tr><th>TicketId</th><td>" + id
+				+ "</td></tr>" + "<tr><th>Date</th><td>"
+				+ sdf.format(ticketDate.getTime()) + "</td></tr>"
+				+ "<tr><th>Departure</th><td>" + dateformat.format(departTime)
+				+ "</td></tr>" + "<tr><th>Arrival</th><td>"
+				+ dateformat.format(arrivalTime) + "</td></tr>"
+				+ "<tr><th>Seat</th><td>" + seat + "</td></tr>"
+				+ "<tr><th>Train</th><td>" + trainName + "</td></tr>"
+				+ "<tr><th>Car</th><td>" + carNum
 				+ "</td></tr></table><br><br>";
 	}
 }

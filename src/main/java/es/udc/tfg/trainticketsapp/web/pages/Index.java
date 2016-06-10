@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
@@ -20,10 +19,12 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
+import es.udc.tfg.trainticketsapp.model.userprofile.UserProfile.TypeUser;
 import es.udc.tfg.trainticketsapp.web.pages.train.TravelsFound;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
 import es.udc.tfg.trainticketsapp.web.util.TravelSession;
+import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
 @AuthenticationPolicy(AuthenticationPolicyType.ALL_USERS)
 public class Index {
@@ -53,6 +54,8 @@ public class Index {
 	private String radioSelectedValue;
 	@SessionState(create = false)
 	private TravelSession travelSession;
+	@SessionState(create = false)
+	private UserSession userSession;
 
 	@Environmental
 	private JavaScriptSupport javaScriptSupport;
@@ -61,6 +64,12 @@ public class Index {
 		javaScriptSupport
 				.importJavaScriptLibrary("/traintickets-app/js/datepicker.js");
 		radioSelectedValue = "I";
+	}
+	public boolean getAdministrator() {
+		if (userSession!=null){
+		return (userSession.getTypeUser() == TypeUser.ADMINISTRATOR);
+		}
+		else return false;
 	}
 
 	List<String> onProvideCompletions(String partial) {

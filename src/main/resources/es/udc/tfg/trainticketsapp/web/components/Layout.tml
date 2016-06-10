@@ -35,10 +35,26 @@
 			<t:if test="userSession">
 
 				<t:if test="administrator">
-					<a class="navbar-brand" href="#" t:type="PageLink"
-						t:page="train/createstation">${message:createStation}</a>
-					<a class="navbar-brand" href="#" t:type="PageLink"
-						t:page="train/createtrain">${message:createTrain}</a>
+					<ul class="nav navbar-nav">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">${message:trains}<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#" t:type="PageLink"
+									t:page="train/createtrain">${message:createTrain}</a></li>
+								<li><a href="#" t:type="PageLink"
+									t:page="train/updatetrain">${message:updateTrain}</a></li>
+							</ul></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">${message:stations}<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#" t:type="PageLink"
+									t:page="train/createstation">${message:createStation}</a></li>
+								<li><a href="#" t:type="PageLink"
+									t:page="train/updatestation">${message:updateStation}</a></li>
+							</ul></li>
+					</ul>						
 					<ul class="nav navbar-nav">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">${message:fares}<span class="caret"></span></a>
@@ -64,6 +80,10 @@
 				<t:if test="salesman">
 					<a class="navbar-brand" href="#" t:type="PageLink"
 						t:page="purchase/findticket">${message:findTicket}</a>
+					<a class="navbar-brand" href="#" t:type="PageLink"
+						t:page="purchase/userTickets">${message:userTickets}</a>
+					<a class="navbar-brand" href="#" t:type="PageLink"
+						t:page="purchase/userpurchases">${message:purchases}</a>						
 				</t:if>
 				<t:if test="client">
 					<a class="navbar-brand" href="#" t:type="PageLink"

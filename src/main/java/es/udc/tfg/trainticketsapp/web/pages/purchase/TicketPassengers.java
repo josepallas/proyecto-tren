@@ -62,7 +62,7 @@ public class TicketPassengers {
 	@InjectPage
 	private SelectSeat selectSeat;
 	@InjectPage
-	private TicketPayment ticketPayment;
+	private ConfirmPurchase confirmPurchase;
 	@SessionState(create = false)
 	private TravelSession travelSession;
 	private Long origin;
@@ -184,13 +184,13 @@ public class TicketPassengers {
 		travelSession.setPrice(price);
 		travelSession.setCarType(carType);
 		travelSession.setCarTypeReturn(carTypeReturn);
-		ticketPayment.setTicketsDetails(ticketsDetails);
-		ticketPayment.setOrigin(origin);
-		ticketPayment.setDestination(destination);
-		ticketPayment.setOriginReturn(originReturn);
-		ticketPayment.setDestinationReturn(destinationReturn);
+		confirmPurchase.setTicketsDetails(ticketsDetails);
+		confirmPurchase.setOrigin(origin);
+		confirmPurchase.setDestination(destination);
+		confirmPurchase.setOriginReturn(originReturn);
+		confirmPurchase.setDestinationReturn(destinationReturn);
 		if (autoSeat) {
-			return ticketPayment;
+			return TicketPayment.class;
 		} else {
 			selectSeat.setOriginId(origin);
 			selectSeat.setOriginReturnId(originReturn);

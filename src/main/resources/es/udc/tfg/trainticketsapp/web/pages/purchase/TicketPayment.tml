@@ -15,7 +15,7 @@
             <input type="hidden" name="currency_code" value="EUR"></input>
             <input type="hidden" name="amount" value="${travelSession.price}"></input>
             <input type="hidden" name="no_shipping" value="1"></input>
-            <input type="hidden" name="return" value="http://localhost:9090/traintickets-app/purchase/ticketpayment/true"></input>
+            <input type="hidden" name="return" value="http://localhost:9090/traintickets-app/purchase/confirmpurchase"></input>
 			<input type="hidden" name="cancel_return" value="http://localhost:9090/traintickets-app/purchase/paymentmethod"></input>
 			<input type="image" src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal. La forma rápida y segura de pagar en Internet."></input>
 			<img alt="" border="0" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" width="1" height="1"></img>

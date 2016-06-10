@@ -47,7 +47,7 @@ public class SelectSeat {
 	private int num;
 	private int passengers;
 	@InjectPage
-	private TicketPayment ticketPayment;
+	private ConfirmPurchase confirmPurchase;
 	@Persist
 	private boolean setReturn;
 
@@ -87,9 +87,9 @@ public class SelectSeat {
 		try {
 			car = trainService.findCar(carId);
 			if(setReturn)
-				ticketPayment.setSeatsReturn(index, car, num);
+				confirmPurchase.setSeatsReturn(index, car, num);
 			else
-			ticketPayment.setSeats(index, car, num);
+				confirmPurchase.setSeats(index, car, num);
 		} catch (InstanceNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class SelectSeat {
 		} else
 			if (setReturn||travelSession.getCarTypeReturn()==null) {
 				setReturn=false;
-				return ticketPayment;
+				return TicketPayment.class;
 			}
 			else {
 				setReturn=true;

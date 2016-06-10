@@ -3,7 +3,6 @@ package es.udc.tfg.trainticketsapp.model.purchase;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

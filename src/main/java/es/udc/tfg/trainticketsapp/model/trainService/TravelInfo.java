@@ -1,7 +1,5 @@
 package es.udc.tfg.trainticketsapp.model.trainService;
 
-import java.util.List;
-
 import es.udc.tfg.trainticketsapp.model.stop.Stop;
 import es.udc.tfg.trainticketsapp.model.train.Train;
 

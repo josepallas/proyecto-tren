@@ -1,6 +1,9 @@
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
-	t:type="Layout" t:title="title" showTitleInBody="false">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" 	xmlns:p="tapestry:parameter"
+	t:type="Layout" t:title="title" showTitleInBody="false"> 
    
+   <t:if test="administrator">
+   <h2>${message:hello}</h2>
+   <p:else>
    	<form t:type="Form" class="form-horizontal" t:id="findForm">
 	
 		<t:errors/>
@@ -59,4 +62,6 @@
 		</div>
 	    	
 	</form>
+	</p:else>
+	</t:if>
 </html>

@@ -73,6 +73,10 @@ public interface TrainService {
 	 */
 	public Station createStation(String stationName, String city, String address)
 			throws DuplicateInstanceException;
+	/**
+	 * Método modifica una estación
+	 */
+	public void updateStation(Long id,String city, String address) throws InstanceNotFoundException;
 
 	/**
 	 * Método que crea un tren a partire de un nombre, un tipo y una lista de vagones
@@ -83,6 +87,12 @@ public interface TrainService {
 	public Train createTrain(String trainName, TrainType trainType,
 			List<Car> cars) throws DuplicateInstanceException,
 			InstanceNotFoundException;
+	
+	/**
+	 * Método que crea actualiza un tren con sus vagones
+	 */	
+	public void updateTrain(Long id, TrainType trainType,
+			List<Car> cars) throws InstanceNotFoundException;
 
 	/**
 	 * Método que busca un tren a partir de su nombre

@@ -143,6 +143,8 @@ public class TrainServiceImpl implements TrainService {
 		case 7:
 			weekDay = Route.WeekDay.SABADO;
 			break;
+		default:
+			break;
 
 		}
 		return weekDay;
@@ -191,6 +193,13 @@ public class TrainServiceImpl implements TrainService {
 			return station;
 		}
 	}
+	
+	public void updateStation(Long id,String city, String address) throws InstanceNotFoundException {
+		Station station=stationDao.find(id);
+		station.setAddress(address);
+		station.setCity(city);
+	}
+
 
 	public Train createTrain(String trainName, TrainType trainType,
 			List<Car> cars) throws DuplicateInstanceException,
@@ -208,5 +217,11 @@ public class TrainServiceImpl implements TrainService {
 			}
 			return train;
 		}
+	}
+	public void updateTrain(Long id, TrainType trainType,
+			List<Car> cars) throws InstanceNotFoundException {
+		Train train=trainDao.find(id);
+		train.setTrainType(trainType);
+		train.setCars(cars);
 	}
 }
