@@ -124,8 +124,14 @@ public class TrainServiceTest {
 			InstanceNotFoundException {
 		Train train = new Train("A25", TrainType.AVE);
 		trainDao.save(train);
-		Route route = trainService.createRoute("M-Coruña", "sin paradas",
-				train.getTrainId(), ROUTE_PRICE, null, null);
+		Station station = new Station("estacionA", "Calle de españa", "Coruna");
+		stationDao.save(station);
+		Stop s1 = new Stop(new Long(0), new Long(10), station);
+		List<Stop> stops = new ArrayList<Stop>();
+		stops.add(s1);
+		Route route = trainService.createRoute(
+				"M-Coruña", "sin paradas",
+				train.getTrainId(), ROUTE_PRICE, stops, null);
 		trainService.updateRoute(route.getRouteId(), "Madird", "ninguna", train, new Float(12), null);
 		assertEquals("ninguna", route.getRouteDescription());
 		assertEquals(new Float(12), route.getPrice());
@@ -147,10 +153,12 @@ public class TrainServiceTest {
 	@Test
 	public void updateTrainTest() throws DuplicateInstanceException,
 			InstanceNotFoundException {
+		List<Car> cars = new ArrayList<Car>();
+		cars.add(new Car(CAPACITY_TRAIN, CAR_TYPE, 1));
+		cars.add(new Car(CAPACITY_TRAIN, CAR_TYPE, 2));
+		Train train = trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 
-		Train train = trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, null);
-
-		trainService.updateTrain(train.getTrainId(), TrainType.AVANT, null);
+		trainService.updateTrain(train.getTrainId(), TrainType.AVANT, cars);
 		assertEquals(TrainType.AVANT, train.getTrainType());
 	}
 
