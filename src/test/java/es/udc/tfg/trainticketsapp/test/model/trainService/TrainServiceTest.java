@@ -62,6 +62,12 @@ public class TrainServiceTest {
 
 	private List<WeekDay> getListDays() {
 		List<WeekDay> days=new ArrayList<WeekDay>();
+		days.add(WeekDay.VIERNES);
+		days.add(WeekDay.SABADO);
+		days.add(WeekDay.LUNES);
+		days.add(WeekDay.MARTES);
+		days.add(WeekDay.MIERCOLES);
+		days.add(WeekDay.JUEVES);
 		days.add(WeekDay.DOMINGO);
 		return days;
 	}
@@ -195,22 +201,23 @@ public class TrainServiceTest {
 	}	
 	@Test	
 	public void findTravelsTest() throws InstanceNotFoundException, DuplicateInstanceException {
-		Train train = new Train("A25", TrainType.AVE);
+		List<Car> cars = new ArrayList<Car>();
+		cars.add(new Car(CAPACITY_TRAIN, CAR_TYPE, 1));
+		Train train =trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 		Long hora = new Long(123445);
 		Station station = new Station("estacionA", "Calle de españa", "Coruna");
 		stationDao.save(station);
 		Station station2 = new Station("estacionB", "Calle mayor", "Coruna");
 		stationDao.save(station2);
-		trainDao.save(train);
-		Stop s1 = new Stop(hora, hora, station);
-		Stop s2 = new Stop(hora, hora, station2);
+		Stop s1 = new Stop(null, hora, station);
+		Stop s2 = new Stop(new Long(923445), new Long(923446), station2);
 		List<Stop> stops = new ArrayList<Stop>();
 		stops.add(s1);
 		stops.add(s2);
 		trainService.createRoute("M-Coruña", "sin paradas",
 				train.getTrainId(), ROUTE_PRICE, stops, getListDays());
 		Calendar calendar=Calendar.getInstance();
-		calendar.set(2017, 1, 1);
+		calendar.add(Calendar.DAY_OF_MONTH, 2);
 		List<TravelInfo> travels=trainService.findTravels(calendar, "estacionA", "estacionB");
 		assertEquals(1, travels.size());
 		assertEquals(train, travels.get(0).getTrain());
