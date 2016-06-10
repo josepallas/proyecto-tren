@@ -9,7 +9,7 @@ DROP TABLE TicketFare;
 DROP TABLE Ticket;
 DROP TABLE Purchase;
 DROP TABLE Car;
-DROP TABLE Days;
+DROP TABLE days;
 DROP TABLE Stop;
 DROP TABLE Route;
 DROP TABLE Train;
@@ -152,7 +152,7 @@ CREATE TABLE Ticket (
     CONSTRAINT Ticket_PK PRIMARY KEY (ticketId))
     ENGINE = InnoDB;	
 -- ------------------------------ Days ----------------------------------			
-CREATE TABLE Days (
+CREATE TABLE days (
   	routeId BIGINT NOT NULL,
   	day TINYINT,
   	key Days_Route_FK (routeId),
