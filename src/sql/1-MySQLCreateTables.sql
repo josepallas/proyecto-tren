@@ -8,8 +8,8 @@ CREATE TABLE PingTable (foo CHAR(1));
 DROP TABLE TicketFare;
 DROP TABLE Ticket;
 DROP TABLE Purchase;
-DROP TABLE Days;
 DROP TABLE Car;
+DROP TABLE Days;
 DROP TABLE Stop;
 DROP TABLE Route;
 DROP TABLE Train;
@@ -151,6 +151,13 @@ CREATE TABLE Ticket (
 	CONSTRAINT Ticket_Origin_FK FOREIGN KEY (originId) REFERENCES Stop(stopId),
     CONSTRAINT Ticket_PK PRIMARY KEY (ticketId))
     ENGINE = InnoDB;	
+-- ------------------------------ Days ----------------------------------			
+CREATE TABLE Days (
+  	routeId BIGINT NOT NULL,
+  	day TINYINT,
+  	key Days_Route_FK (routeId),
+  CONSTRAINT Days_Route_FK FOREIGN KEY (routeId) REFERENCES Route (routeId))
+   ENGINE=InnoDB;
     
 -- ------------------------------ TicketFare ----------------------------------
 
@@ -162,10 +169,3 @@ CREATE TABLE TicketFare (
     CONSTRAINT Ticket_PK PRIMARY KEY (ticketId,fareId))
     ENGINE = InnoDB;	    
 			
-			
-CREATE TABLE Days (
-  	routeId BIGINT NOT NULL,
-  	day TINYINT,
-  	key Days_Route_FK (routeId),
-  CONSTRAINT Days_Route_FK FOREIGN KEY (routeId) REFERENCES Route (routeId)
-) ENGINE=InnoDB;
