@@ -3,7 +3,9 @@ package es.udc.tfg.trainticketsapp.test.model.trainService;
 import static es.udc.tfg.trainticketsapp.model.util.GlobalNames.SPRING_CONFIG_FILE;
 import static es.udc.tfg.trainticketsapp.test.util.GlobalNames.SPRING_CONFIG_TEST_FILE;
 import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -19,6 +21,7 @@ import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.car.Car.CarType;
 import es.udc.tfg.trainticketsapp.model.car.CarDao;
 import es.udc.tfg.trainticketsapp.model.route.Route;
+import es.udc.tfg.trainticketsapp.model.route.Route.WeekDay;
 import es.udc.tfg.trainticketsapp.model.route.RouteDao;
 import es.udc.tfg.trainticketsapp.model.station.Station;
 import es.udc.tfg.trainticketsapp.model.station.StationDao;
@@ -28,6 +31,7 @@ import es.udc.tfg.trainticketsapp.model.train.Train;
 import es.udc.tfg.trainticketsapp.model.train.Train.TrainType;
 import es.udc.tfg.trainticketsapp.model.train.TrainDao;
 import es.udc.tfg.trainticketsapp.model.trainService.TrainService;
+import es.udc.tfg.trainticketsapp.model.trainService.TravelInfo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { SPRING_CONFIG_FILE, SPRING_CONFIG_TEST_FILE })
@@ -56,6 +60,13 @@ public class TrainServiceTest {
 	@Autowired
 	private TrainService trainService;
 
+	private List<WeekDay> getListDays() {
+		List<WeekDay> days=new ArrayList<WeekDay>();
+		days.add(WeekDay.DOMINGO);
+		return days;
+	}
+	
+	
 	@Test
 	public void createStationTest() throws DuplicateInstanceException,
 			InstanceNotFoundException {
@@ -67,6 +78,18 @@ public class TrainServiceTest {
 		assertEquals(station, station2);
 
 	}
+	@Test
+	public void updateStationTest() throws
+			InstanceNotFoundException, DuplicateInstanceException {
+		Station station = trainService.createStation(STATION_NAME, ADDRESS,
+				CITY);
+		trainService.updateStation(station.getStationId(), "una", "otra");
+
+		assertEquals("una", station.getCity());
+		assertEquals("otra", station.getAddress());
+
+
+	}
 
 	@Test(expected = DuplicateInstanceException.class)
 	public void createDuplicateStationTest() throws DuplicateInstanceException,
@@ -74,44 +97,6 @@ public class TrainServiceTest {
 
 		trainService.createStation(STATION_NAME, ADDRESS, CITY);
 		trainService.createStation(STATION_NAME, ADDRESS, CITY);
-
-	}
-
-	@Test
-	public void findTravelTest() {/*
-								 * Long hora=new Long(123445); Station
-								 * station=new Station("Madrid-ATocha",
-								 * "Calle de españa","Coruna");
-								 * stationDao.save(station); Station
-								 * station2=new Station("Coruña",
-								 * "Calle mayor","Coruna");
-								 * stationDao.save(station2); Train train=new
-								 * Train("A25", TrainType.AVE);
-								 * trainDao.save(train); List<WeekDay> days=new
-								 * ArrayList<WeekDay>();
-								 * days.add(WeekDay.DOMINGO);
-								 * days.add(WeekDay.JUEVES);
-								 * days.add(WeekDay.LUNES);
-								 * days.add(WeekDay.MARTES);
-								 * days.add(WeekDay.MIERCOLES);
-								 * days.add(WeekDay.SABADO);
-								 * days.add(WeekDay.VIERNES);
-								 * 
-								 * Route route=new Route("Madrid-Coruna",
-								 * "Viaje con paradas", days,train);
-								 * routeDao.save(route); Stop s1=new Stop(hora,
-								 * hora, station); Stop s2=new Stop(new
-								 * Long(123446), new Long(123446), station2);
-								 * route.addStop(s1); route.addStop(s2);
-								 * stopDao.save(s1); stopDao.save(s2);
-								 * List<TravelInfo>
-								 * result=trainService.findTravels2
-								 * (Calendar.getInstance(), "Madrid-ATocha",
-								 * "Coruña"); assertEquals(result.size(),1);
-								 * result
-								 * .get(0).getDestination().getArrivalTime();
-								 * result.get(0).getOrigin().getDepartTime();
-								 */
 
 	}
 
@@ -134,7 +119,20 @@ public class TrainServiceTest {
 				train.getTrainId(), ROUTE_PRICE, stops, null);
 		assertEquals(result.getRouteName(), "M-Coruña");
 	}
+	@Test
+	public void updateRouteTest() throws DuplicateInstanceException,
+			InstanceNotFoundException {
+		Train train = new Train("A25", TrainType.AVE);
+		trainDao.save(train);
+		Route route = trainService.createRoute("M-Coruña", "sin paradas",
+				train.getTrainId(), ROUTE_PRICE, null, null);
+		trainService.updateRoute(route.getRouteId(), "Madird", "ninguna", train, new Float(12), null);
+		assertEquals("ninguna", route.getRouteDescription());
+		assertEquals(new Float(12), route.getPrice());
 
+		
+	}
+	
 	@Test
 	public void createTrainTest() throws DuplicateInstanceException,
 			InstanceNotFoundException {
@@ -146,6 +144,15 @@ public class TrainServiceTest {
 		Train train2 = trainService.findTrainByName(TRAIN_NAME);
 		assertEquals(train, train2);
 	}
+	@Test
+	public void updateTrainTest() throws DuplicateInstanceException,
+			InstanceNotFoundException {
+
+		Train train = trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, null);
+
+		trainService.updateTrain(train.getTrainId(), TrainType.AVANT, null);
+		assertEquals(TrainType.AVANT, train.getTrainType());
+	}
 
 	@Test(expected = DuplicateInstanceException.class)
 	public void createDuplicateTrainTest() throws DuplicateInstanceException,
@@ -155,5 +162,51 @@ public class TrainServiceTest {
 		trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 		trainService.createTrain(TRAIN_NAME, TRAIN_TYPE, cars);
 	}
+	
+	public void findTrainByIdTest() throws InstanceNotFoundException {
+		Train train=new Train(TRAIN_NAME, TRAIN_TYPE);
+		trainDao.save(train);
+		Train train2=trainService.findTrain(train.getTrainId());
+		assertEquals(train, train2);
+	}
+	public void findStationByIdTest() throws InstanceNotFoundException {
+		Station station = new Station("estacionA", "Calle de españa", "Coruna");
+		stationDao.save(station);
+		Station station2=trainService.findStation(station.getStationId());
+		assertEquals(station, station2);
+	}
+	public void findRouteByIdTest() throws InstanceNotFoundException {
+		Train train=new Train(TRAIN_NAME, TRAIN_TYPE);
+		trainDao.save(train);
+		Route route=new Route("Madrid-Coruna","Viaje con paradas", null,train,ROUTE_PRICE);
+		routeDao.save(route);
+		Route route2=trainService.findRoute(route.getRouteId());
+		assertEquals(route,route2);
+	}	
+	public void findTravelsTest() throws InstanceNotFoundException, DuplicateInstanceException {
+		Train train = new Train("A25", TrainType.AVE);
+		Long hora = new Long(123445);
+		Station station = new Station("estacionA", "Calle de españa", "Coruna");
+		stationDao.save(station);
+		Station station2 = new Station("estacionB", "Calle mayor", "Coruna");
+		stationDao.save(station2);
+		trainDao.save(train);
+		Stop s1 = new Stop(hora, hora, station);
+		Stop s2 = new Stop(hora, hora, station2);
+		List<Stop> stops = new ArrayList<Stop>();
+		stops.add(s1);
+		stops.add(s2);
+		trainService.createRoute("M-Coruña", "sin paradas",
+				train.getTrainId(), ROUTE_PRICE, stops, getListDays());
+		Calendar calendar=Calendar.getInstance();
+		calendar.set(2017, 1, 1);
+		List<TravelInfo> travels=trainService.findTravels(calendar, "estacionA", "estacionB");
+		assertEquals(1, travels.size());
+		assertEquals(train, travels.get(0).getTrain());
+		assertEquals(s1, travels.get(0).getOrigin());
+		assertEquals(s2, travels.get(0).getDestination());
+		
 
+		
+	}	
 }
