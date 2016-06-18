@@ -2,7 +2,58 @@
 	xmlns:p="tapestry:parameter" t:type="Layout" t:title="title"
 	showTitleInBody="false">
 
-<t:purchaseState actualPage="'confirmPurchase'" />
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>${message:panel-header}</h4>
+  </div>
+  <div class="panel-body">
+    <p>${message:originStation-label} : ${travelSession.originStation}  <t:output value="travelSession.departure.time" format="dateFormat"/></p>
+    <p>${message:destinationStation-label} : ${travelSession.destinationStation} <t:if test="travelSession.arrival"><t:output value="travelSession.arrival.time" format="dateFormat"/> </t:if></p>
+  </div>
+</div>	
 
-<t:actionlink t:id="purchase">confirm</t:actionlink>
+	<table class="table">
+	
+		<thead>
+			<tr>
+			    <th>${message:index-label}</th>
+			    <th>${message:class-label}</th>
+			    <th>${message:type-label}</th>
+			    <th>${message:fare-label}</th>
+				<th></th>
+				<th></th>
+			    
+			</tr>
+		</thead>
+		
+		<tbody>			
+			<tr t:type="Loop" t:source="ticketsDetails" t:value="ticketDetails" t:index="index">
+
+				<td>${index}</td>
+				<td>${travelSession.carType}</td>
+				
+				<t:if test="travelSession.carTypeReturn">
+				<td>ida y vuelta</td>
+				<p:else>	
+					<td>solo ida</td>
+				</p:else>
+				</t:if>
+				<t:if test="ticketDetails.fareFamily">
+				<td>${ticketDetails.fareFamily.fareName}</td>
+				<p:else>	
+					<td></td>
+				</p:else>				
+				</t:if>
+				<td></td>
+			    
+			</tr>
+			<tr><td></td><td></td><td></td><td></td><td>${message:num-label}</td><td>${ticketsDetails.size()}</td></tr>
+			<tr><td></td><td></td><td></td><td></td><td>${message:total-label}</td><td>${travelSession.price}</td></tr>
+		</tbody>
+	</table>
+		    	<div class="col-md-offset-5 col-md-1">
+<button type="button" t:type="Actionlink" t:id="purchase" class="btn btn-primary">${message:confirm}</button>
+</div>
+	<br></br>
+
 </html>

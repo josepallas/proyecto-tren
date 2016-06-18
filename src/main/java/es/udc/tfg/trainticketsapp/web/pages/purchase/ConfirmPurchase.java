@@ -1,6 +1,8 @@
 package es.udc.tfg.trainticketsapp.web.pages.purchase;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.InjectPage;
@@ -8,16 +10,17 @@ import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import es.udc.tfg.trainticketsapp.model.purchaseService.TicketDetails;
+import org.apache.tapestry5.services.Request;
 
 import es.udc.pojo.modelutil.exceptions.InstanceNotFoundException;
 import es.udc.tfg.trainticketsapp.model.car.Car;
 import es.udc.tfg.trainticketsapp.model.purchase.Purchase.PaymentMethod;
 import es.udc.tfg.trainticketsapp.model.purchaseService.PurchaseService;
+import es.udc.tfg.trainticketsapp.model.purchaseService.TicketDetails;
 import es.udc.tfg.trainticketsapp.model.util.exceptions.NotEmpySeatsException;
-import es.udc.tfg.trainticketsapp.web.pages.Index;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicy;
 import es.udc.tfg.trainticketsapp.web.services.AuthenticationPolicyType;
+import es.udc.tfg.trainticketsapp.web.util.PaypalManager;
 import es.udc.tfg.trainticketsapp.web.util.TravelSession;
 import es.udc.tfg.trainticketsapp.web.util.UserSession;
 
@@ -48,6 +51,18 @@ public class ConfirmPurchase {
 	private Long destinationReturn;
 	@Property
 	private float price;
+	@Property
+	private TicketDetails ticketDetails;
+	@Inject
+	private Locale locale;
+	@Property
+	private int index;	
+	@Inject
+	private Request request;
+	@Persist
+	private String token;
+	@Persist
+	private String userPaypalId;
 
 	public Long getOrigin() {
 		return origin;
@@ -98,6 +113,21 @@ public class ConfirmPurchase {
 		this.ticketsDetails.get(num).setCarReturn(car);
 	}
 
+	public DateFormat getDateFormat() {
+		return DateFormat.getDateInstance(DateFormat.SHORT, locale);
+	}
+
+	void onActivate() {
+		if (request.getParameter("token") != null) {
+			token = request.getParameter("token");
+			userPaypalId=PaypalManager.purchaseDetails(token);
+			} 
+		System.out.print("");
+		
+
+	}
+	
+	
 	void onPrepareForRender() {
 		this.price = travelSession.getPrice();
 	}
@@ -116,6 +146,7 @@ public class ConfirmPurchase {
 		} catch (NotEmpySeatsException e) {
 			return null;
 		}
+		PaypalManager.finishPurchase(token, userPaypalId, travelSession.getPrice());
 		sendTickets.setpurchaseId(purchaseId);
 		return sendTickets;
 

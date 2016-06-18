@@ -1,5 +1,7 @@
 package es.udc.tfg.trainticketsapp.model.purchaseService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -263,7 +265,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 				amount = (amount + (t.getFareFamily().getDiscount() * amount) / 100);
 			total = total + amount;
 		}
-		return total;
+        BigDecimal bd = new BigDecimal(Float.toString(total));
+        bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
 	}
 
 	public void cancelTicket(Long ticketId) throws InstanceNotFoundException,

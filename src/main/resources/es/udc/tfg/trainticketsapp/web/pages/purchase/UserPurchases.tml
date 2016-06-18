@@ -19,7 +19,7 @@
 	</p:paymentMethodHeader>	
 	
 	<p:purchaseIdCell>
-		${purchase.purchaseId}
+		<t:pagelink page="purchase/purchasedetails" context="purchase.purchaseId">${purchase.purchaseId}</t:pagelink>
 	</p:purchaseIdCell>
 	
 	<p:purchaseDateCell>

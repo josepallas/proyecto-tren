@@ -48,6 +48,7 @@ public class UpdateProfile {
 		firstName = userProfile.getFirstName();
 		lastName = userProfile.getLastName();
 		email = userProfile.getEmail();
+		dni=userProfile.getDni();
 
 	}
 

@@ -131,7 +131,7 @@
 					
 				    <div class="alert alert-danger" role="alert">
 			       		<h1 class="text-center">${message:title}</h1>
-			       		<p>${message:click} <a href="#" t:type="PageLink" t:page="index">MiniPortal</a> ${message:toReturnToMainPage}</p>
+			       		<p>${message:click} <a href="#" t:type="PageLink" t:page="index">TrainTickets</a> ${message:toReturnToMainPage}</p>
 			    	</div>
 					
 				</div>
