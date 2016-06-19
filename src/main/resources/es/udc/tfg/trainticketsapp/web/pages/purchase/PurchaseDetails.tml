@@ -1,0 +1,54 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter" t:type="Layout" t:title="title"
+	showTitleInBody="false">
+
+<t:if test="purchase">
+
+
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h4>${message:panel-header}</h4>
+		</div>
+		<div class="panel-body">
+			<p>${message:id-label} : ${purchase.purchaseId}</p>
+			<p>${message:paymentMethod-label}: ${purchase.paymentMethod}</p>
+		</div>
+	</div>
+	
+	<table class="table">
+	
+		<thead>
+			<tr>
+			    <th>${message:index-label}</th>
+			    <th>${message:class-label}</th>
+			    <th>${message:route-label}</th>
+				<th></th>
+				<th></th>
+			    
+			</tr>
+		</thead>
+		
+		<tbody>			
+			<tr t:type="Loop" t:source="purchase.tickets" t:value="ticket" t:index="index">
+
+				<td>${index}</td>
+				<td>${ticket.car.carType}</td>
+				
+				<td>${ticket.origin.station.stationName}-${ticket.destination.station.stationName}</td>
+				
+				<td></td>
+			    
+			</tr>
+			<tr><td></td><td></td><td></td><td>${message:num-label}</td><td>${purchase.tickets.size()}</td></tr>
+			<tr><td></td><td></td><td></td><td>${message:total-label}</td><td>27</td></tr>
+		</tbody>
+	</table>	
+	
+
+	<t:alerts />
+	<p:else>
+		<h4 class="alert alert-danger text-center">${message:purchaseNotFound}</h4>
+	</p:else>
+
+</t:if>
+</html>
