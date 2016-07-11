@@ -1,7 +1,7 @@
-# proyecto-tren [![Build Status](https://travis-ci.org/josepallas2/proyecto-tren.svg?branch=master)](https://travis-ci.org/josepallas2/proyecto-tren) [![Coverage Status](https://coveralls.io/repos/github/josepallas2/proyecto-tren/badge.svg?branch=master)](https://coveralls.io/github/josepallas2/proyecto-tren?branch=master)
+# proyecto-tren [![Build Status](https://travis-ci.org/josepallas/proyecto-tren.svg?branch=master)](https://travis-ci.org/josepallas/proyecto-tren) [![Coverage Status](https://coveralls.io/repos/github/josepallas/proyecto-tren/badge.svg?branch=master)](https://coveralls.io/github/josepallas/proyecto-tren?branch=master)
 Trabajo fin de grado de José Pallas Pena. Facultad de Informatica de Coruña. Curso 2015/2016
 
-
+https://travis-ci.org/josepallas/proyecto-tren.svg
 Aplicación que consiste en un servicio web para la búsqueda de trayectos y la compra de billetes de tren. Además cuenta con las siguientes características:
 + Interfaz adaptativa
 + Pago con Paypal mediante [Express Checkout](https://developer.paypal.com/docs/classic/express-checkout/) 
